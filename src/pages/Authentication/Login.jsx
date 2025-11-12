@@ -14,6 +14,7 @@ import { ReactSession } from "react-client-session";
 import { useNavigate } from "react-router-dom";
 import PageLoading from "../../common/PageLoading";
 import axiosInstance from "../../utils/AxiosInstance";
+import useTextFieldSx from "../../themes/textFieldDark";
 
 const Login = () => {
 
@@ -22,32 +23,32 @@ const Login = () => {
     const [message, setMessage] = useState("");
 
 
-    // const handleLogin = (values) => {
-    //     debugger
-    //     if (values.username === "admin" && values.password === "1234") {
-    //         const userData = { username: values.username, token: "dummy-token" };
-    //         ReactSession.set("authUser", userData);
-    //         navigate("/test");
-    //     } else {
-    //         debugger
-    //         setMessage("Username atau password salah!");
-    //     }
-    // }
-    const handleLogin = async (values) => {
+    const handleLogin = (values) => {
         debugger
-        try {
-            console.log("Test Login API")
-            const response = await axiosInstance().post("/api/auth/login", {
-                username: values.username,
-                password: values.password
-            })
-
-            console.log("Response:", response);
-        } catch (error) {
-            console.log("Test Login API Error")
-            setMessage("API ERROR")
+        if (values.username === "admin" && values.password === "1234") {
+            const userData = { username: values.username, token: "dummy-token" };
+            ReactSession.set("authUser", userData);
+            navigate("/test");
+        } else {
+            debugger
+            setMessage("Username atau password salah!");
         }
     }
+    // const handleLogin = async (values) => {
+    //     debugger
+    //     try {
+    //         console.log("Test Login API")
+    //         const response = await axiosInstance().post("/api/auth/login", {
+    //             username: values.username,
+    //             password: values.password
+    //         })
+
+    //         console.log("Response:", response);
+    //     } catch (error) {
+    //         console.log("Test Login API Error")
+    //         setMessage("API ERROR")
+    //     }
+    // }
 
 
     const formik = useFormik({
@@ -86,7 +87,14 @@ const Login = () => {
                 text="Memproses login..."
             />
 
-            <Paper elevation={6} sx={{ p: 4, borderRadius: 3, width:'auto', mx: "auto" }}>
+            <Paper elevation={6}
+                sx={{
+                    p: 4, borderRadius: 3, width: 'auto', mx: "auto",
+                    backgroundColor: "#36393f", // warna gelap untuk form
+                    color: "#ffffff",
+                    border: "1px solid #4a4d52",
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.5)",
+                }}>
 
                 <Typography variant="h5" textAlign="center" fontWeight="bold" mb={3}>
                     Login
@@ -127,12 +135,12 @@ const Login = () => {
                     <Button
                         type="submit"
                         variant="contained"
-                        color="primary"
+                        color="dark"
                         fullWidth
                         sx={{ mt: 3, py: 1.2, borderRadius: 2 }}
                         disabled={formik.isSubmitting}
                     >
-                        {formik.isSubmitting ? "Memproses..." : "Masuk"}
+                        {formik.isSubmitting ? "Processing..." : "Login"}
                     </Button>
                 </Box>
 
