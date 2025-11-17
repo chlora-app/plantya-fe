@@ -7,9 +7,6 @@ const NonAuthLayout = ({ children }) => {
 
             <Row lg="12" md="12" sm="12"
                 className="p-0 m-0 d-flex flex-row h-100"
-                style={{
-                    backgroundColor: "#0F1624", // Main Background
-                }}
             >
                 <Col lg="6" md="6" sm="6"
                     className="d-flex flex-column justify-content-center align-items-center p-4 h-100"
