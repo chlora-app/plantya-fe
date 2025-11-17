@@ -115,7 +115,20 @@ const Login = () => {
             },
         },
 
-        // ⛔ FIX autofill jadi putih
+        // 👉 Placeholder jadi putih
+        "& .MuiInputBase-input::placeholder": {
+            color: "#ffffff",
+            opacity: 1,
+            fontSize: '0.8rem'
+
+        },
+
+        // 👉 Warna icon menjadi putih
+        "& .MuiSvgIcon-root": {
+            color: "white",
+        },
+
+        // 👉 Autofill
         "& input:-webkit-autofill": {
             WebkitBoxShadow: "0 0 0 1000px #0E1621 inset !important",
             WebkitTextFillColor: "#ffffff !important",
@@ -125,6 +138,7 @@ const Login = () => {
             WebkitTextFillColor: "#ffffff !important",
         },
     };
+
 
 
 
@@ -181,16 +195,16 @@ const Login = () => {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        mb: "-15px",        // rapat ke TextField
+                                        mb: "-10px",        // rapat ke TextField
                                         fontSize: "0.85rem",
-                                        fontWeight: 500
+                                        fontWeight: "medium"
                                     }}
                                     className="p-0"
                                 >
                                     Email or Username
                                 </Typography>
                                 <TextField
-                                    placeholder="Email or Username"
+                                    placeholder="Email or username"
                                     name="username"
                                     size="small"
                                     fullWidth
@@ -218,9 +232,9 @@ const Login = () => {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        mb: "-15px",        // rapat ke TextField
+                                        mb: "-10px",        // rapat ke TextField
                                         fontSize: "0.85rem",
-                                        fontWeight: 500
+                                        fontWeight: "medium"
                                     }}
 
                                     className="p-0"
@@ -270,7 +284,7 @@ const Login = () => {
                                 fullWidth
                                 sx={{
                                     mt: 3,
-                                    py: 1.2,
+                                    // py: 1.2,
                                     borderRadius: 2,
                                     backgroundColor: "#3B82F6",
                                     "&:hover": { backgroundColor: "#2563EB" }
