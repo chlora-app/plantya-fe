@@ -111,7 +111,7 @@ const Register = () => {
 
             "& fieldset": {
                 borderColor: "#352F44",
-                borderWidth: "1px",
+                borderWidth: "2px",
                 transition: "border-color 0.25s ease, box-shadow 0.25s ease",
             },
             "&:hover fieldset": {
@@ -434,7 +434,8 @@ const Register = () => {
                                         borderColor: '#352F44',
                                         color: 'white',
                                         // py: 1.2,
-                                        borderRadius: 2,
+                                        borderWidth: '2px',
+                                        borderRadius: '15px',
                                         "&:hover": {
                                             backgroundColor: "#ffffffff",
                                             color: '#000000',

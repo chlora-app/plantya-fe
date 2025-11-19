@@ -371,7 +371,7 @@ const Login = () => {
 
                     <Row className="text-white text-center align-items-center justify-content-center mt-4 gap-1">
                         <Col lg={12} md={12} sm={12} className="d-flex justify-content-center align-items-center w-75">
-                            <hr className="flex-grow-1 text-white my-0 mx-3 border-success" />
+                            <hr className="flex-grow-1 text-white my-0 mx-3" />
                             <p className="my-0 mx-2 ">OR</p>
                             <hr className="flex-grow-1 text-white my-0 mx-3" />
                         </Col>
