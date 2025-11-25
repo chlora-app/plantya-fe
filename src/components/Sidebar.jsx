@@ -216,11 +216,12 @@ const Sidebar = (props) => {
                                             >
                                                 <List component="div" disablePadding
                                                     sx={{
-                                                        width: '75%',
-                                                        ml: '25%',
+                                                        width: '80%',
+                                                        ml: '20%',
                                                         borderLeft: '3px solid #352F44',
-                                                        px:1
+                                                        pl:1
                                                     }}
+                                                     className="d-flex flex-column gap-2"
                                                 >
                                                     {item.sub.map((sub, subIndex) => (
                                                         <ListItemButton
