@@ -219,6 +219,7 @@ const Sidebar = (props) => {
                                                         width: '75%',
                                                         ml: '25%',
                                                         borderLeft: '3px solid #352F44',
+                                                        px:1
                                                     }}
                                                 >
                                                     {item.sub.map((sub, subIndex) => (
