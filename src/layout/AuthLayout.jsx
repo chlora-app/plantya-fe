@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+
+
 
 const SIDEBAR_COLLAPSE_WIDTH = 70;
 const SIDEBAR_WIDTH = 280;
@@ -15,7 +19,7 @@ const AuthLayout = ({ children }) => {
 
     return (
         // Container
-        <div style={{ display: 'flex', height: "100vh", overflow: "hidden" }}>
+        <div style={{ display: 'flex', height: "100vh", overflow: "visible" }}>
 
             {/* Sidebar */}
             <aside
@@ -27,7 +31,7 @@ const AuthLayout = ({ children }) => {
                     height: '100vh',
                     backgroundColor: "#0F1624",
                     borderRight: "3px solid #352F44",
-                    overflow: "hidden",
+                    overflow: "visible",
                     transition: "width 0.3s ease",
                     zIndex: 1200,
                 }}
@@ -37,6 +41,32 @@ const AuthLayout = ({ children }) => {
                     heightHeader={HEADER_HEIGHT}
                 />
             </aside>
+
+            {/* Floating Toggle Button */}
+            {/* Floating Toggle Button */}
+            <IconButton
+                onClick={toggleSidebar}
+                sx={{
+                    position: "fixed",
+                    top: HEADER_HEIGHT,
+                    left: isCollapsed
+                        ? SIDEBAR_COLLAPSE_WIDTH - 15
+                        : SIDEBAR_WIDTH - 15,
+                    transform: "translateY(-50%)",
+                    zIndex: 2001,
+                    width: 36,
+                    height: 36,
+                    backgroundColor: "#ffc107",
+                    borderRadius: "50%",
+                    transition: "left 0.3s ease",   // ⭐ ANIMASI SAMA DENGAN SIDEBAR
+                    "&:hover": {
+                        backgroundColor: "#e6b800"
+                    }
+                }}
+            >
+                <MenuIcon />
+            </IconButton>
+
 
 
             {/* Header and Content Wrapper */}
@@ -48,7 +78,7 @@ const AuthLayout = ({ children }) => {
                     flexDirection: "column",
                     transition: "margin-left 0.3s ease",
                     height: "100vh",
-                    overflow: "hidden",
+                    overflow: "visible",
                 }}
             >
 

@@ -77,7 +77,7 @@ const Sidebar = (props) => {
             {/* Header Sidebar */}
             <Box
                 sx={{
-                    height: props.heightHeader,
+                    minHeight: props.heightHeader,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
