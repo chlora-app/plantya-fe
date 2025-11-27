@@ -61,48 +61,12 @@ const Sidebar = (props) => {
                 { text: "Test", path: "/test", icon: <PersonIcon /> },
                 { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
                 { text: "Test", path: "/test", icon: <PersonIcon /> },
+                { text: "Test", path: "/test", icon: <PersonIcon /> },
+                { text: "Test", path: "/test", icon: <PersonIcon /> },
             ],
         },
-        {
-            text: "Test",
-            icon: <PeopleIcon />,
 
-            sub: [
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-                { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-            ],
-        },
-        {
-            text: "Test",
-            icon: <PeopleIcon />,
 
-            sub: [
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-                { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-            ],
-        },
-        {
-            text: "Test",
-            icon: <PeopleIcon />,
-
-            sub: [
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-                { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-            ],
-        },
-        {
-            text: "Test",
-            icon: <PeopleIcon />,
-
-            sub: [
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-                { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
-                { text: "Test", path: "/test", icon: <PersonIcon /> },
-            ],
-        },
 
 
 
@@ -174,11 +138,12 @@ const Sidebar = (props) => {
                 />
             </Box>
 
+            {/* Container Main and Footer Sidebar */}
             <Box
                 sx={{
                     p: 0,
                     // flex: 1,
-                    minHeight: '60%',
+                    // minHeight: '60%',
                     overflowY: "auto",
                     overflowX: "hidden",
                     /* Hide scrollbar for Chrome, Safari and Edge */
@@ -200,11 +165,10 @@ const Sidebar = (props) => {
                 >
                     <Typography
                         sx={{
-                            px: 3,
-                            mx: 1,
+                            px: props.isCollapsed ? 0 : 3,
+                            mx: props.isCollapsed ? 0 : 1,
                             flex: 1,
-                            mt: 1,
-                            mb: 1,
+                            my: 1,
                             color: '#64748B'
                         }}
                         variant="body2"
@@ -378,7 +342,7 @@ const Sidebar = (props) => {
                 {/* Footer Sidebar */}
                 <Box
                     sx={{
-                        borderBottom: "3px solid #352F44",
+                        // borderBottom: "3px solid #352F44",
                         p: 2,
                     }}
                 // className="bg-info"

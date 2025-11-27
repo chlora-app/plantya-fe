@@ -7,7 +7,7 @@ import CodeIcon from '@mui/icons-material/Code';
 
 
 
-const SIDEBAR_COLLAPSE_WIDTH = 70;
+const SIDEBAR_COLLAPSE_WIDTH = 75;
 const SIDEBAR_WIDTH = 280;
 const HEADER_HEIGHT = 70;
 
