@@ -116,6 +116,8 @@ const Sidebar = (props) => {
     useEffect(() => {
         debugger
         setOpenMenuIndex(null)
+        setPopoverParentIndex(null);
+        setAnchorEl(null);
         if (props.isCollapsed == false) {
 
 
