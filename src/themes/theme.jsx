@@ -4,7 +4,14 @@ const theme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
   },
-
+  palette: {
+    background: {
+      default: "#0F1624",
+    },
+    text: {
+      primary: "#FFFFFF",
+    },
+  },
 });
 export default theme;
 

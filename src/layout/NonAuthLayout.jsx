@@ -3,7 +3,7 @@ import { Col, Container, Row } from "reactstrap";
 
 const NonAuthLayout = ({ children }) => {
     return (
-        <Container fluid className="p-0 m-0" style={{ minHeight: "100vh" }}>
+        <Container fluid className="p-0 m-0 " style={{ minHeight: "100vh" }}>
             <Row
                 className="p-0 m-0 d-flex"
                 style={{

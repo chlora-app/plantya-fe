@@ -8,7 +8,9 @@ import {
     ListItemIcon,
     Divider,
     Collapse,
-    Typography
+    Typography,
+    Tooltip,
+    Popover,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -23,10 +25,14 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 const Sidebar = (props) => {
     const location = useLocation();
 
+    // State and Function Sidebar Expand
     const [openMenuIndex, setOpenMenuIndex] = useState(null)
     const handleToggleMenu = (index) => {
         setOpenMenuIndex(prev => prev === index ? null : index)
     }
+
+    // State and Function Sidebar Collapse
+
 
     // Mapping dari index.jsx route path
     const menuItems = [
@@ -73,7 +79,6 @@ const Sidebar = (props) => {
 
         { text: "Settings", path: "/settings", icon: <SettingsIcon /> },
     ];
-
     const footerItems = [
         {
             text: "Support",
@@ -165,8 +170,8 @@ const Sidebar = (props) => {
                 >
                     <Typography
                         sx={{
-                            px: props.isCollapsed ? 0 : 3,
-                            mx: props.isCollapsed ? 0 : 1,
+                            px: 3,
+                            mx: 1,
                             flex: 1,
                             my: 1,
                             color: '#64748B'
@@ -230,6 +235,7 @@ const Sidebar = (props) => {
                                     )}
 
                                     {/* Menu with child */}
+                                    
                                     {isParent && (
                                         <>
                                             <ListItemButton
