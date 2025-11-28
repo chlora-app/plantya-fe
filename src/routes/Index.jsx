@@ -8,7 +8,8 @@ import Register from "../pages/Authentication/Register";
 
 const AuthProtectedRoutes = [
     { path: "/dashboard", component: LazyLoadRoutes(() => import("../pages/app001/Dashboard")) },
-    { path: "/test", component: LazyLoadRoutes(() => import("../pages/app002/Test")) }
+    { path: "/test", component: LazyLoadRoutes(() => import("../pages/app002/Test")) },
+    { path: "/user", component: LazyLoadRoutes(() => import("../pages/app003/User")) }
     // { path: "/test", component: LazyLoadRoutes(() => import("../pages/app001/Test")) }
 ]
 

@@ -11,6 +11,7 @@ import {
     Typography,
     Tooltip,
     Popover,
+    Fade
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -20,6 +21,12 @@ import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+import BackupTableOutlinedIcon from '@mui/icons-material/BackupTableOutlined';
+import ShowChartOutlinedIcon from '@mui/icons-material/ShowChartOutlined';
+import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import SupportAgentOutlinedIcon from '@mui/icons-material/SupportAgentOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 
 const Sidebar = (props) => {
@@ -32,7 +39,23 @@ const Sidebar = (props) => {
     }
 
     // State and Function Sidebar Collapse
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [popoverParentIndex, setPopoverParentIndex] = useState(null);
 
+    const handleOpenPopover = (event, index) => {
+        setAnchorEl(event.currentTarget);
+        setPopoverParentIndex(index);
+    };
+
+    const handleClosePopover = () => {
+        setAnchorEl(null);
+        setPopoverParentIndex(null);
+    };
+
+    const isChildSelected = (item) => {
+        if (!item.sub) return false
+        return item.sub.some(sub => location.pathname === sub.path)
+    }
 
     // Mapping dari index.jsx route path
     const menuItems = [
@@ -46,22 +69,22 @@ const Sidebar = (props) => {
             icon: <PeopleIcon />,
 
             sub: [
-                { text: "User", path: "/master-data/user", icon: <PersonIcon /> },
+                { text: "User", path: "/user", icon: <PersonIcon /> },
                 { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
             ],
         },
         {
             text: "Reports",
-            icon: <PeopleIcon />,
+            icon: <AnalyticsOutlinedIcon />,
 
             sub: [
-                { text: "testing", path: "/testing", icon: <PersonIcon /> },
-                { text: "Teams", path: "/master-data/team", icon: <GroupIcon /> },
+                { text: "Table", path: "/testing", icon: <BackupTableOutlinedIcon /> },
+                { text: "Graph", path: "/master-data/team", icon: <ShowChartOutlinedIcon /> },
             ],
         },
         {
             text: "Test",
-            icon: <PeopleIcon />,
+            icon: <FactCheckOutlinedIcon />,
 
             sub: [
                 { text: "Test", path: "/test", icon: <PersonIcon /> },
@@ -71,11 +94,6 @@ const Sidebar = (props) => {
                 { text: "Test", path: "/test", icon: <PersonIcon /> },
             ],
         },
-
-
-
-
-
 
         { text: "Settings", path: "/settings", icon: <SettingsIcon /> },
     ];
@@ -83,11 +101,11 @@ const Sidebar = (props) => {
         {
             text: "Support",
             path: "/dashboard",
-            icon: <DashboardCustomizeIcon />
+            icon: <SupportAgentOutlinedIcon />
         },
         {
             text: "About",
-            icon: <PeopleIcon />,
+            icon: <InfoOutlinedIcon />,
             path: "/about",
         },
 
@@ -96,15 +114,22 @@ const Sidebar = (props) => {
 
     // Expand Parent Jika Child Menu Active Sesuai Path
     useEffect(() => {
-        menuItems.forEach((item, index) => {
-            if (item.sub) {
-                let isMatch = item.sub.some(sub => sub.path === location.pathname);
-                if (isMatch) {
-                    setOpenMenuIndex(index);
+        debugger
+        setOpenMenuIndex(null)
+        if (props.isCollapsed == false) {
+
+
+            menuItems.forEach((item, index) => {
+                if (item.sub) {
+                    let isMatch = item.sub.some(sub => sub.path === location.pathname);
+                    if (isMatch) {
+                        setOpenMenuIndex(index);
+                    }
                 }
-            }
-        });
-    }, [location.pathname]);
+            });
+        }
+    }, [location.pathname, props.isCollapsed]);
+
 
 
 
@@ -147,15 +172,12 @@ const Sidebar = (props) => {
             <Box
                 sx={{
                     p: 0,
-                    // flex: 1,
-                    // minHeight: '60%',
+
                     overflowY: "auto",
                     overflowX: "hidden",
-                    /* Hide scrollbar for Chrome, Safari and Edge */
                     "&::-webkit-scrollbar": {
                         display: "none"
                     },
-                    /* Hide scrollbar for Firefox */
                     scrollbarWidth: "none",
                 }}
             >
@@ -164,17 +186,21 @@ const Sidebar = (props) => {
                 <Box
                     sx={{
                         p: 2,
+                        pb: 0,
                         borderBottom: "3px solid #352F44",
                     }}
                 // className="bg-success"
                 >
                     <Typography
                         sx={{
-                            px: 3,
-                            mx: 1,
+                            px: props.isCollapsed ? 0 : 3,
+                            mx: props.isCollapsed ? 0 : 1,
                             flex: 1,
                             my: 1,
-                            color: '#64748B'
+                            color: '#64748B',
+                            transition: "all 0.3s ease"
+
+
                         }}
                         variant="body2"
                     // className="bg-warning"
@@ -182,18 +208,326 @@ const Sidebar = (props) => {
                         MAIN
                     </Typography>
 
+                    <List
+                        className="d-flex flex-column"
+                        sx={{
+                            flex: 1, p: 0, color: '#64748B',
+                        }}
+                    >
+
+                        {menuItems.map((item, index) => {
+                            const isParent = !!item.sub;
+                            return (
+                                <React.Fragment key={index}>
+
+                                    {/* Parent Menu*/}
+                                    <Tooltip
+                                        title={props.isCollapsed ? item.text : ""}
+                                        placement="right"
+                                        arrow
+                                        disableHoverListener={!props.isCollapsed}
+                                        slots={{
+                                            transition: Fade,
+                                        }}
+                                        slotProps={{
+                                            tooltip: {
+                                                sx: {
+                                                    bgcolor: "#323347",
+                                                    color: '#FFFFFF',
+                                                    fontSize: '1rem'
+                                                }
+                                            },
+                                            arrow: {
+                                                sx: {
+                                                    color: '#323347',
+                                                }
+                                            },
+                                            transition: { timeout: 600 },
+                                        }}
+                                    >
+                                        <ListItemButton
+                                            component={!isParent ? Link : "button"}
+                                            to={!isParent ? item.path : undefined}
+                                            onClick={(e) => {
+                                                if (props.isCollapsed && isParent) {
+                                                    handleOpenPopover(e, index);
+                                                } else if (isParent) {
+                                                    handleToggleMenu(index)
+                                                }
+                                            }
+                                            }
+                                            selected={!isParent && location.pathname === item.path || props.isCollapsed && isParent && isChildSelected(item)}
+                                            sx={{
+                                                borderRadius: 35,
+                                                mb: 1,
+
+                                                ...(props.isCollapsed && {
+                                                    px: 0,
+                                                    justifyContent: "center",
+                                                }),
+
+
+                                                "&.Mui-selected": {
+                                                    bgcolor: "#323347",
+                                                    borderRadius: 35,
+                                                    color: '#FFFFFF'
+                                                },
+                                                "&:hover": {
+                                                    bgcolor: "#323347",
+                                                    borderRadius: 35,
+                                                    color: '#FFFFFF',
+                                                    transition: "all 0.5s ease"
+                                                },
+                                            }}
+                                        >
+
+                                            <ListItemIcon
+                                                sx={{
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    color: 'inherit',
+                                                    "& svg": {
+                                                        fontSize: 20,
+                                                    },
+                                                    ...(props.isCollapsed && {
+                                                        minWidth: 0,
+
+                                                        "& svg": {
+                                                            fontSize: 26,
+                                                        },
+                                                    }),
+                                                }}
+                                            >
+                                                {item.icon}
+                                            </ListItemIcon>
+
+                                            {!props.isCollapsed && (
+                                                <ListItemText
+                                                    primary={item.text}
+                                                    sx={{
+                                                        "& .MuiListItemText-primary": {
+                                                            fontWeight: 600,
+                                                        }
+                                                    }}
+                                                />
+                                            )}
+
+                                            {isParent && !props.isCollapsed && (
+                                                <ExpandMore
+                                                    sx={{
+                                                        transform: openMenuIndex === index ? "rotate(180deg)" : "rotate(0deg)",
+                                                        transition: "transform 0.5s ease",
+                                                    }}
+                                                />
+                                            )}
+                                        </ListItemButton>
+                                    </Tooltip>
+
+                                    {props.isCollapsed && (
+
+                                        <Popover
+                                            open={popoverParentIndex === index}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClosePopover}
+                                            anchorOrigin={{
+                                                vertical: 'center',
+                                                horizontal: 'right',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'center',
+                                                horizontal: 'left',
+                                            }}
+                                            PaperProps={{
+                                                sx: {
+                                                    bgcolor: "#0F1624",
+                                                    borderRadius: 3,
+                                                    p: 1,
+                                                    border: "3px solid #352F44",
+                                                    width: '15%'
+                                                }
+                                            }}
+                                        >
+                                            <List sx={{ p: 0 }}>
+                                                {item.sub?.map((sub, subIndex) => (
+                                                    <ListItemButton
+                                                        key={subIndex}
+                                                        component={Link}
+                                                        to={sub.path}
+                                                        selected={location.pathname === sub.path}
+                                                        onClick={handleClosePopover}
+                                                        sx={{
+                                                            // --- Styling dari ListItemButton di Collapse ---
+                                                            borderRadius: 35,          // Dari `borderRadius: 35`
+                                                            px: 0,                      // Dari `px: 0`
+                                                            "&.Mui-selected": {
+                                                                bgcolor: "#323347",
+                                                                color: '#FFFFFF'
+                                                            },
+                                                            "&:hover": {
+                                                                bgcolor: "#323347",
+                                                                color: '#FFFFFF',
+                                                                transition: "all 0.5s ease" // Dari `transition`
+                                                            },
+                                                        }}
+                                                    >
+                                                        <ListItemIcon
+                                                            sx={{
+                                                                // --- Styling dari ListItemIcon di Collapse ---
+                                                                display: "flex",
+                                                                justifyContent: "center",
+                                                                color: 'inherit',
+                                                                "& svg": {
+                                                                    fontSize: 20,
+                                                                },
+                                                            }}
+                                                        >
+                                                            {sub.icon}
+                                                        </ListItemIcon>
+
+                                                        <ListItemText
+                                                            primary={sub.text}
+                                                            sx={{
+                                                                "& .MuiListItemText-primary": {
+                                                                    fontWeight: 600
+                                                                }
+                                                            }}
+                                                        />
+                                                    </ListItemButton>
+                                                ))}
+                                            </List>
+                                        </Popover>
+                                    )}
+
+
+
+                                    {/* Child Menu */}
+                                    {isParent && !props.isCollapsed && (
+                                        <Collapse in={openMenuIndex === index} timeout={500} unmountOnExit>
+                                            <Box sx={{ mb: 1 }}>
+                                                <List component="div" disablePadding
+                                                    sx={{
+                                                        width: '80%',
+                                                        ml: '20%',
+                                                        borderLeft: '3px solid #352F44',
+                                                        pl: 1,
+                                                    }}
+                                                    className="d-flex flex-column gap-2"
+                                                >
+                                                    {item.sub.map((sub, subIndex) => (
+                                                        <ListItemButton
+                                                            key={subIndex}
+                                                            component={Link}
+                                                            to={sub.path}
+                                                            selected={location.pathname === sub.path}
+                                                            sx={{
+                                                                borderRadius: 35,
+                                                                px: 0,
+                                                                "&.Mui-selected": {
+                                                                    bgcolor: "#323347",
+                                                                    color: '#FFFFFF'
+                                                                },
+                                                                "&:hover": {
+                                                                    bgcolor: "#323347",
+                                                                    color: '#FFFFFF',
+                                                                    transition: "all 0.5s ease"
+                                                                },
+                                                            }}
+                                                        >
+                                                            <ListItemIcon
+                                                                sx={{
+                                                                    display: "flex",
+                                                                    justifyContent: "center",
+                                                                    color: 'inherit',
+                                                                    "& svg": {
+                                                                        fontSize: 20,
+                                                                    },
+                                                                }}
+
+                                                            // className="bg-warning"
+                                                            >
+                                                                {sub.icon}
+                                                            </ListItemIcon>
+
+
+                                                            <ListItemText
+                                                                primary={sub.text}
+                                                                sx={{
+                                                                    "& .MuiListItemText-primary": {
+                                                                        fontWeight: 600,
+                                                                    },
+                                                                }}
+                                                            />
+                                                        </ListItemButton>
+                                                    ))}
+                                                </List>
+                                            </Box>
+                                        </Collapse>
+                                    )
+                                    }
+                                </React.Fragment>
+                            );
+                        })}
+                    </List>
+                </Box>
+
+
+                {/* Footer Sidebar */}
+                <Box
+                    sx={{
+                        p: 2,
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            px: props.isCollapsed ? 0 : 3,
+                            mx: props.isCollapsed ? 0 : 1,
+                            flex: 1,
+                            my: 1,
+                            color: '#64748B',
+                            transition: "all 0.3s ease"
+
+
+                        }}
+                        variant="body2"
+                    >
+                        Others
+                    </Typography>
+
                     <List sx={{
                         flex: 1, p: 0, color: '#64748B',
                         // my: 1,
                     }} className="d-flex flex-column" >
-                        {menuItems.map((item, index) => {
-                            const isParent = !!item.sub;
-
+                        {footerItems.map((item, index) => {
                             return (
                                 <React.Fragment key={index}>
+                                    <Tooltip
+                                        title={props.isCollapsed ? item.text : ""}
+                                        placement="right"
+                                        arrow
+                                        disableHoverListener={!props.isCollapsed}
+                                        slots={{
+                                            transition: Fade,
+                                        }}
 
-                                    {/* Menu without child */}
-                                    {!isParent && (
+                                        slotProps={{
+                                            transition: { timeout: 600 },
+                                            tooltip: {
+                                                sx: {
+                                                    bgcolor: "#323347",
+                                                    color: "#ffffff",
+                                                    fontSize: "14px",
+                                                    fontWeight: 600,
+                                                    borderRadius: "8px",
+                                                }
+                                            },
+                                            arrow: {
+                                                sx: {
+                                                    color: "#323347",
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        {/* Menu without child */}
                                         <ListItemButton
                                             component={Link}
                                             to={item.path}
@@ -207,6 +541,10 @@ const Sidebar = (props) => {
                                                     color: '#FFFFFF'
                                                 },
                                                 "&:hover": { bgcolor: "#323347", borderRadius: 35, color: '#FFFFFF', transition: "all 0.5s ease" },
+                                                ...(props.isCollapsed && {
+                                                    px: 0,
+                                                    justifyContent: "center",
+                                                }),
                                             }}
                                         >
                                             <ListItemIcon
@@ -217,58 +555,19 @@ const Sidebar = (props) => {
                                                     "& svg": {
                                                         fontSize: 20,
                                                     },
+                                                    ...(props.isCollapsed && {
+                                                        minWidth: 0,
+
+                                                        "& svg": {
+                                                            fontSize: 26,
+                                                        },
+                                                    }),
                                                 }}
                                             >
                                                 {item.icon}
                                             </ListItemIcon>
 
-
-                                            <ListItemText
-                                                primary={item.text}
-                                                sx={{
-                                                    "& .MuiListItemText-primary": {
-                                                        fontWeight: 600,
-                                                    }
-                                                }}
-                                            />
-                                        </ListItemButton>
-                                    )}
-
-                                    {/* Menu with child */}
-                                    
-                                    {isParent && (
-                                        <>
-                                            <ListItemButton
-                                                onClick={() => handleToggleMenu(index)}
-
-                                                sx={{
-                                                    borderRadius: 35,
-                                                    mb: 1,
-                                                    "&.Mui-selected": {
-                                                        bgcolor: "#323347",
-                                                        borderRadius: 35,
-                                                        color: '#FFFFFF'
-                                                    },
-                                                    "&:hover": {
-                                                        bgcolor: "#323347", borderRadius: 35, color: '#FFFFFF',
-                                                        transition: "all 0.5s ease"
-                                                    },
-                                                }}
-                                            >
-                                                <ListItemIcon
-                                                    sx={{
-                                                        display: "flex",
-                                                        justifyContent: "center",
-                                                        color: 'inherit',
-                                                        "& svg": {
-                                                            fontSize: 20,
-                                                        },
-                                                    }}
-                                                >
-                                                    {item.icon}
-                                                </ListItemIcon>
-
-
+                                            {!props.isCollapsed && (
                                                 <ListItemText
                                                     primary={item.text}
                                                     sx={{
@@ -277,146 +576,9 @@ const Sidebar = (props) => {
                                                         }
                                                     }}
                                                 />
-                                                <ExpandMore
-                                                    sx={{
-                                                        transform: openMenuIndex === index ? "rotate(180deg)" : "rotate(0deg)",
-                                                        transition: "transform 0.5s ease",
-                                                    }}
-                                                />
-
-                                            </ListItemButton>
-
-                                            {/* Child Menu */}
-                                            <Collapse in={openMenuIndex === index} timeout={500} unmountOnExit>
-                                                <Box
-                                                    sx={{
-                                                        mb: 1,
-                                                        opacity: openMenuIndex === index ? 1 : 0,
-                                                        transition: "opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1)",
-                                                    }}
-                                                >
-                                                    <List component="div" disablePadding
-                                                        sx={{
-                                                            width: '80%',
-                                                            ml: '20%',
-                                                            borderLeft: '3px solid #352F44',
-                                                            pl: 1,
-                                                            // pt:1,
-
-                                                        }}
-                                                        className="d-flex flex-column gap-2"
-                                                    >
-                                                        {item.sub.map((sub, subIndex) => (
-                                                            <ListItemButton
-                                                                key={subIndex}
-                                                                component={Link}
-                                                                to={sub.path}
-                                                                selected={location.pathname === sub.path}
-                                                                sx={{
-                                                                    // mb: 1,
-                                                                    borderRadius: 35,
-                                                                    "&.Mui-selected": {
-                                                                        bgcolor: "#323347",
-                                                                        borderRadius: 35,
-                                                                        color: '#FFFFFF'
-                                                                    },
-                                                                    "&:hover": { bgcolor: "#323347", borderRadius: 35, color: '#FFFFFF', transition: "all 0.5s ease" },
-                                                                }}
-                                                            // className="bg-success"
-
-                                                            >
-                                                                <ListItemIcon sx={{ minWidth: 36, color: "#64748B" }} >
-                                                                    {sub.icon}
-                                                                </ListItemIcon>
-                                                                <ListItemText primary={sub.text} />
-                                                            </ListItemButton>
-                                                        ))}
-                                                    </List>
-                                                </Box>
-                                            </Collapse>
-
-                                        </>
-                                    )
-                                    }
-                                </React.Fragment>
-                            );
-                        })}
-                    </List>
-                </Box>
-
-
-                {/* Footer Sidebar */}
-                <Box
-                    sx={{
-                        // borderBottom: "3px solid #352F44",
-                        p: 2,
-                    }}
-                // className="bg-info"
-                >
-                    <Typography
-                        sx={{
-                            px: 3,
-                            mx: 1,
-                            flex: 1,
-                            mt: 1,
-                            mb: 1,
-                            color: '#64748B'
-                        }}
-                        variant="body2"
-                    // className="bg-warning"
-                    >
-                        Others
-                    </Typography>
-
-                    <List sx={{
-                        flex: 1, p: 0, color: '#64748B',
-                        // my: 1,
-                    }} className="d-flex flex-column" >
-                        {footerItems.map((item, index) => {
-                            // const isParent = !!item.sub;
-
-                            return (
-                                <React.Fragment key={index}>
-
-                                    {/* Menu without child */}
-                                    <ListItemButton
-                                        component={Link}
-                                        to={item.path}
-                                        selected={location.pathname === item.path}
-                                        sx={{
-                                            borderRadius: 35,
-                                            mb: 1,
-                                            "&.Mui-selected": {
-                                                bgcolor: "#323347",
-                                                borderRadius: 35,
-                                                color: '#FFFFFF'
-                                            },
-                                            "&:hover": { bgcolor: "#323347", borderRadius: 35, color: '#FFFFFF', transition: "all 0.5s ease" },
-                                        }}
-                                    >
-                                        <ListItemIcon
-                                            sx={{
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                color: 'inherit',
-                                                "& svg": {
-                                                    fontSize: 20,
-                                                },
-                                            }}
-                                        >
-                                            {item.icon}
-                                        </ListItemIcon>
-
-
-                                        <ListItemText
-                                            primary={item.text}
-                                            sx={{
-                                                "& .MuiListItemText-primary": {
-                                                    fontWeight: 600,
-                                                }
-                                            }}
-                                        />
-                                    </ListItemButton>
+                                            )}
+                                        </ListItemButton>
+                                    </Tooltip>
 
 
                                 </React.Fragment>
@@ -424,6 +586,7 @@ const Sidebar = (props) => {
                         })}
                     </List>
                 </Box>
+
             </Box>
 
 
