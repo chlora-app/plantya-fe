@@ -33,7 +33,7 @@ const AuthLayout = ({ children }) => {
                     backgroundColor: "#0F1624",
                     borderRight: "3px solid #352F44",
                     overflow: "visible",
-                    transition: "width 0.3s ease",
+                    transition: "width 0.5s ease-in-out",
                     zIndex: 1200,
                 }}
             >
@@ -59,7 +59,7 @@ const AuthLayout = ({ children }) => {
                     borderRadius: '5px',
                     backgroundColor: "#0F1624",
                     border: "3px solid #352F44",
-                    transition: "left 0.3s ease",   // ⭐ ANIMASI SAMA DENGAN SIDEBAR
+                    transition: "left 0.5s ease-in-out",
                     "&:hover": {
                         bgcolor: "#323347",
                     }
@@ -78,7 +78,7 @@ const AuthLayout = ({ children }) => {
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-                    transition: "margin-left 0.3s ease",
+                    transition: "margin-left 0.5s ease-in-out",
                     height: "100vh",
                     overflow: "visible",
                 }}

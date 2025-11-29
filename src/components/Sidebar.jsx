@@ -115,8 +115,8 @@ const Sidebar = (props) => {
     // Expand Parent Jika Child Menu Active Sesuai Path
     useEffect(() => {
         debugger
-        setOpenMenuIndex(null)
         handleClosePopover()
+        setOpenMenuIndex(null)
         if (props.isCollapsed == false) {
 
 
@@ -199,7 +199,7 @@ const Sidebar = (props) => {
                             flex: 1,
                             my: 1,
                             color: '#64748B',
-                            transition: "all 0.3s ease"
+                            transition: "all 0.5s ease"
 
 
                         }}
@@ -243,7 +243,7 @@ const Sidebar = (props) => {
                                                     color: '#323347',
                                                 }
                                             },
-                                            transition: { timeout: 600 },
+                                            transition: { timeout: 500 },
                                         }}
                                     >
                                         <ListItemButton
@@ -277,8 +277,9 @@ const Sidebar = (props) => {
                                                     bgcolor: "#323347",
                                                     borderRadius: 35,
                                                     color: '#FFFFFF',
-                                                    transition: "all 0.5s ease"
+                                                    transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                 },
+
                                             }}
                                         >
 
@@ -306,6 +307,10 @@ const Sidebar = (props) => {
                                                 <ListItemText
                                                     primary={item.text}
                                                     sx={{
+                                                        opacity: props.isCollapsed ? 0 : 1,
+                                                        transition: "opacity 0.4s ease-in-out",
+                                                        whiteSpace: "nowrap",
+                                                        overflow: "hidden",
                                                         "& .MuiListItemText-primary": {
                                                             fontWeight: 600,
                                                         }
@@ -317,7 +322,7 @@ const Sidebar = (props) => {
                                                 <ExpandMore
                                                     sx={{
                                                         transform: openMenuIndex === index ? "rotate(180deg)" : "rotate(0deg)",
-                                                        transition: "transform 0.5s ease",
+                                                        transition: "transform 0.4s ease-in-out",
                                                     }}
                                                 />
                                             )}
@@ -350,7 +355,7 @@ const Sidebar = (props) => {
                                                         border: "3px solid #352F44",
                                                         width: '10%',
                                                         ml: 1,
-                                                        transition: "opacity 0.3s ease, transform 0.3s ease"
+                                                        transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out"
                                                     }
                                                 }
                                             }}
@@ -377,7 +382,7 @@ const Sidebar = (props) => {
                                                             "&:hover": {
                                                                 bgcolor: "#323347",
                                                                 color: '#FFFFFF',
-                                                                transition: "all 0.5s ease" // Dari `transition`
+                                                                transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                             },
                                                         }}
                                                     >
@@ -413,7 +418,7 @@ const Sidebar = (props) => {
 
                                     {/* Child Menu */}
                                     {isParent && !props.isCollapsed && (
-                                        <Collapse in={openMenuIndex === index} timeout={500} unmountOnExit>
+                                        <Collapse in={openMenuIndex === index} timeout={"auto"} unmountOnExit>
                                             <Box sx={{ mb: 1 }}>
                                                 <List component="div" disablePadding
                                                     sx={{
@@ -440,7 +445,7 @@ const Sidebar = (props) => {
                                                                 "&:hover": {
                                                                     bgcolor: "#323347",
                                                                     color: '#FFFFFF',
-                                                                    transition: "all 0.5s ease"
+                                                                    transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                                 },
                                                             }}
                                                         >
@@ -453,8 +458,6 @@ const Sidebar = (props) => {
                                                                         fontSize: 20,
                                                                     },
                                                                 }}
-
-                                                            // className="bg-warning"
                                                             >
                                                                 {sub.icon}
                                                             </ListItemIcon>
@@ -487,27 +490,34 @@ const Sidebar = (props) => {
                     sx={{
                         p: 2,
                     }}
+                // className="bg-warning"
                 >
                     <Typography
                         sx={{
                             px: props.isCollapsed ? 0 : 3,
-                            mx: props.isCollapsed ? 0 : 1,
+                            mx: props.isCollapsed ? -1 : 1,
                             flex: 1,
                             my: 1,
                             color: '#64748B',
-                            transition: "all 0.3s ease"
+                            transition: "all 0.5s ease-in-out",
+                            width: "auto"
 
 
                         }}
                         variant="body2"
+                    // className="bg-success"
                     >
-                        Others
+                        OTHERS
                     </Typography>
 
-                    <List sx={{
-                        flex: 1, p: 0, color: '#64748B',
-                        // my: 1,
-                    }} className="d-flex flex-column" >
+                    <List
+                        sx={{
+                            flex: 1,
+                            p: 0,
+                            color: '#64748B',
+                        }}
+                        className="d-flex flex-column"
+                    >
                         {footerItems.map((item, index) => {
                             return (
                                 <React.Fragment key={index}>
@@ -521,7 +531,7 @@ const Sidebar = (props) => {
                                         }}
 
                                         slotProps={{
-                                            transition: { timeout: 600 },
+                                            transition: { timeout: 500 },
                                             tooltip: {
                                                 sx: {
                                                     bgcolor: "#323347",
@@ -551,7 +561,13 @@ const Sidebar = (props) => {
                                                     borderRadius: 35,
                                                     color: '#FFFFFF'
                                                 },
-                                                "&:hover": { bgcolor: "#323347", borderRadius: 35, color: '#FFFFFF', transition: "all 0.5s ease" },
+                                                "&:hover":
+                                                {
+                                                    bgcolor: "#323347",
+                                                    borderRadius: 35,
+                                                    color: '#FFFFFF',
+                                                    transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
+                                                },
                                                 ...(props.isCollapsed && {
                                                     px: 0,
                                                     justifyContent: "center",
@@ -582,6 +598,11 @@ const Sidebar = (props) => {
                                                 <ListItemText
                                                     primary={item.text}
                                                     sx={{
+                                                        opacity: props.isCollapsed ? 0 : 1,
+                                                        // transform: props.isCollapsed ? "translateX(-10px)" : "translateX(0)",
+                                                        transition: "opacity 0.4s ease-in-out",
+                                                        whiteSpace: "nowrap",
+                                                        overflow: "hidden",
                                                         "& .MuiListItemText-primary": {
                                                             fontWeight: 600,
                                                         }
