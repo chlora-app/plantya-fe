@@ -67,7 +67,7 @@ const AuthLayout = ({ children }) => {
 
                 }}
             >
-                <CodeIcon sx={{ color: "#64748B" }} />
+                <CodeIcon sx={{ color: "#383B42" }} />
             </IconButton>
 
 
