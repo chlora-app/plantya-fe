@@ -31,7 +31,7 @@ const PopupModal = (props) => {
                     zIndex: 1300,
                     "& .MuiDialog-paper": {
                         borderRadius: "30px",
-                        backgroundColor: "#0F1624",
+                        backgroundColor: "#121314",
                         textAlign: "center",
                         padding: 2,
                     },

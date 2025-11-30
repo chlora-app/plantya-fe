@@ -58,11 +58,11 @@ const AuthLayout = ({ children }) => {
                     width: 35,
                     height: 35,
                     borderRadius: '5px',
-                    backgroundColor: "#121314",
+                    backgroundColor: "#16181A",
                     border: "2px solid #383B42",
                     transition: "left 0.5s ease-in-out",
                     "&:hover": {
-                        bgcolor: "#323347",
+                        bgcolor: "#121314",
                     }
 
                 }}

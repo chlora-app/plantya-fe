@@ -11,7 +11,7 @@ const ContentLoading = ({ text = "Loading..." }) => {
                 flexDirection: 'column',
                 minHeight: '80vh',
                 width: '100%',
-                backgroundColor: '#0F1624',
+                backgroundColor: '#121314',
             }}
         >
             <CircularProgress

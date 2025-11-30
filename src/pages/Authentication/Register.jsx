@@ -376,6 +376,7 @@ const Register = () => {
                                         borderRadius: '15px',
                                         "&:hover": {
                                             backgroundColor: "#1976D2",
+                                            border: "2px solid #1976D2",
                                             // color: '#000000',
                                             transition: "0.7s ease",
                                         }

@@ -9,8 +9,9 @@ import { useAuth } from "../context/AuthContext";
 const Authmiddleware = (props) => {
 
     const loginStatus = useAuth();
+    debugger
 
-    if (!loginStatus) {
+    if (!loginStatus.loginStatus) {
         return (
             <Navigate to={{ pathname: "/login", state: { from: props.location } }} />
         )

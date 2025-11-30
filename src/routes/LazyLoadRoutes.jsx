@@ -3,7 +3,6 @@ import ContentLoading from '../common/ContentLoading';
 
 // Lazy Function
 const LazyLoadRoutes = (importFunc) => {
-    debugger
     const LazyElement = lazy(importFunc);
 
     return (
