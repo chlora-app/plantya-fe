@@ -67,7 +67,7 @@ const Header = (props) => {
 
                     <Box
                         sx={{
-                            borderLeft: '3px solid #383B42',
+                            borderLeft: '2px solid #383B42',
                         }}>
 
                         <IconButton
