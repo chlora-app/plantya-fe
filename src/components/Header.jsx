@@ -232,6 +232,7 @@ const Header = (props) => {
                                     p: 0,
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    color: '#FAFAFA',
                                     // gap: 0.5,
                                 }}
                             // className="bg-success"
@@ -243,32 +244,32 @@ const Header = (props) => {
                                     height: '100%',
                                     "&:hover": {
                                         bgcolor: "#1F1F1F",
-                                        color: '#FFFFFF',
+                                        color: '#FAFAFA',
+                                        transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                     },
                                     // bgcolor: 'red',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}>
+
                                     <ListItemIcon sx={{
-                                        color: '#64748B',
+                                        color: 'inherit',
                                         minWidth: 32,
                                         // bgcolor: 'red',
                                         "& svg": {
                                             fontSize: 22,
                                         },
                                     }}>
+
                                         <PersonOutlineOutlinedIcon fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText
                                         primary="Profile"
                                         sx={{
                                             "& .MuiListItemText-primary": {
-                                                fontSize: "0.9rem",
-                                                fontWeight: 500,
-                                                color: 'inherit',
-                                            },
-                                            // bgcolor: 'red'
+                                                fontWeight: 500
+                                            }
 
                                         }} />
                                 </ListItemButton>
@@ -282,14 +283,15 @@ const Header = (props) => {
                                     height: '100%',
                                     "&:hover": {
                                         bgcolor: "#1F1F1F",
-                                        color: '#FFFFFF',
+                                        color: '#FAFAFA',
+                                        transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                     },
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}>
                                     <ListItemIcon sx={{
-                                        color: '#64748B',
+                                        color: 'inherit',
                                         minWidth: 32,
                                         // bgcolor: 'red',
                                         "& svg": {
@@ -298,14 +300,15 @@ const Header = (props) => {
                                     }}>
                                         <LogoutIcon fontSize="small" />
                                     </ListItemIcon>
+
                                     <ListItemText
                                         primary="Logout"
                                         sx={{
+                                            // bgcolor: 'red',
                                             "& .MuiListItemText-primary": {
-                                                fontSize: "0.9rem",
-                                                fontWeight: 500,
-                                                color: 'inherit',
+                                                fontWeight: 500
                                             }
+
                                         }} />
                                 </ListItemButton>
                             </List>
