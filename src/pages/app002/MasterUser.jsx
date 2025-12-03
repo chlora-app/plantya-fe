@@ -2,7 +2,7 @@ import { Paper, Container } from "@mui/material";
 import React from "react";
 import { Button, Alert, Row, Col, Form } from "reactstrap";
 
-const User = () => {
+const MasterUser = () => {
     return (
         <React.Fragment>
             <Container
@@ -12,7 +12,7 @@ const User = () => {
                 <Row style={{ height: '120vh' }}>
                     <Col>
                         {/* <Alert color="primary">Tab 🎉</Alert> */}
-                        <Alert color="primary">Create User Page</Alert>
+                        <Alert color="primary">Master User</Alert>
                         <Button color="success">User Page</Button>
                     </Col>
                 </Row>
@@ -22,4 +22,4 @@ const User = () => {
         </React.Fragment>
     );
 }
-export default User;
+export default MasterUser;

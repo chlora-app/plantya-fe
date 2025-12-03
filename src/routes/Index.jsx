@@ -32,15 +32,15 @@ export const appMenuStructure = [
         section: "main",
         sub: [
             {
-                path: "/user",
-                component: LazyLoadRoutes(() => import("../pages/app003/User")),
-                text: "User",
+                text: "Master User",
+                path: "/master/user",
+                component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: <PersonIcon />
             },
             {
-                text: "Teams",
-                path: "/master-data/team",
-                component: "",
+                text: "Master Device",
+                path: "/master/device",
+                component: LazyLoadRoutes(() => import("../pages/app003/MasterDevice")),
                 icon: <GroupIcon />
             },
         ],
@@ -72,7 +72,7 @@ export const appMenuStructure = [
             {
                 text: "Test 1",
                 path: "/test",
-                component: LazyLoadRoutes(() => import("../pages/app002/Test")),
+                component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: <PersonIcon />
             },
 
@@ -85,19 +85,19 @@ export const appMenuStructure = [
             {
                 text: "Test 3",
                 path: "/test",
-                component: LazyLoadRoutes(() => import("../pages/app002/Test")),
+                component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: <PersonIcon />
             },
             {
                 text: "Test 4",
                 path: "/test",
-                component: LazyLoadRoutes(() => import("../pages/app002/Test")),
+                component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: <PersonIcon />
             },
             {
                 text: "Test 5",
                 path: "/test",
-                component: LazyLoadRoutes(() => import("../pages/app002/Test")),
+                component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: <PersonIcon />
             },
         ],

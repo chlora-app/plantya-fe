@@ -17,8 +17,8 @@ const Dashboard = () => {
                 }} >
                     <Col>
                         {/* <Alert color="primary">Tab 🎉</Alert> */}
-                        < Alert color="primary">Graph || Table</Alert>
-                        <Button color="success">Test Button</Button>
+                        < Alert color="primary">Dashboard</Alert>
+                        <Button color="success">Dashboard Button</Button>
                     </Col>
                 </Row>
 

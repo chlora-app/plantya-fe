@@ -329,7 +329,7 @@ const Sidebar = (props) => {
                                                         sx={{
                                                             // --- Styling dari ListItemButton di Collapse ---
                                                             borderRadius: 35,          // Dari `borderRadius: 35`
-                                                            px: 0,                      // Dari `px: 0`
+                                                            pl: 0,                      // Dari `px: 0`
                                                             "&.Mui-selected": {
                                                                 bgcolor: "#1F1F1F",
                                                                 color: '#FAFAFA'
