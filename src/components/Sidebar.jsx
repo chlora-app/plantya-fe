@@ -103,7 +103,6 @@ const Sidebar = (props) => {
                     justifyContent: "center",
                     borderBottom: "2px solid #383B42",
                 }}
-            // className="bg-info"
             >
                 <img
                     src={props.isCollapsed ? "/SmallIcon.png" : "/BaseLogo.png"}
@@ -136,7 +135,6 @@ const Sidebar = (props) => {
                         pb: 0,
                         borderBottom: "2px solid #383B42",
                     }}
-                // className="bg-success"
                 >
                     <Typography
                         sx={{
@@ -150,15 +148,17 @@ const Sidebar = (props) => {
 
                         }}
                         variant="body2"
-                    // className="bg-warning"
                     >
                         MAIN
                     </Typography>
 
                     <List
-                        className="d-flex flex-column"
                         sx={{
-                            flex: 1, p: 0, color: '#383B42',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            flex: 1,
+                            p: 0,
+                            color: '#383B42',
                         }}
                     >
 
@@ -312,8 +312,12 @@ const Sidebar = (props) => {
                                             }}
                                         >
                                             <List
-                                                sx={{ p: 0 }}
-                                                className="d-flex flex-column gap-2"
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: 1,
+                                                    color: '#383B42'
+                                                }}
                                             >
                                                 {item.sub?.map((sub, subIndex) => (
                                                     <ListItemButton
@@ -377,12 +381,14 @@ const Sidebar = (props) => {
                                             <Box sx={{ mb: 1 }}>
                                                 <List component="div" disablePadding
                                                     sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        gap: 1,
                                                         width: '80%',
                                                         ml: '20%',
                                                         borderLeft: '2px solid #383B42',
                                                         pl: 1,
                                                     }}
-                                                    className="d-flex flex-column gap-2"
                                                 >
                                                     {item.sub.map((sub, subIndex) => (
                                                         <ListItemButton
@@ -449,7 +455,6 @@ const Sidebar = (props) => {
                     sx={{
                         p: 2,
                     }}
-                // className="bg-warning"
                 >
                     <Typography
                         sx={{
@@ -464,18 +469,18 @@ const Sidebar = (props) => {
 
                         }}
                         variant="body2"
-                    // className="bg-success"
                     >
                         OTHERS
                     </Typography>
 
                     <List
                         sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
                             flex: 1,
                             p: 0,
                             color: '#383B42',
                         }}
-                        className="d-flex flex-column"
                     >
                         {footerItems.map((item, index) => {
                             return (

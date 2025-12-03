@@ -324,7 +324,6 @@ const Login = () => {
 
                                 <Typography
                                     variant="body2"
-                                    sx={{ color: 'white' }}
                                 >
                                     Don't have an account?
                                     <Button

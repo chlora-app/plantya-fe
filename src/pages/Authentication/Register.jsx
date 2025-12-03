@@ -425,7 +425,7 @@ const Register = () => {
 
                                 <Typography
                                     variant="body2"
-                                    className="my-0 mx-2">
+                                    >
                                     Have an account?
                                     <Button
                                         component={Link}
