@@ -62,22 +62,22 @@ const Sidebar = (props) => {
 
     // Expand Parent Jika Child Menu Active Sesuai Path
     useEffect(() => {
-        debugger
+        if (props.isCollapsed && !props.mobileOpen) {
+            return;
+        }
+
         handleClosePopover()
         setOpenMenuIndex(null)
-        if (props.isCollapsed == false) {
 
-
-            menuItems.forEach((item, index) => {
-                if (item.sub) {
-                    let isMatch = item.sub.some(sub => sub.path === location.pathname);
-                    if (isMatch) {
-                        setOpenMenuIndex(index);
-                    }
+        menuItems.forEach((item, index) => {
+            if (item.sub) {
+                let isMatch = item.sub.some(sub => sub.path === location.pathname);
+                if (isMatch) {
+                    setOpenMenuIndex(index);
                 }
-            });
-        }
-    }, [location.pathname, props.isCollapsed]);
+            }
+        });
+    }, [location.pathname, props.isCollapsed, props.isMobileOpen, menuItems]);
 
 
     return (
@@ -592,6 +592,8 @@ const Sidebar = (props) => {
 Sidebar.PropTypes = {
     isCollapsed: PropTypes.any,
     heightHeader: PropTypes.any,
+    userData: PropTypes.any,
+    isMobileOpen: PropTypes.any,
 };
 
 export default Sidebar;
