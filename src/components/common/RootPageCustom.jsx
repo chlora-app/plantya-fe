@@ -17,14 +17,13 @@ const RootPageCustom = (props) => {
             <Box
                 sx={{
                     width: "100%",
-                    p: 2,
                 }}
             >
                 <AlertMessage
-                    msg={props.msg}
-                    onClose={() => props.setMsg("")}
+                    msg={props.msgStateGet}
+                    stateData={props.msgStateSet}
+                    msgStatus={props.msgStateGetStatus}
                 />
-
                 {props.children}
             </Box>
 
@@ -34,8 +33,9 @@ const RootPageCustom = (props) => {
 
 RootPageCustom.propTypes = {
     children: PropTypes.any,
-    msg: PropTypes.any,
-    setMsg: PropTypes.any,
+    msgStateGet: PropTypes.any,
+    msgStateGetStatus: PropTypes.any,
+    msgStateSet: PropTypes.any,
     setFirstRender: PropTypes.any,
 };
 

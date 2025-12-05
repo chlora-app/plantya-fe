@@ -8,10 +8,14 @@ const AlertMessage = (props) => {
         return null
     }
 
+    const alertClose = () => {
+        props.stateData("")
+    }
+
     return (
-        <Collapse in={!!props.msg}>
+        props.msg ?
             <Alert
-                severity="error"    
+                severity={props.msgStatus ? props.msgStatus : "error"}
                 variant="outlined"
                 onClose={props.onClose}
                 action={
@@ -19,25 +23,28 @@ const AlertMessage = (props) => {
                         aria-label="close"
                         color="inherit"
                         size="small"
-                        onClick={props.onClose}
+                        onClick={alertClose}
                     >
-                        <CloseIcon fontSize="inherit" color='#ff0000ff' />
+                        <CloseIcon
+                            fontSize="inherit"
+                            color='#inherit' />
                     </IconButton>
                 }
                 sx={{
                     mb: 2,
-                    color:"#ff0000ff"
+                    color: "#inherit"
                 }}
             >
-                {props.msg}
-            </Alert>
-        </Collapse>
+                {typeof props.msg == 'string' ? props.msg : props.msg.listmessage?.map((msg, key) => (<p key={key}>{"* " + msg}</p>))}
+            </Alert> : null
+
     )
 }
 
 AlertMessage.propTypes = {
     msg: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
+    stateData: PropTypes.func,
+    msgStatus: PropTypes.string,
 };
 
 export default AlertMessage
