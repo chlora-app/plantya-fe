@@ -171,7 +171,7 @@ const Register = () => {
                     sx={{
                         textAlign: 'center',
                         mt: 2,
-                        color: "#FAFAFA",
+                        color: "text.white",
                         // bgcolor: 'red'
                     }}
                 >
@@ -200,7 +200,7 @@ const Register = () => {
                 >
 
                     {/* Body Section */}
-                    <Typography variant="h4" fontWeight="medium" color="#FAFAFA"
+                    <Typography variant="h4" fontWeight="medium" color="text.white"
                         sx={{
                             mb: 2,
                             textAlign: 'center'
@@ -242,7 +242,7 @@ const Register = () => {
                                             <InputAdornment position="start">
                                                 <AccountCircleIcon
                                                     sx={{
-                                                        color: formik.values.username === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.username === "" ? 'text.secondary' : 'text.white'
                                                     }} />
                                             </InputAdornment>
                                         ),
@@ -276,7 +276,7 @@ const Register = () => {
                                             <InputAdornment position="start">
                                                 <MailOutlineOutlinedIcon
                                                     sx={{
-                                                        color: formik.values.email === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.email === "" ? 'text.secondary' : 'text.white'
                                                     }} />
                                             </InputAdornment>
                                         ),
@@ -311,7 +311,7 @@ const Register = () => {
                                             <InputAdornment position="start">
                                                 <LockOutlinedIcon
                                                     sx={{
-                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.white'
                                                     }} />
                                             </InputAdornment>
                                         ),
@@ -321,7 +321,7 @@ const Register = () => {
                                                     onClick={() => setShowPassword(!showPassword)}
                                                     edge="end"
                                                     sx={{
-                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.white'
                                                     }}
                                                 >
                                                     {showPassword ? <VisibilityOutlinedIcon /> : <VisibilityOff />}
@@ -358,7 +358,7 @@ const Register = () => {
                                             <InputAdornment position="start">
                                                 <LockOutlinedIcon
                                                     sx={{
-                                                        color: formik.values.rePassword === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.rePassword === "" ? 'text.secondary' : 'text.white'
                                                     }} />
                                             </InputAdornment>
                                         ),
@@ -368,7 +368,7 @@ const Register = () => {
                                                     onClick={() => setShowRePassword(!showRePassword)}
                                                     edge="end"
                                                     sx={{
-                                                        color: formik.values.rePassword === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.rePassword === "" ? 'text.secondary' : 'text.white'
                                                     }}
                                                 >
                                                     {showRePassword ? <VisibilityOutlinedIcon /> : <VisibilityOff />}

@@ -28,7 +28,7 @@ const AlertAuthMessage = (props) => {
                     direction="down"
                     in={props.open}
                     mountOnEnter
-                    unmountOnExit   
+                    unmountOnExit
                 >
                     <Alert
                         variant="filled"
@@ -38,7 +38,7 @@ const AlertAuthMessage = (props) => {
                             display: "flex",
                             alignItems: "center",
                             borderRadius: "10px",
-                            color: '#FAFAFA',
+                            color: 'text.white',
                             opacity: 0.9,
                             fontSize: '16px',
                         }}

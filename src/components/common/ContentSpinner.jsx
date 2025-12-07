@@ -12,17 +12,17 @@ const ContentSpinner = (props) => {
                 flexDirection: 'column',
                 minHeight: '80vh',
                 width: '100%',
-                backgroundColor: '#121314',
+                backgroundColor: 'background.main',
             }}
         >
             <CircularProgress
                 sx={{
-                    color: '#64748B',
+                    color: 'text.secondary',
                     marginBottom: 2,
                 }}
                 size={50}
             />
-            <Typography variant="body1" sx={{ color: '#64748B' }}>
+            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                 {props.text}
             </Typography>
         </Box>

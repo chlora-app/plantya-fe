@@ -11,6 +11,8 @@ const NonAuthLayout = ({ children }) => {
                 minHeight: '100vh',
                 p: 0,
                 m: 0,
+                bgcolor: 'background.main',
+                color: "text.white"
             }}
         >
             <Grid

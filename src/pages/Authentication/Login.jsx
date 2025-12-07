@@ -202,7 +202,7 @@ const Login = () => {
                                             <InputAdornment position="start">
                                                 <MailOutlineOutlinedIcon
                                                     sx={{
-                                                        color: formik.values.username === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.username === "" ? 'text.secondary' : 'text.white'
                                                     }}
                                                 />
                                             </InputAdornment>
@@ -237,7 +237,7 @@ const Login = () => {
                                             <InputAdornment position="start">
                                                 <LockOutlinedIcon
                                                     sx={{
-                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.white'
                                                     }} />
                                             </InputAdornment>
                                         ),
@@ -245,7 +245,7 @@ const Login = () => {
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     sx={{
-                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.primary'
+                                                        color: formik.values.password === "" ? 'text.secondary' : 'text.white'
                                                     }}
                                                     onClick={() => setShowPassword(!showPassword)}
                                                     edge="end"

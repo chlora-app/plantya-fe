@@ -8,7 +8,7 @@ const PageSpinner = (props) => {
             open={props.open}
             sx={{
                 zIndex: (theme) => theme.zIndex.drawer + 1,
-                color: "#fff",
+                color: "text.secondary",
                 flexDirection: "column",
                 backdropFilter: "blur(4px)",
                 backgroundColor: "rgba(0,0,0,0.3)",

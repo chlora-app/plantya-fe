@@ -74,12 +74,12 @@ const Header = (props) => {
             <AppBar
                 position="static"
                 sx={{
-                    backgroundColor: "background.default",
+                    backgroundColor: "background.main",
                     zIndex: theme.zIndex.drawer + 1,
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
                     height: props.headerHeight,
                     borderBottom: "1px solid",
-                    borderBottomColor: 'background.third'
+                    borderBottomColor: 'background.line'
                 }}
             >
                 <Toolbar
@@ -113,14 +113,14 @@ const Header = (props) => {
                                 borderRadius: '5px',
                                 backgroundColor: "background.secondary",
                                 border: "1px solid",
-                                borderColor: 'background.third',
+                                borderColor: 'background.line',
                                 transition: "left 0.3s ease",
                                 "&:hover": {
-                                    bgcolor: "background.default",
+                                    bgcolor: "background.main",
                                 }
                             }}
                         >
-                            <CodeIcon sx={{ color: "background.third" }} />
+                            <CodeIcon sx={{ color: "background.line" }} />
                         </IconButton>
 
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -173,7 +173,7 @@ const Header = (props) => {
                         >
                             <Divider
                                 orientation="vertical"
-                                sx={{ border: '1px solid', height: '100%', borderColor: 'background.third' }}
+                                sx={{ border: '1px solid', height: '100%', borderColor: 'background.line' }}
                             />
                         </Box>
                         <IconButton
@@ -207,22 +207,22 @@ const Header = (props) => {
                     }
                 }}
             >
-                <Box sx={{ px: 2, py: 2, borderBottom: "1px solid", textAlign: 'center', borderBottomColor:'background.third' }}>
+                <Box sx={{ px: 2, py: 2, borderBottom: "1px solid", textAlign: 'center', borderBottomColor: 'background.line', color: "text.white" }}>
                     <Box
                         component="img"
                         src="/GacorBang.jpg"
                         alt="Profile"
                         sx={{ width: 75, height: 75, borderRadius: "50%", objectFit: "cover", mb: 2 }}
                     />
-                    <Typography sx={{ fontSize: "1rem", fontWeight: 600}}>
+                    <Typography sx={{ fontSize: "1rem", fontWeight: 600 }}>
                         {userName}
                     </Typography>
-                    <Typography sx={{ fontSize: "0.9rem"}}>
+                    <Typography sx={{ fontSize: "0.9rem" }}>
                         {userRole}
                     </Typography>
                 </Box>
 
-                <List sx={{ display: 'flex', p: 0 }}>
+                <List sx={{ display: 'flex', p: 0, color: 'text.white' }}>
                     <ListItemButton onClick={handleAccountInfo} sx={{ flex: 1, borderRadius: 1, m: 1 }}>
                         <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
                             <PersonOutlineOutlinedIcon />
