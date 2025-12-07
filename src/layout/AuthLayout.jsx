@@ -145,7 +145,7 @@ const AuthLayout = (props) => {
                     }
                 }}
             >
-                <CodeIcon sx={{ color: "background.third" }} />
+                <CodeIcon sx={{ color: "text.secondary" }} />
             </IconButton>
 
         </Box >
