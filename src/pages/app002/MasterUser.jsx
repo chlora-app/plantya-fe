@@ -1,27 +1,79 @@
-import { Paper, Container, Box } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Paper, Container, Box, Typography, Grid } from "@mui/material";
 import { Button, Alert, Row, Col, Form } from "reactstrap";
+import RootPageCustom from "../../components/common/RootPageCustom";
 
 const MasterUser = () => {
+
+    const [firstRender, setFirstRender] = useState(false)
+    const [app002p01Page, setApp002p01Page] = useState(true);
+
+    const [app002Msg, setApp002setMsg] = useState("");
+    const [app002MsgStatus, setApp002setMsgStatus] = useState("");
+
     return (
         <React.Fragment>
-            <Container
-                sx={{
-                    bgcolor: 'background.default'
-                }}
-                // className="bg-secondary p-0"
-                maxWidth={false} // Menghilangkan batasan lebar
+            <RootPageCustom
+                msgStateGet={app002Msg}
+                msgStateSet={setApp002setMsg}
+                msgStateGetStatus={app002MsgStatus}
+                setFirstRender={setFirstRender}
             >
-                <Box style={{ height: '120vh' }} sx={{ bgcolor: 'background.paper' }}>
-                    <Col>
-                        {/* <Alert color="primary">Tab 🎉</Alert> */}
-                        <Alert color="">Master User</Alert>
-                        <Button color="success">User Page</Button>
-                    </Col>
-                </Box>
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                        display: app002p01Page ? "block" : "none",
+                        bgcolor: 'secondary.main'
+                    }}
+                >
+                    <Typography variant="h4" gutterBottom>
+                        Master User
+                    </Typography>
+                    <Typography>
+                        Ini adalah contoh bagaimana menggunakan komponen AlertMessage yang Anda buat.
+                    </Typography>
+
+                    <Grid container spacing={2} sx={{ mt: 3 }}>
+                        <Grid >
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={() => {
+                                    setApp002setMsg("Data berhasil disimpan!")
+                                    setApp002setMsgStatus("success")
+                                }}
+                            >
+                                Tampilkan Alert Sukses
+                            </Button>
+                        </Grid>
+                        <Grid >
+                            <Button
+                                variant="contained"
+                                color="danger"
+                                onClick={() => {
+                                    setApp002setMsg("Terjadi kesalahan pada server!")
+                                    setApp002setMsgStatus("error")
+                                }}
+                            >
+                                Tampilkan Alert Error
+                            </Button>
+                        </Grid>
+                        <Grid >
+                            <Button
+                                variant="contained"
+                                color="warning"
+                                onClick={() => {
+                                    setApp002setMsg("Warning  pada server!");
+                                    setApp002setMsgStatus("warning")
+                                }}                        >
+                                Tampilkan Alert Warning
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Container>
 
 
-            </Container>
+            </RootPageCustom>
         </React.Fragment>
     );
 }
