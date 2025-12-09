@@ -14,8 +14,34 @@ const MasterUser = () => {
 
     // --- TAMBAHKAN STATE UNTUK TABEL ---
     // 4. State untuk data dan pencarian tabel
-    const [app002UserData, setApp002UserData] = useState([]);
-    const [app002UserTotal, setApp002UserTotal] = useState(0);
+    const [app002UserData, setApp002UserData] = useState({
+        data: {
+            user: [
+                {
+                    id: 1,
+                    name: "John Doe",
+                    email: "john@example.com",
+                    role: "Admin",
+                    createdAt: "2025-01-05"
+                },
+                {
+                    id: 2,
+                    name: "Sarah Tan",
+                    email: "sarah@example.com",
+                    role: "User",
+                    createdAt: "2025-01-07"
+                },
+                {
+                    id: 3,
+                    name: "Michael Lee",
+                    email: "michael@example.com",
+                    role: "Manager",
+                    createdAt: "2025-01-09"
+                }
+            ],
+            total: 3
+        },
+    });
 
     const [app002p01TableSearch, setApp002p01TableSearch] = useState({
         page: 1,
@@ -113,32 +139,15 @@ const MasterUser = () => {
     // 5. Definisi kolom, mirip dengan yang Anda lakukan di komponen Grade
     const app002UserColumns = [
         {
-            dataField: "action",
-            text: "Aksi",
-            headerStyle: { textAlign: 'center', width: '100px' },
-            formatter: (cellContent, row) => (
-                <div style={{ justifyContent: 'center' }} className="d-flex gap-3">
-                    <i className="mdi mdi-pencil font-size-18 text-primary" style={{ cursor: 'pointer' }} onClick={() => console.log('Edit user:', row)} />
-                    <i className="mdi mdi-delete font-size-18 text-danger" style={{ cursor: 'pointer' }} onClick={() => console.log('Delete user:', row)} />
-                </div>
-            ),
-        },
-        {
-            dataField: "userId",
-            text: "ID User",
+            dataField: "id",
+            text: "User ID",
             sort: true,
             align: "center",
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "userName",
-            text: "Nama User",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "email",
-            text: "Email",
+            dataField: "name",
+            text: "Username",
             sort: true,
             headerStyle: { textAlign: 'center' },
         },
@@ -150,7 +159,13 @@ const MasterUser = () => {
             headerStyle: { textAlign: 'center' },
         },
         {
-            dataField: "isActive",
+            dataField: "email",
+            text: "Email",
+            sort: true,
+            headerStyle: { textAlign: 'center' },
+        },
+        {
+            dataField: "status",
             text: "Status",
             sort: true,
             align: "center",
@@ -160,6 +175,17 @@ const MasterUser = () => {
                     {cell ? 'Active' : 'Inactive'}
                 </span>
             )
+        },
+        {
+            dataField: "action",
+            text: "Action",
+            headerStyle: { textAlign: 'center', width: '100px' },
+            formatter: (cellContent, row) => (
+                <div style={{ justifyContent: 'center' }} className="d-flex gap-3">
+                    <i className="mdi mdi-pencil font-size-18 text-primary" style={{ cursor: 'pointer' }} onClick={() => console.log('Edit user:', row)} />
+                    <i className="mdi mdi-delete font-size-18 text-danger" style={{ cursor: 'pointer' }} onClick={() => console.log('Delete user:', row)} />
+                </div>
+            ),
         },
     ];
 
@@ -177,7 +203,9 @@ const MasterUser = () => {
                     </Typography>
 
                     {/* Bungkus dengan Paper agar lebih rapi */}
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', 
+                        bgcolor: 'background.default' 
+                        }}>
                         <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
                             <Grid item>
                                 <Typography variant="h6">Daftar User</Typography>
@@ -197,11 +225,11 @@ const MasterUser = () => {
                             appdata={app002UserData.data?.user || []}
                             // appdata={app028p01GradeData.data != null ? app028p01GradeData.data.grade : []}
                             // appdataTotal={app028p01GradeData.data != null ? app028p01GradeData.data.gradetotal : 0}
-                            appdataTotal={app002UserData.data?.usertotal || 0}
+                            appdataTotal={app002UserData.data?.total || 0}
                             searchSet={setApp002p01TableSearch}
                             searchGet={app002p01TableSearch}
                             setData={setApp002UserData}
-                            urlHelper={getUserListDummy}
+                        // urlHelper={getUserListDummy}
                         />
                     </Paper>
 

@@ -92,7 +92,7 @@ const Register = () => {
                     .oneOf([Yup.ref("password"), null], "Password do not match"),
             }),
 
-        onSubmit: async (values, { setSubmitting, resetForm }) => {
+        onSubmit: async (values) => {
             setSubmitting(true);
             setLoadingSpinner(true);
             setTextLoading("Processing...");

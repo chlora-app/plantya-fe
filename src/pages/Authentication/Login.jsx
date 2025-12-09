@@ -83,14 +83,15 @@ const Login = () => {
 
         onSubmit: async (values, { setSubmitting, resetForm }) => {
             // Default state and submit form
+            document.activeElement.blur();
             setSubmitting(true)
             setLoadingSpinner(true);
             setShowAlert(false)
             setMessage("");
 
             try {
-                // const response = await handleLogin(values)
-                const response = await handeLoginState(values)
+                const response = await handleLogin(values)
+                // const response = await handeLoginState(values)
 
                 login(response.data.data)
                 navigate("/")

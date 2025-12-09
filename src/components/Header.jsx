@@ -139,7 +139,7 @@ const Header = (props) => {
                                     fontWeight: 'light'
                                 }}
                             >
-                                Plantya - {userRole} User
+                                Plantya - Role {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
                             </Typography>
                         </Box>
                     </Box>
@@ -222,7 +222,7 @@ const Header = (props) => {
                         {userName}
                     </Typography>
                     <Typography sx={{ fontSize: "0.9rem" }}>
-                        {userRole}
+                        {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
                     </Typography>
                 </Box>
 
