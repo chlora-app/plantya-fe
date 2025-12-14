@@ -19,8 +19,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import IconButton from '@mui/material/IconButton';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import ListApi from "../../utils/ListApi";
 import AlertAuthMessage from "../../components/common/AlertAuthMessage";
+import { loginApi } from "../../utils/ListApi";
 
 const Login = () => {
     const { login } = useAuth();
@@ -33,12 +33,12 @@ const Login = () => {
 
     // Function Handle Login
     const handleLogin = async (values) => {
-        const response = await axiosInstance().post(ListApi.auth.login, {
+        debugger
+        const response = await loginApi({
             username_or_email: values.username,
             password: values.password
-        }, {
-            withCredentials: true,
         })
+        debugger
         return response
     }
 
@@ -90,8 +90,9 @@ const Login = () => {
             setMessage("");
 
             try {
-                // const response = await handleLogin(values)
-                const response = await handeLoginState(values)
+                debugger
+                const response = await handleLogin(values)
+                // const response = await handeLoginState(values)
 
                 login(response.data.data)
                 navigate("/")

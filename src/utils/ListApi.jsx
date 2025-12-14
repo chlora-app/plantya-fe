@@ -1,18 +1,13 @@
-const ListApi = {
-    // Authentication API
-    auth:
-    {
-        login: "/api/auth/login",
-        register: "/api/auth/register",
-        // logout: "/api/auth/logout",
-    },
+import axiosInstance from "./AxiosInstance";
 
-};
+// Login and Register
+export const loginApi = (res) => axiosInstance("auth").post("/api/auth/login", res, { withCredentials: true });
+export const registerApi = (res) => axiosInstance("auth").post("/api/auth/register", res, { withCredentials: true });
+// export const logoutApi = (res) => "/api/auth/logout";
 
-export default ListApi;
-
-
-// PAKAI EXPORT CONST (res => (res) api path)
-// PAKAI EXPORT CONST (res => (res) api path)
-// PAKAI EXPORT CONST (res => (res) api path)
-// PAKAI EXPORT CONST (res => (res) api path)
+// app002 - Master User
+export const getUser = (params, config = {}) =>
+    axiosInstance("management").get("/api/v1/users", {
+        params,
+        ...config
+    });

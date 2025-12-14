@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import AlertMessage from "./AlertMessage";
 
 const RootPageCustom = (props) => {
@@ -10,23 +10,16 @@ const RootPageCustom = (props) => {
         }
     }, [])
 
-
-
     return (
         <React.Fragment>
-            <Box
-                sx={{
-                    width: "100%",
-                }}
-            >
+            <Container disableGutters maxWidth={false}>
                 <AlertMessage
                     msg={props.msgStateGet}
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
                 {props.children}
-            </Box>
-
+            </Container>
         </React.Fragment>
     )
 }

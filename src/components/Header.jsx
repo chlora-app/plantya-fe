@@ -135,9 +135,9 @@ const Header = (props) => {
                             </Typography>
 
                             <Typography
-                                variant="body2"
+                                variant="subtitle2"
                                 sx={{
-                                    fontWeight: 'light'
+                                    fontWeight: 'medium'
                                 }}
                             >
                                 Plantya - Role {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
@@ -219,10 +219,10 @@ const Header = (props) => {
                         alt="Profile"
                         sx={{ width: 75, height: 75, borderRadius: "50%", objectFit: "cover", mb: 2 }}
                     />
-                    <Typography sx={{ fontSize: "1rem", fontWeight: 600 }}>
+                    <Typography variant="h6">
                         {userName}
                     </Typography>
-                    <Typography sx={{ fontSize: "0.9rem" }}>
+                    <Typography variant="body1">
                         {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
                     </Typography>
                 </Box>

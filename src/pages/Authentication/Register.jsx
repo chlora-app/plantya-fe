@@ -21,7 +21,7 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // import { textFieldCustom } from "../../themes/globalTheme"
-import ListApi from "../../utils/ListApi";
+import { registerApi } from "../../utils/ListApi";
 import PopupModal from "../../components/common/PopupModal";
 
 const Register = () => {
@@ -44,16 +44,12 @@ const Register = () => {
 
     // Function Handle Register
     const handleRegister = async (values) => {
-        const response = await axiosInstance().post(
-            ListApi.auth.register,
-            {
-                username: values.username,
-                email: values.email,
-                password: values.password,
-                confirm_password: values.rePassword
-            },
-            { withCredentials: true }
-        );
+        const response = await registerApi({
+            username: values.username,
+            email: values.email,
+            password: values.password,
+            confirm_password: values.rePassword
+        })
         return response;
     };
 
@@ -92,7 +88,8 @@ const Register = () => {
                     .oneOf([Yup.ref("password"), null], "Password do not match"),
             }),
 
-        onSubmit: async (values) => {
+        onSubmit: async (values, { setSubmitting, resetForm }) => {
+            debugger
             setSubmitting(true);
             setLoadingSpinner(true);
             setTextLoading("Processing...");

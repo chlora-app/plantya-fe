@@ -9,6 +9,8 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import globalTheme from './themes/globalTheme';
+import '@mdi/font/css/materialdesignicons.min.css';
+
 // ReactSession.setStoreType("localStorage");
 
 ReactDOM.createRoot(document.getElementById('root')).render(

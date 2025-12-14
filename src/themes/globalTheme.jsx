@@ -10,18 +10,8 @@ const baseColors = {
   black: '#16181A',
   deepBlack: '#121314',
   line: '#2c2e31',
-  yellow: "#ff8c00ff",
-
-  bgSidebar: '#2E4839',
-  bgHeader: '#FAFAFA  ',
-  bgContent: '#f0eff4',
-
-  textPrimary: '#000000',
-  textSecondary: '#FFFFFF',
-
   hover: '#1F1F1F',
-
-
+  yellow: "#ff8c00ff",
 };
 
 const globalTheme = createTheme({
@@ -30,7 +20,7 @@ const globalTheme = createTheme({
   },
   palette: {
     primary: {
-      main: baseColors.bgSidebar
+      main: baseColors.darkBlue
     },
     secondary: {
       main: baseColors.black,
@@ -49,14 +39,13 @@ const globalTheme = createTheme({
     },
 
     background: {
-      default: baseColors.bgHeader,
-      paper: baseColors.bgSidebar,
-      content: baseColors.bgContent,
+      default: baseColors.deepBlack,
+      paper: baseColors.black,
     },
 
     text: {
-      primary: baseColors.textPrimary,
-      secondary: baseColors.textSecondary,
+      primary: baseColors.white,
+      secondary: baseColors.grey,
     },
 
     action: {

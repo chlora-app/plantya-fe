@@ -1,194 +1,122 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Container, Box, Typography, Grid, Paper, Card, CardHeader, CardContent } from "@mui/material";
+import React, { useState, useEffect, useMemo, useCallback } from "react"; // Tambah useMemo
+import { Container, Box, Typography, Grid, Paper, Card, CardHeader, CardContent, TextField, IconButton } from "@mui/material";
 import { Button } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
+import { getUser } from "../../utils/ListApi";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MasterUser = () => {
 
+    const [app002Msg, setApp002setMsg] = useState("");
+    const [app002MsgStatus, setApp002setMsgStatus] = useState("");
     const [firstRender, setFirstRender] = useState(false)
     const [app002p01Page, setApp002p01Page] = useState(true);
 
-    const [app002Msg, setApp002setMsg] = useState("");
-    const [app002MsgStatus, setApp002setMsgStatus] = useState("");
+    // State untuk data akan tetap sama
+    const [app002p01UserData, setApp002p01UserData] = useState([]); // Akan menampung SEMUA data dari API
+    const [app002p01UserTotalData, setApp002p01UserTotalData] = useState(0) // Akan menampung total data
+    const [loading, setLoading] = useState(false);
 
-    // --- TAMBAHKAN STATE UNTUK TABEL ---
-    // 4. State untuk data dan pencarian tabel
-    const [app002UserData, setApp002UserData] = useState({
-        data: {
-            user: [
-                {
-                    id: 1,
-                    name: "John Doe",
-                    email: "john@example.com",
-                    role: "Admin",
-                    createdAt: "2025-01-05"
-                },
-                {
-                    id: 2,
-                    name: "Sarah Tan",
-                    email: "sarah@example.com",
-                    role: "User",
-                    createdAt: "2025-01-07"
-                },
-                {
-                    id: 3,
-                    name: "Michael Lee",
-                    email: "michael@example.com",
-                    role: "Manager",
-                    createdAt: "2025-01-09"
-                }
-            ],
-            total: 3
-        },
-    });
+    // State untuk parameter kontrol pagination dan sorting akan tetap sama
+    const [app002p01UserDataParam, setApp002p01UserDataParam] = useState(
+        {
+            page: 1,       // 1-based
+            limit: 10,
+            sort: "user_id",
+            order: "asc",
+        }
+    )
 
-    const [app002p01TableSearch, setApp002p01TableSearch] = useState({
-        page: 1,
-        limit: 10,
-        offset: 0,
-        sort: "userId",
-        order: "asc",
-        search: {
-            any: ""
-        },
-        render: true
-    });
+    // --- PERUBAHAN 1: GUNAKAN SATU useEffect UNTUK MENGAMBIL SEMUA DATA ---
+    // useEffect yang ini dihapus karena menyebabkan panggilan API berulang kali
+    // useEffect(() => {
+    //     getUserList();
+    // }, [app002p01UserDataParam]);
 
+    // Gunakan useEffect ini untuk mengambil data hanya sekali saat komponen dimuat
     useEffect(() => {
-        console.log('MasterUser: State app002UserData berubah:', app002UserData);
-    }, [app002UserData]);
+        fetchAllUsers();
+    }, []);
 
-    // --- BUAT FUNGSI API PALSU ---
-    // Ini adalah contoh `urlHelper`. Ganti dengan pemanggilan API asli Anda.
-    const getUserListDummy = useCallback(async (params) => {
-        console.log('MasterUser: getUserListDummy dipanggil dengan params:', params);
-        await new Promise(resolve => setTimeout(resolve, 500));
+    const fetchAllUsers = useCallback(async () => {
+        setLoading(true);
+        try {
+            // API dipanggil TANPA parameter untuk mendapatkan semua data
+            const response = await getUser({});
+            console.log(response);
+            const allData = response.data || response || []; // Sesuaikan dengan struktur response API Anda
+            setApp002p01UserData(allData);
+            setApp002p01UserTotalData(allData.length);
+        } catch (error) {
+            console.error("Gagal mengambil data:", error);
+            setApp002p01UserData([]);
+            setApp002p01UserTotalData(0);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
-        const allUsers = Array.from({ length: 85 }, (_, i) => ({
-            userId: i + 1, userName: `User ${i + 1}`, email: `user${i + 1}@example.com`,
-            role: i % 3 === 0 ? 'Admin' : 'User', isActive: i % 2 === 0,
-        }));
+    // --- PERUBAHAN 2: GUNAKAN useMemo UNTUK MEMPROSES DATA DI CLIENT-SIDE ---
+    // Hook ini akan mengurutkan dan memotong data sesuai dengan parameter yang ada
+    const processedData = useMemo(() => {
+        let sortedData = [...app002p01UserData]; // Buat salinan agar tidak mengubah state asli
 
-        // --- PERBAIKAN: Tambahkan pengecekan aman untuk `params.search` ---
-        const searchTerm = params.search?.any || ''; // Jika params.search atau params.search.any tidak ada, gunakan string kosong
-
-        const filteredUsers = allUsers.filter(user =>
-            user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
-        // ... sisanya tetap sama
-        const sortedUsers = filteredUsers.sort((a, b) => {
-            if (a[params.sort] < b[params.sort]) return params.order === 'asc' ? -1 : 1;
-            if (a[params.sort] > b[params.sort]) return params.order === 'asc' ? 1 : -1;
+        // 1. Lakukan sorting
+        sortedData.sort((a, b) => {
+            const valA = a[app002p01UserDataParam.sort];
+            const valB = b[app002p01UserDataParam.sort];
+            if (valA < valB) return app002p01UserDataParam.order === 'asc' ? -1 : 1;
+            if (valA > valB) return app002p01UserDataParam.order === 'asc' ? 1 : -1;
             return 0;
         });
 
-        const paginatedUsers = sortedUsers.slice(params.offset, params.offset + params.limit);
+        // 2. Lakukan pagination (slice)
+        const startIndex = (app002p01UserDataParam.page - 1) * app002p01UserDataParam.limit;
+        const endIndex = startIndex + app002p01UserDataParam.limit;
+        return sortedData.slice(startIndex, endIndex);
 
-        const response = {
-            status: "0",
-            message: "Success (Dummy Data)",
-            data: { user: paginatedUsers, usertotal: filteredUsers.length }
-        };
+    }, [app002p01UserData, app002p01UserDataParam]); // Akan dihitung ulang jika data atau parameter berubah
 
-        console.log('MasterUser: getUserListDummy akan mengembalikan:', response);
-        return response;
-    }, []);
+    // --- Handler untuk mengubah state akan tetap sama ---
+    const handleChangePage = (event, newPage) => {
+        setApp002p01UserDataParam(prevParams => ({ ...prevParams, page: newPage + 1 }));
+    };
 
-    // const getUserList = async (params) => {
-    //     console.log('Mengambil data user dengan params:', params);
-    //     // Simulasi delay network
-    //     await new Promise(resolve => setTimeout(resolve, 1000));
+    const handleChangeRowsPerPage = (event) => {
+        const newLimit = parseInt(event.target.value, 10);
+        setApp002p01UserDataParam(prevParams => ({ ...prevParams, limit: newLimit, page: 1 }));
+    };
 
-    //     // Data palsu
-    //     const allUsers = Array.from({ length: 85 }, (_, i) => ({
-    //         userId: i + 1,
-    //         userName: `User ${i + 1}`,
-    //         email: `user${i + 1}@example.com`,
-    //         role: i % 3 === 0 ? 'Admin' : 'User',
-    //         isActive: i % 2 === 0,
-    //     }));
+    const handleRequestSort = (event, property) => {
+        const isAsc = app002p01UserDataParam.sort === property && app002p01UserDataParam.order === 'asc';
+        setApp002p01UserDataParam(prevParams => ({
+            ...prevParams,
+            sort: property,
+            order: isAsc ? 'desc' : 'asc',
+            page: 1
+        }));
+    };
 
-    //     // Simulasi filter
-    //     const filteredUsers = allUsers.filter(user =>
-    //         user.userName.toLowerCase().includes(params.search.any.toLowerCase())
-    //     );
-
-    //     // Simulasi sorting
-    //     const sortedUsers = filteredUsers.sort((a, b) => {
-    //         if (a[params.sort] < b[params.sort]) return params.order === 'asc' ? -1 : 1;
-    //         if (a[params.sort] > b[params.sort]) return params.order === 'asc' ? 1 : -1;
-    //         return 0;
-    //     });
-
-    //     // Simulasi pagination
-    //     const paginatedUsers = sortedUsers.slice(params.offset, params.offset + params.limit);
-
-    //     return {
-    //         status: "0",
-    //         message: "Success",
-    //         data: {
-    //             user: paginatedUsers,
-    //             usertotal: filteredUsers.length
-    //         }
-    //     };
-    // };
-
-    // --- DEFINISIKAN KOLOM TABEL ---
-    // 5. Definisi kolom, mirip dengan yang Anda lakukan di komponen Grade
+    // --- DEFINISIKAN KOLOM TABEL (Tetap Sama) ---
     const app002UserColumns = [
+        { dataField: "user_id", text: "User ID", sort: true, align: "center", headerStyle: { textAlign: 'center' } },
+        { dataField: "name", text: "Username", sort: true, headerStyle: { textAlign: 'center' } },
+        { dataField: "role", text: "Role", sort: true, align: "center", headerStyle: { textAlign: 'center' } },
+        { dataField: "email", text: "Email", sort: true, headerStyle: { textAlign: 'center' } },
         {
-            dataField: "id",
-            text: "User ID",
-            sort: true,
-            align: "center",
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "name",
-            text: "Username",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "role",
-            text: "Role",
-            sort: true,
-            align: "center",
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "email",
-            text: "Email",
-            sort: true,
-            headerStyle: { textAlign: 'center' },
-        },
-        {
-            dataField: "status",
-            text: "Status",
-            sort: true,
-            align: "center",
-            headerStyle: { textAlign: 'center' },
-            formatter: (cell) => (
-                <span className={`badge ${cell ? 'bg-success' : 'bg-danger'}`}>
-                    {cell ? 'Active' : 'Inactive'}
-                </span>
-            )
-        },
-        {
-            dataField: "action",
-            text: "Action",
-            headerStyle: { textAlign: 'center', width: '100px' },
+            dataField: "action", text: "Action", headerStyle: { textAlign: 'center', width: '120px' },
             formatter: (cellContent, row) => (
-                <div style={{ justifyContent: 'center' }} className="d-flex gap-3">
-                    <i className="mdi mdi-pencil font-size-18 text-primary" style={{ cursor: 'pointer' }} onClick={() => console.log('Edit user:', row)} />
-                    <i className="mdi mdi-delete font-size-18 text-danger" style={{ cursor: 'pointer' }} onClick={() => console.log('Delete user:', row)} />
-                </div>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+                    <IconButton aria-label="edit" size="small" onClick={() => console.log('Edit user:', row)} color="info"><EditIcon fontSize="inherit" /></IconButton>
+                    <IconButton aria-label="delete" size="small" onClick={() => console.log('Delete user:', row)} color="error"><DeleteIcon fontSize="inherit" /></IconButton>
+                </Box>
             ),
         },
     ];
 
+    // --- PERUBAHAN 3: KIRIM DATA YANG SUDAH DIPROSES KE TABEL ---
     return (
         <React.Fragment>
             <RootPageCustom
@@ -197,74 +125,37 @@ const MasterUser = () => {
                 msgStateGetStatus={app002MsgStatus}
                 setFirstRender={setFirstRender}
             >
-                <Container
-                    disableGutters
-                    maxWidth="xl" sx={{
-                        display: app002p01Page ? "block" : "none",
-                        // backgroundColor:'red'
-                    }}
-
-                >
-                    {/* <Paper
-                        elevation={4}
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            borderRadius: '10px',
-                            flexDirection: 'column',
-                            bgcolor: 'background.default',
-                            // backgroundColor:'none'
-                        }}> */}
-                    <Card sx={{
-                        bgcolor: 'background.default',
-                        color: 'text.secondary'
-                    }}>
-                        <CardHeader
-                            sx={{ backgroundColor: 'background.paper', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}
-                            title="Master User"
-                        />
-
-                        {/* Bungkus dengan Paper agar lebih rapi */}
-                        <CardContent sx={{
-                            bgcolor: '',
-                            color: 'text.primary'
-                        }}>
-                            <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                                <Grid item>
-                                    <Typography variant="h6">Filtering</Typography>
-                                </Grid>
-                        
-                            </Grid>
-                            <Grid container justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
-                                <Grid item>
-                                    <Typography variant="h6">Daftar User</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="contained" color="primary">
-                                        <i className="bx bx-plus font-size-16 align-middle me-2"></i>
-                                        Tambah User
-                                    </Button>
+                <Container disableGutters maxWidth={false} sx={{ display: app002p01Page ? "block" : "none" }}>
+                    <Card sx={{ bgcolor: 'background.default', color: 'text.primary' }}>
+                        <CardHeader sx={{ backgroundColor: 'background.paper', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }} title="Master User" />
+                        <CardContent sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
+                            <Grid container justifyContent="start" alignItems="center" sx={{ mb: 2 }}>
+                                <Grid justifyContent="start" alignItems="center" sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+                                    <TextField placeholder="Search" sx={{ width: '200px' }} />
+                                    <TextField placeholder="Role" sx={{ width: '200px' }} />
+                                    <Button variant="contained" color="primary"><i className="bx bx-plus font-size-16 align-end me-2"></i>Export</Button>
+                                    <Button variant="contained" color="primary"><i className="bx bx-plus font-size-16 align-end me-2"></i>Tambah User</Button>
                                 </Grid>
                             </Grid>
 
-                            {/* 6. Gunakan komponen TableCustomMUI */}
                             <TableCustom
-                                keyField="userId"
+                                keyField="user_id"
                                 columns={app002UserColumns}
-                                appdata={app002UserData.data?.user || []}
-                                // appdata={app028p01GradeData.data != null ? app028p01GradeData.data.grade : []}
-                                // appdataTotal={app028p01GradeData.data != null ? app028p01GradeData.data.gradetotal : 0}
-                                appdataTotal={app002UserData.data?.total || 0}
-                                searchSet={setApp002p01TableSearch}
-                                searchGet={app002p01TableSearch}
-                                setData={setApp002UserData}
-                            // urlHelper={getUserListDummy}
+                                // Gunakan processedData yang sudah di-sort dan di-paginate
+                                appdata={processedData}
+                                // Total data adalah SELURUH data yang ada di app002p01UserData
+                                appdataTotal={app002p01UserTotalData}
+                                loading={loading}
+                                page={app002p01UserDataParam.page - 1}
+                                rowsPerPage={app002p01UserDataParam.limit}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                sortField={app002p01UserDataParam.sort}
+                                sortOrder={app002p01UserDataParam.order}
+                                onRequestSort={handleRequestSort}
                             />
                         </CardContent>
                     </Card>
-                    {/* </Paper> */}
-
-                    {/* Bagian untuk tombol alert bisa dipindahkan ke bawah atau dihapus jika tidak perlu */}
                 </Container>
             </RootPageCustom>
         </React.Fragment >

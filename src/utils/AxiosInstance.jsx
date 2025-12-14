@@ -20,22 +20,37 @@ const checkExpiredToken = (key) => {
 
 // Function Helper Axios
 
-const ENV = import.meta.env.VITE_ENV;
+const ENV = import.meta.env.VITE_ENV || "local";
 
 const BASE_URL = {
-    local: import.meta.env.VITE_BASE_URL_LOCAL,
+    local: {
+        auth: import.meta.env.VITE_BASE_URL_LOCAL,
+        management: import.meta.env.VITE_BASE_URL_LOCAL2,
+    },
     dev: import.meta.env.VITE_BASE_URL_DEV,
     prod: import.meta.env.VITE_BASE_URL_PROD
 };
 
-const axiosInstance = (additionalConfig = {}) => {
+const axiosInstance = (service, additionalConfig = {}) => {
+    debugger
     const token = checkExpiredToken("token");
 
+    const baseURL = typeof BASE_URL[ENV] === "object" ? BASE_URL[ENV][service] : BASE_URL[ENV];
+
+    const serviceHeaders = {
+        auth: {
+            "Content-Type": "application/json",
+        },
+        management: {
+            "Accept": "application/json",
+        },
+    };
+
     return axios.create({
-        baseURL: BASE_URL[ENV],
+        baseURL,
         headers: {
             ...(token && { Authorization: `Bearer ${token}` }),
-            "Content-Type": "application/json",
+            ...(serviceHeaders[service] || {}),
         },
         ...additionalConfig,
     });
