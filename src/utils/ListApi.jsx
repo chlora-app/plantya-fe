@@ -6,8 +6,4 @@ export const registerApi = (res) => axiosInstance("auth").post("/api/auth/regist
 // export const logoutApi = (res) => "/api/auth/logout";
 
 // app002 - Master User
-export const getUser = (params, config = {}) =>
-    axiosInstance("management").get("/api/users", {
-        params,
-        ...config
-    });
+export const getUser = (params, config = {}) => axiosInstance("management").get("/api/users", { params, ...config });

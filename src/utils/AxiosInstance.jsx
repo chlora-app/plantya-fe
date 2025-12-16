@@ -32,7 +32,6 @@ const BASE_URL = {
 };
 
 const axiosInstance = (service, additionalConfig = {}) => {
-    debugger
     const token = checkExpiredToken("token");
 
     const baseURL = typeof BASE_URL[ENV] === "object" ? BASE_URL[ENV][service] : BASE_URL[ENV];

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Container, Box, Typography, Grid, Paper, Card, CardHeader, CardContent, TextField, IconButton, Stack, Select, MenuItem } from "@mui/material";
+import { Container, Box, Typography, Grid, Paper, Card, CardHeader, CardContent, TextField, IconButton, Stack, Select, MenuItem, Autocomplete } from "@mui/material";
 import { Button } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
 import { getUser } from "../../utils/ListApi";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Icon } from "@iconify/react";
 
 const MasterUser = () => {
     const [firstRender, setFirstRender] = useState(false)
@@ -51,25 +52,24 @@ const MasterUser = () => {
 
     // Call API
     useEffect(() => {
-        setApp002p01UserData([])
-        setApp002p01UserTotalData(0)
+
         getAllUser();
     }, [app002p01UserDataParam]);
 
     const getAllUser = useCallback(async () => {
         setLoadingData(true);
+        setApp002p01UserData([]);
+        setApp002p01UserTotalData(0);
+        setTotalPage(0);
         try {
             const response = await getUser(app002p01UserDataParam);
             if (response?.data) {
                 setApp002p01UserData(response?.data?.data ? response.data.data : []);
                 setApp002p01UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
-                setTotalPage(response.data.total_pages);
+                setTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
             }
         } catch (error) {
             console.error("Gagal mengambil data:", error);
-            setApp002p01UserData([]);
-            setApp002p01UserTotalData(0);
-            setTotalPage(1);
 
         } finally {
             setLoadingData(false);
@@ -104,25 +104,43 @@ const MasterUser = () => {
     // Search and Filtering
     const [role, setRole] = useState("")
     const roleOptions = [
-        { value: "", label: "All" },
         { value: "ADMIN", label: "Admin" },
         { value: "USER", label: "User" },
         { value: "STAFF", label: "Staff" },
     ];
-
     const handleRoleChange = (event) => {
         debugger
         setRole(event.target.value)
+        setSearch("")
+    }
 
+    useEffect(() => {
         setApp002p01UserDataParam(prev => ({
             ...prev,
             "page": 1,
             "size": 10,
             "sort": "",
             "order": "asc",
-            "role": event.target.value
+            "role": role,
+            "search": ""
         }))
-    }
+    }, [role])
+
+    const [search, setSearch] = useState("")
+    const handleSearchInputChange = (event) => {
+        setSearch(event.target.value);
+    };
+    const updateSearch = () => {
+        setApp002p01UserDataParam(prev => ({
+            ...prev,
+            "page": 1,
+            "size": 10,
+            "sort": "",
+            "order": "asc",
+            "search": search
+        }));
+    };
+
 
     return (
         <React.Fragment>
@@ -138,33 +156,59 @@ const MasterUser = () => {
                         <Box>
                             <Grid container justifyContent="start" alignItems="center" sx={{ mb: 2 }}>
                                 <Grid justifyContent="start" alignItems="center" sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                                    <TextField placeholder="Search" sx={{ width: '200px' }} />
-
-                                    <Select
-                                        value={role}
-                                        onChange={handleRoleChange}
-                                        displayEmpty
-                                        renderValue={(selected) => {
-                                            if (selected === "") {
-                                                return "Role";
+                                    <TextField
+                                        placeholder="Search"
+                                        value={search}
+                                        onChange={handleSearchInputChange}
+                                        onKeyDown={(event) => {
+                                            if (event.key === 'Enter') {
+                                                updateSearch()
                                             }
-                                            const selectedOption = roleOptions.find((opt) => opt.value === selected);
-                                            return selectedOption ? selectedOption.label : "";
                                         }}
-                                        sx={{
-                                            height: 40,
-                                            minWidth: 100,
-                                            fontSize: 14,
-                                            color: 'text.secondary',
-                                            '& .MuiSelect-select': { padding: '4px 10px' }
+                                        size="small"
+                                        sx={{ width: '200px' }}
+                                        slotProps={{
+                                            input: {
+                                                endAdornment: (
+                                                    <IconButton
+                                                        aria-label="search button"
+                                                        onClick={updateSearch} // Panggil fungsi triggerSearch
+                                                        edge="end"
+                                                        size="small"
+                                                    >
+                                                        <Icon icon="mdi:magnify" width={20} />
+                                                    </IconButton>
+                                                ),
+                                            }
                                         }}
-                                    >
-                                        {roleOptions.map((obj) => (
-                                            <MenuItem key={obj.value} value={obj.value}>
-                                                {obj.label}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                    />
+
+                                    <Autocomplete
+                                        options={roleOptions}
+                                        getOptionLabel={(option) => option.label}
+                                        value={roleOptions.find((opt) => opt.value === role) || null}
+                                        onChange={(event, newValue) => {
+                                            handleRoleChange({
+                                                target: { value: newValue ? newValue.value : "" }
+                                            });
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                placeholder="Role"
+                                                size="small"
+                                                sx={{
+                                                    '& .MuiInputBase-root': {
+                                                        height: 40,
+                                                        fontSize: 14
+                                                    }
+                                                }}
+                                            />
+                                        )}
+                                        isOptionEqualToValue={(opt, val) => opt.value === val.value}
+                                        clearOnEscape
+                                    />
+
 
                                     <Button variant="contained" color="primary"><i className="bx bx-plus font-size-16 align-end me-2"></i>Export</Button>
                                     <Button variant="contained" color="primary"><i className="bx bx-plus font-size-16 align-end me-2"></i>Tambah User</Button>

@@ -21,7 +21,6 @@ import {
     MenuItem,
 } from "@mui/material";
 import { Icon } from '@iconify/react';
-import ContentSpinner from "./ContentSpinner";
 
 
 
@@ -81,16 +80,16 @@ const TableCustom = (props) => {
 
 
 
-    // const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    //     [`&.${tableCellClasses.head}`]: {
-    //         color: theme.palette.text.primary,
-    //         backgroundColor: '#807d7dff',
-    //         borderBottom: `1px solid ${theme.palette.custom.line}`,
-    //     },
-    //     [`&.${tableCellClasses.body}`]: {
-    //         fontSize: 14,
-    //     },
-    // }));
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            color: theme.palette.text.primary,
+            backgroundColor: '#807d7dff',
+            borderBottom: `1px solid ${theme.palette.custom.line}`,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }));
 
     return (
         <>
@@ -99,27 +98,35 @@ const TableCustom = (props) => {
                     borderRadius: 2,
                     overflow: 'hidden',
                     border: '1px solid',
+                    borderColor: 'custom.line',
                     position: 'relative'
                 }}
             >
 
-                {props.loadingData && (
-                    <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.7)', zIndex: 1 }}>
-                        <ContentSpinner text={'Loading...'} />
-                    </Box>
-                )}
                 <Table
                     size="small"
                     aria-label="a dense table"
                     sx={{
+                        border: 'none'
                     }}
                 >
                     <TableHead
                         sx={{
-                            bgcolor: 'background.tableHead'
+                            bgcolor: 'background.tableHead',
+                            border: '1px solid',
+                            borderColor: 'custom.line',
+                            borderBottom: '1px solid',  // Add this line
+                            borderBottomColor: 'custom.line'  // Add this line
                         }}
                     >
-                        <TableRow>
+                        <TableRow
+                            sx={{
+                                border: '1px solid',
+                                borderColor: 'custom.line',
+                                borderBottom: 'none'
+
+                            }}
+                        >
                             {props.columns.map((column) => (
                                 <TableCell
                                     key={column.dataField}
@@ -127,6 +134,9 @@ const TableCustom = (props) => {
                                     style={{ ...column.headerStyle }}
                                     sortDirection={sortField === column.dataField ? sortOrder : false}
                                     size="medium"
+                                    sx={{
+                                        borderBottom: 'none'
+                                    }}
                                 >
                                     {column.sort ? (
                                         <TableSortLabel
@@ -164,7 +174,7 @@ const TableCustom = (props) => {
                                         <TableCell
                                             key={column.dataField}
                                             align={column.align || 'left'}
-                                            sx={{ borderBottom: 'none' }}
+                                            sx={{ borderBottom: 'none', borderTop: 'none' }}
                                             size="small"
                                             padding="normal"
                                         >
@@ -215,7 +225,7 @@ const TableCustom = (props) => {
                         "& .MuiPaginationItem-root": {
                             borderRadius: 2,
                             border: "1px solid",
-                            borderColor: "divider",
+                            borderColor: 'custom.line',
                             minWidth: 36,
                             height: 36,
                             fontWeight: 500,
@@ -226,7 +236,7 @@ const TableCustom = (props) => {
                         "& .Mui-selected": {
                             bgcolor: "primary.main",
                             color: "primary.contrastText",
-                            borderColor: "primary.main",
+                            borderColor: 'custom.line',
                             "&:hover": {
                                 bgcolor: "primary.dark",
                             },
