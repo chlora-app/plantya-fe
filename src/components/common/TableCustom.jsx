@@ -1,6 +1,6 @@
 // src/components/common/TableCustom.jsx
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { styled } from '@mui/material/styles';
 import PropTypes from "prop-types";
 import { tableCellClasses } from '@mui/material/TableCell';
@@ -27,6 +27,25 @@ import chevronRight from '@iconify/icons-mdi/chevron-right';
 import sortUp from "@iconify/icons-fa/sort-up";
 import sortDown from "@iconify/icons-fa/sort-down";
 import sort from "@iconify/icons-fa/sort";
+
+// Pindahkan StyledTableCell ke luar komponen agar tidak dibuat ulang setiap render
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.tableHead,
+        borderBottom: `1px solid ${theme.palette.custom.line}`,
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        padding: '8px 16px',
+    },
+    [`&.${tableCellClasses.body}`]: {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        padding: '8px 16px',
+    },
+}));
 
 const TableCustom = (props) => {
     const [page, setPage] = useState(props.page || 0)
@@ -84,26 +103,8 @@ const TableCustom = (props) => {
     const isFirstPage = page === 0;
     const isLastPage = page + 1 >= totalPages;
 
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
-        [`&.${tableCellClasses.head}`]: {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.background.tableHead,
-            borderBottom: `1px solid ${theme.palette.custom.line}`,
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            padding: '8px 16px',
-        },
-        [`&.${tableCellClasses.body}`]: {
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            padding: '8px 16px',
-        },
-    }));
-
-    // Fungsi untuk menampilkan nomor halaman
-    const renderPageNumbers = () => {
+    // Gunakan useMemo untuk komponen yang sering berubah
+    const renderPageNumbers = useMemo(() => {
         const maxVisiblePages = 3;
         let startPage, endPage;
 
@@ -160,7 +161,121 @@ const TableCustom = (props) => {
                 {pageNum}
             </Box>
         ));
-    };
+    }, [page, totalPages]);
+
+    // Optimasi render header columns dengan useMemo
+    const headerColumns = useMemo(() => {
+        return props.columns.map((column) => (
+            <StyledTableCell
+                key={column.dataField}
+                align={column.align || 'left'}
+                sx={{
+                    borderBottom: 'none',
+                    width: column.width || 'auto',
+                }}
+            >
+                {column.sort ? (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: column.align === 'center' ? 'center' :
+                                column.align === 'right' ? 'flex-end' : 'flex-start',
+                            gap: 0.5,
+                            cursor: 'pointer',
+                            userSelect: 'none',
+                            '&:hover': {
+                                color: 'primary.main',
+                                '& .sort-icon': {
+                                    color: 'primary.main',
+                                }
+                            }
+                        }}
+                        onClick={() => handleRequestSort(null, column.dataField)}
+                    >
+                        <Typography
+                            variant="body2"
+                            component="span"
+                            fontWeight="bold"
+                        >
+                            {column.text}
+                        </Typography>
+
+                        {/* Icon Sort Section */}
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            ml: 0.5,
+                            flexShrink: 0,
+                        }}>
+                            {sortField === column.dataField ? (
+                                sortOrder === 'asc' ? (
+                                    <Icon icon={sortUp} />
+                                ) : (
+                                    <Icon icon={sortDown} />
+                                )
+                            ) : (
+                                <Icon icon={sort} />
+                            )}
+                        </Box>
+                    </Box>
+                ) : (
+                    <Typography
+                        variant="body2"
+                        component="span"
+                        fontWeight="bold"
+                    >
+                        {column.text}
+                    </Typography>
+                )}
+            </StyledTableCell>
+        ));
+    }, [props.columns, sortField, sortOrder]);
+
+    // Optimasi render body rows dengan useMemo
+    const bodyRows = useMemo(() => {
+        if (props.appdata.length === 0 && !props.loadingData) {
+            return (
+                <TableRow>
+                    <StyledTableCell colSpan={props.columns.length} align="center">
+                        <Typography variant="body2">No records to display</Typography>
+                    </StyledTableCell>
+                </TableRow>
+            );
+        }
+
+        return props.appdata.map((row) => (
+            <TableRow
+                hover
+                role="checkbox"
+                tabIndex={-1}
+                key={row[props.keyField]}
+                sx={{
+                    borderBottom: '1px solid',
+                    borderColor: 'custom.line'
+                }}
+            >
+                {props.columns.map((column) => {
+                    const value = row[column.dataField];
+                    return (
+                        <StyledTableCell
+                            key={column.dataField}
+                            align={column.align || 'left'}
+                            sx={{
+                                borderBottom: 'none',
+                                borderTop: 'none',
+                                width: column.width || 'auto',
+                            }}
+                            size="small"
+                        >
+                            {column.formatter ? column.formatter(value, row) : value}
+                        </StyledTableCell>
+                    );
+                })}
+            </TableRow>
+        ));
+    }, [props.appdata, props.columns, props.keyField, props.loadingData]);
 
     return (
         <>
@@ -193,73 +308,7 @@ const TableCustom = (props) => {
                         }}
                     >
                         <TableRow>
-                            {props.columns.map((column) => (
-                                <StyledTableCell
-                                    key={column.dataField}
-                                    align={column.align || 'left'}
-                                    sx={{
-                                        borderBottom: 'none',
-                                        width: column.width || 'auto',
-                                    }}
-                                >
-                                    {column.sort ? (
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: column.align === 'center' ? 'center' :
-                                                    column.align === 'right' ? 'flex-end' : 'flex-start',
-                                                gap: 0.5,
-                                                cursor: 'pointer',
-                                                userSelect: 'none',
-                                                '&:hover': {
-                                                    color: 'primary.main',
-                                                    '& .sort-icon': {
-                                                        color: 'primary.main',
-                                                    }
-                                                }
-
-                                            }}
-                                            onClick={() => handleRequestSort(null, column.dataField)}
-                                        >
-                                            <Typography
-                                                variant="body2"
-                                                component="span"
-                                                fontWeight="bold"
-                                            >
-                                                {column.text}
-                                            </Typography>
-
-                                            {/* Icon Sort Section */}
-                                            <Box sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                ml: 0.5,
-                                                flexShrink: 0,
-                                            }}>
-                                                {sortField === column.dataField ? (
-                                                    sortOrder === 'asc' ? (
-                                                        <Icon icon={sortUp} />
-                                                    ) : (
-                                                        <Icon icon={sortDown} />
-                                                    )
-                                                ) : (
-                                                    <Icon icon={sort} />
-                                                )}
-                                            </Box>
-                                        </Box>
-                                    ) : (
-                                        <Typography
-                                            variant="body2"
-                                            component="span"
-                                            fontWeight="bold"
-                                        >
-                                            {column.text}
-                                        </Typography>
-                                    )}
-                                </StyledTableCell>
-                            ))}
+                            {headerColumns}
                         </TableRow>
                     </TableHead>
 
@@ -268,48 +317,12 @@ const TableCustom = (props) => {
                             bgcolor: 'background.paper'
                         }}
                     >
-                        {props.appdata.map((row) => (
-                            <TableRow
-                                hover
-                                role="checkbox"
-                                tabIndex={-1}
-                                key={row[props.keyField]}
-                                sx={{
-                                    borderBottom: '1px solid',
-                                    borderColor: 'custom.line'
-                                }}>
-
-                                {props.columns.map((column) => {
-                                    const value = row[column.dataField];
-                                    return (
-                                        <StyledTableCell
-                                            key={column.dataField}
-                                            align={column.align || 'left'}
-                                            sx={{
-                                                borderBottom: 'none',
-                                                borderTop: 'none',
-                                                width: column.width || 'auto',
-                                            }}
-                                            size="small"
-                                        >
-                                            {column.formatter ? column.formatter(value, row) : value}
-                                        </StyledTableCell>
-                                    );
-                                })}
-                            </TableRow>
-                        ))}
-                        {props.appdata.length === 0 && !props.loadingData && (
-                            <TableRow>
-                                <StyledTableCell colSpan={props.columns.length} align="center">
-                                    <Typography variant="body2">No records to display</Typography>
-                                </StyledTableCell>
-                            </TableRow>
-                        )}
+                        {bodyRows}
                     </TableBody>
                 </Table>
             </TableContainer>
 
-             <Box sx={{
+            <Box sx={{
                 display: "flex",
                 flexDirection: { xs: 'column', lg: 'row' },
                 alignItems: "center",
@@ -387,7 +400,7 @@ const TableCustom = (props) => {
 
                     {/* Page Numbers */}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                        {renderPageNumbers()}
+                        {renderPageNumbers}
                     </Box>
 
                     {/* Next Page Button (>) */}
@@ -494,5 +507,6 @@ TableCustom.propTypes = {
     sortOrder: PropTypes.string,
     onRequestSort: PropTypes.func,
 };
+
 
 export default TableCustom;

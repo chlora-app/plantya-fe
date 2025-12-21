@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Icon } from "@iconify/react";
 import plusIcon from "@iconify/icons-mdi/plus";
 import magnifyIcon from "@iconify/icons-mdi/magnify";
+import MasterUserAdd from "./MasterUserAdd";
 
 
 
@@ -23,6 +24,8 @@ const MasterUser = () => {
     const [totalPage, setTotalPage] = useState(0)
     const [search, setSearch] = useState("")
     const [role, setRole] = useState("")
+
+    const [modalAdd, setModalAdd] = useState(false);
 
     // Get All Param
     const [app002p01UserDataParam, setApp002p01UserDataParam] = useState(
@@ -154,6 +157,10 @@ const MasterUser = () => {
             page: 1,
             search: search
         }));
+    }
+
+    const handleModalAdd = () => {
+        setModalAdd(true)
     }
 
 
@@ -306,6 +313,7 @@ const MasterUser = () => {
                                             opacity: 0.9,
                                         },
                                     }}
+                                    onClick={() => { handleModalAdd }}
                                 >
                                     Add User
                                 </Button>
@@ -339,6 +347,12 @@ const MasterUser = () => {
 
                     </Stack>
                 </Container>
+
+                <MasterUserAdd
+                    modalAdd={modalAdd}
+                >
+                </MasterUserAdd>
+
             </RootPageCustom>
         </React.Fragment >
     );
