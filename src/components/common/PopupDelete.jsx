@@ -11,6 +11,12 @@ const PopupDelete = (props) => {
         props.setModalDeleteOpen(false);
     }
 
+    const handleDelete = () => {
+        if (props.onDelete) {
+            props.onDelete()
+        }
+    }
+
     return (
         <React.Fragment>
             <Dialog
@@ -28,11 +34,16 @@ const PopupDelete = (props) => {
                     }
                 }}
             >
+                <FormSpinner
+                    open={props.loadingDelete}
+                    text={'Processing...'}
+                />
                 <DialogTitle
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        // bgcolor: 'red'
                     }}
                 >
                     <ErrorIcon
@@ -50,68 +61,81 @@ const PopupDelete = (props) => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        // bgcolor: 'blue'
                     }}
                 >
                     <Stack
-                        spacing={2}
+                        spacing={1}
                         sx={{
-                            p: 2,
+                            p: 0,
                         }}>
 
-                        <DialogContentText
-                            textAlign={"center"}
-                            variant="h6"
-                            sx={{
-                                color: 'text.primary'
-                            }}>
-                            {props.headerMessageModal}
-                        </DialogContentText>
-
-                        <DialogContentText
-                            textAlign={"center"}
-                            variant="body2"
-                            sx={{
-                                color: 'text.primary'
-                            }}>
-                            {props.messageModal}
-                        </DialogContentText>
-
-
-                        <DialogActions sx={{ justifyContent: 'center', gap: 2, p: 0, px: 10 }}  >
-                            <Button
-                                color="main"
-                                variant="contained"
-                                fullWidth
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2,
+                        }}>
+                            <DialogContentText
+                                textAlign={"center"}
+                                variant="h6"
                                 sx={{
-                                    minHeight: '50px',
-                                    bgcolor: 'button.grey',
-                                    borderRadius: '15px',
-                                    '&:hover': {
+                                    color: 'text.primary',
+                                    // bgcolor: 'yellow'
+                                }}>
+                                {props.headerMessageModal}
+                            </DialogContentText>
+
+                            <DialogContentText
+                                textAlign={"center"}
+                                variant="body2"
+                                sx={{
+                                    color: 'text.primary',
+                                    // bgcolor: 'grey'
+
+                                }}>
+                                {props.messageModal}
+                            </DialogContentText>
+                        </Box>
+
+
+                        <Box>
+                            <DialogActions sx={{ justifyContent: 'center', gap: 2, p: 0, px: 10, mt: 4 }}  >
+                                <Button
+                                    color="main"
+                                    variant="contained"
+                                    fullWidth
+                                    sx={{
+                                        minHeight: '50px',
                                         bgcolor: 'button.grey',
-                                        opacity: 0.9,
-                                    },
-                                }}
-                                onClick={handleClose}
-                            >
-                                CANCEL
-                            </Button>
-                            <Button
-                                type="submit"
-                                color="error"
-                                variant="contained"
-                                fullWidth
+                                        borderRadius: '15px',
+                                        '&:hover': {
+                                            bgcolor: 'button.grey',
+                                            opacity: 0.9,
+                                        },
+                                    }}
+                                    onClick={handleClose}
+                                >
+                                    CANCEL
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    color="error"
+                                    variant="contained"
+                                    fullWidth
+                                    onClick={handleDelete}
 
-                                sx={{
-                                    minHeight: '50px',
-                                    borderRadius: '15px',
-                                    '&:hover': {
-                                        opacity: 0.9,
-                                    },
-                                }}
-                            >
-                                DELETE
-                            </Button>
-                        </DialogActions>
+                                    sx={{
+                                        minHeight: '50px',
+                                        borderRadius: '15px',
+                                        '&:hover': {
+                                            opacity: 0.9,
+                                        },
+                                    }}
+                                >
+                                    DELETE
+                                </Button>
+                            </DialogActions>
+                        </Box>
 
                     </Stack>
                 </DialogContent>
@@ -126,8 +150,13 @@ const PopupDelete = (props) => {
 
 PopupDelete.propTypes = {
     modalDeleteOpen: PropTypes.bool,
+    setModalDeleteOpen: PropTypes.any,
     headerMessageModal: PropTypes.string,
     messageModal: PropTypes.string,
+    fullWidth: PropTypes.any,
+    maxWidth: PropTypes.any,
+    loadingDelete: PropTypes.any,
+    onDelete: PropTypes.any,
 };
 
 export default PopupDelete;

@@ -9,4 +9,5 @@ export const registerApi = (res) => axiosInstance("auth").post("/api/auth/regist
 export const getUser = (params, config = {}) => axiosInstance("management").get("/api/users", { params, ...config });
 export const addUser = (res) => axiosInstance("management").post("/api/users", res)
 export const editUser = (userId, res, config = {}) => axiosInstance("management").patch(`/api/users/${userId}`, res, config)
+export const deleteUser = (userId) => axiosInstance("management").delete(`/api/users/${userId}`)
 

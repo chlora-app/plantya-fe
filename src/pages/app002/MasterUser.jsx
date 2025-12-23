@@ -3,7 +3,7 @@ import { Container, Box, Typography, Grid, Paper, Card, CardHeader, CardContent,
 import { Button } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
-import { getUser } from "../../utils/ListApi";
+import { getUser, deleteUser } from "../../utils/ListApi";
 import EditSquareIcon from '@mui/icons-material/EditSquare';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Icon } from "@iconify/react";
@@ -21,6 +21,7 @@ const MasterUser = () => {
     const [app002Msg, setApp002setMsg] = useState("");
     const [app002MsgStatus, setApp002setMsgStatus] = useState("");
     const [loadingData, setLoadingData] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState(false)
     const [app002p01UserData, setApp002p01UserData] = useState([]);
     const [app002p03UserData, setApp002p03UserData] = useState();
     const [app002p01UserTotalData, setApp002p01UserTotalData] = useState(0)
@@ -29,7 +30,7 @@ const MasterUser = () => {
     const [role, setRole] = useState("")
     const [modalAddOpen, setModalAddOpen] = useState(false);
     const [modalEditOpen, setModalEditOpen] = useState(false);
-    const [modalDeleteOpen, setModalDeleteOpen] = useState(true);
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
     const [app002p01UserDataParam, setApp002p01UserDataParam] = useState(
         {
             page: 1,
@@ -95,7 +96,7 @@ const MasterUser = () => {
                             <IconButton
                                 aria-label="delete"
                                 size="small"
-                                onClick={() => handleDelete(app002p01UserData)}
+                                onClick={() => handleModalDeleteOpen(app002p01UserData)}
                                 color="error"
                             >
                                 <DeleteOutlineIcon fontSize="inherit" />
@@ -183,20 +184,18 @@ const MasterUser = () => {
         }));
     }
 
-    const refreshTable = () => {
-        setSearch("")
-        setRole("")
-        setApp002p01UserDataParam(
-            {
-                page: 1,
-                size: 10,
-                sort: "",
-                order: "asc",
-                search: "",
-                role: "",
-            }
-        );
-    }
+    const refreshTable = useCallback(() => {
+        setSearch("");
+        setRole("");
+        setApp002p01UserDataParam({
+            page: 1,
+            size: 10,
+            sort: "",
+            order: "asc",
+            search: "",
+            role: "",
+        });
+    });
 
 
     // Form Add Modal
@@ -214,7 +213,29 @@ const MasterUser = () => {
         setApp002p03UserData(obj)
     }
 
+    // Form Delete Modal
+    const handleModalDeleteOpen = (obj) => {
+        debugger
+        setApp002setMsg("")
+        setModalDeleteOpen(true)
+        setApp002p03UserData(obj)
+    }
 
+    const handleDelete = async () => {
+        setLoadingDelete(true)
+        try {
+            await deleteUser(app002p03UserData.user_id)
+            setApp002setMsg("User Has Been Successfully Deleted.")
+            setApp002setMsgStatus("success")
+            setModalDeleteOpen(false)
+            refreshTable();
+        } catch (error) {
+            setApp002setMsg("Gagal menghapus user. Silakan coba lagi.");
+            setApp002setMsgStatus("error");
+        } finally {
+            setLoadingDelete(false);
+        }
+    }
 
 
 
@@ -444,6 +465,8 @@ const MasterUser = () => {
                         messageModal={"Deleted data will not be permanently deleted immediately and can still be restored via the data archive menu"}
                         fullWidth={true}
                         maxWidth={"sm"}
+                        loadingDelete={loadingDelete}
+                        onDelete={handleDelete}
                     // refreshTable={refreshTable}
 
                     // // Props for message and data
