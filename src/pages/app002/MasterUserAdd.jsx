@@ -60,6 +60,9 @@ const MasterUserAdd = (props) => {
     onSubmit: async (values, { setSubmitting }) => {
       debugger
       setSubmitting(true)
+      setLoadingSpinner(true)
+      setTextLoading("Processing...")
+
       try {
         const response = await addUser(values)
         debugger
@@ -77,6 +80,8 @@ const MasterUserAdd = (props) => {
       }
       finally {
         setSubmitting(false)
+        setLoadingSpinner(false)
+        setTextLoading("")
         setTimeout(() => {
           props.setApp002setMsg("")
           props.setApp002setMsgStatus("")
