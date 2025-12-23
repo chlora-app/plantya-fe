@@ -10,10 +10,17 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'; // Import ikon untuk rol
 import { addUser } from "../../utils/ListApi";
+import PageSpinner from "../../components/common/PageSpinner";
+import FormSpinner from "../../components/common/FormSpinner";
 
 
 
 const MasterUserAdd = (props) => {
+
+  // State for Loading Spinner
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
+  const [textLoading, setTextLoading] = useState("")
+
 
   // Role 
   const roleOptions = [
@@ -21,6 +28,13 @@ const MasterUserAdd = (props) => {
     { value: "USER", label: "User" },
     { value: "STAFF", label: "Staff" },
   ];
+
+  // Function Close, Reset, and Refresh After Submitting
+  const handleClose = () => {
+    debugger
+    formik.resetForm();
+    props.handleModalAddClose();
+  }
 
   // Validation Form
   const formik = useFormik({
@@ -34,59 +48,51 @@ const MasterUserAdd = (props) => {
       ({
         email: Yup.string()
           .required("Email is required.")
-          .email("Please enter a valid email address."),
-        name: Yup.string()
-          .required("Name is required.")
-          .min(4, "Name must be at least 4 characters.")
-          .max(20, "Name must not exceed 20 characters.")
           .matches(
-            /^[a-zA-Z0-9_]+$/,
-            "Name can only contain letters, numbers, and underscores."
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            "Please enter a valid email address."
           ),
+        name: Yup.string()
+          .required("Name is required."),
         role: Yup.string().required("Role is required."),
       }),
 
-    onSubmit: async (values, { setSubmitting, resetForm }) => {
-      // Default state and submit form
+    onSubmit: async (values, { setSubmitting }) => {
+      debugger
       setSubmitting(true)
-      // setLoadingSpinner(true);
-      // setShowAlert(false)
-      // setMessage("");
-
       try {
-        debugger
         const response = await addUser(values)
-        props.handleModalAddClose()
-
-      } catch (error) {
-        setShowAlert(true)
-        if (error.response) {
-          setMessage(error.response.data.message);
-        } else {
-          setMessage("System is Unavailable. Please Try Again Later.");
+        debugger
+        if (response.status === 201) {
+          props.setApp002setMsg("User Has Been Successfully Added.");
+          props.setApp002setMsgStatus("success");
+          props.refreshTable();
+          handleClose()
         }
-
-      } finally {
-        setSubmitting(false);
-        setLoadingSpinner(false);
-        resetForm()
-
-        // setTimeout(() => {
-        //   setShowAlert(false);
-        //   setMessage("");
-        // }, 3000);
+      }
+      catch (error) {
+        debugger
+        props.setApp002setMsg(error?.response?.data?.detail || "System is Unavailable. Please Try Again Later.")
+        props.setApp002setMsgStatus("error")
+      }
+      finally {
+        setSubmitting(false)
+        setTimeout(() => {
+          props.setApp002setMsg("")
+          props.setApp002setMsgStatus("")
+        }, 3000);
       }
     },
   });
 
-  const handleClose = () => {
-    formik.resetForm(); // Reset form saat modal ditutup
-    props.handleModalAddClose();
-  }
+
 
 
   return (
     <React.Fragment>
+
+
+
 
       <Dialog
         open={props.modalAddOpen}
@@ -140,6 +146,11 @@ const MasterUserAdd = (props) => {
               // bgcolor: 'darkRed',
               p: 4
             }}>
+
+            <FormSpinner
+              open={loadingSpinner}
+              text={textLoading}
+            />
 
             <DialogContentText
               textAlign={"center"}

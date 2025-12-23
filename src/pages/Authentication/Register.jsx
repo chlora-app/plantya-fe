@@ -75,7 +75,10 @@ const Register = () => {
                     ),
                 email: Yup.string()
                     .required("Email is required.")
-                    .email("Please enter a valid email address."),
+                    .matches(
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                        "Please enter a valid email address."
+                    ),
                 password: Yup.string()
                     .required("Password is required.")
                     .min(8, "Password must be at least 8 characters.")

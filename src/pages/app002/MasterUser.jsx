@@ -21,7 +21,7 @@ const MasterUser = () => {
     const [loadingData, setLoadingData] = useState(false);
     const [app002p01UserData, setApp002p01UserData] = useState([]);
     const [app002p01UserTotalData, setApp002p01UserTotalData] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
+    const [app002p01TotalPage, app002p01SetTotalPage] = useState(0)
     const [search, setSearch] = useState("")
     const [role, setRole] = useState("")
 
@@ -92,7 +92,7 @@ const MasterUser = () => {
 
             setApp002p01UserData(response?.data?.data ? response.data.data : []);
             setApp002p01UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
-            setTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
+            app002p01SetTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
 
         } catch (error) {
             console.error("Gagal mengambil data:", error);
@@ -131,6 +131,21 @@ const MasterUser = () => {
             page: 1
         }));
     };
+
+    const refreshTable = () => {
+        setSearch("")
+        setRole("")
+        setApp002p01UserDataParam(
+            {
+                page: 1,
+                size: 10,
+                sort: "",
+                order: "asc",
+                search: "",
+                role: "",
+            }
+        );
+    }
 
     // Search and Filtering
     const roleOptions = [
@@ -338,7 +353,7 @@ const MasterUser = () => {
                             columns={app002UserColumns}
                             appdata={app002p01UserData}
                             appdataTotal={app002p01UserTotalData}
-                            totalPage={totalPage}
+                            totalPage={app002p01TotalPage}
                             rowsPerPageOption={[2, 10, 20, 25]}
 
                             page={app002p01UserDataParam.page - 1}
@@ -360,6 +375,13 @@ const MasterUser = () => {
                     handleModalAddClose={handleModalAddClose}
                     fullWidth={true}
                     maxWidth={"xs"}
+                    refreshTable={refreshTable}
+
+                    // Props for message
+                    app002Msg={app002Msg}
+                    setApp002setMsg={setApp002setMsg}
+                    app002MsgStatus={app002MsgStatus}
+                    setApp002setMsgStatus={setApp002setMsgStatus}
                 >
                 </MasterUserAdd>
 
