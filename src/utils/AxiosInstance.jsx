@@ -45,7 +45,10 @@ const axiosInstance = (service, additionalConfig = {}) => {
 
     return axios.create({
         baseURL,
-        withCredentials: true,
+
+        //  Wait for Auth from Backend (withCredentials is Required later)
+        // withCredentials: true,
+
         headers: {
             ...(token && { Authorization: `Bearer ${token}` }),
             ...(SERVICE_HEADERS[service] || {}),
