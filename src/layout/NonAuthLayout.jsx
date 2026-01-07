@@ -1,6 +1,5 @@
 import React from "react";
-// import { Col, Container, Row } from "reactstrap";
-import { Box, Grid, Container } from "@mui/material"
+import { Box, Grid, Container, Paper } from "@mui/material"
 
 const NonAuthLayout = ({ children }) => {
     return (
@@ -9,81 +8,75 @@ const NonAuthLayout = ({ children }) => {
             disableGutters
             sx={{
                 minHeight: '100vh',
-                p: 0,
-                m: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 bgcolor: 'background.default',
-                color: "text.primary"
+                p: { xs: 0, sm: 2 },
             }}
         >
-            <Grid
-                container
+            <Paper
+                elevation={3}
                 sx={{
-                    minHeight: "100vh",
-                    alignItems: "stretch",
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    width: { xs: '100%', sm: "90%", md: '85%', lg: "80%" },
+                    height: { xs: '100%', sm: '85%', md: "80%" },
+                    maxWidth: '1200px',
+                    maxHeight: '800px',
+                    borderRadius: 5,
+                    overflow: 'hidden',
                 }}
             >
-                <Grid
-                    size={{ xs: 12, sm: 6, md: 6, lg: 6 }}
+                {/* LEFT SIDE */}
+                <Box
                     sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    {children}
-                </Grid>
-                <Grid
-                    size={{ xs: 12, sm: 6, md: 6, lg: 6 }}
-                    sx={{
-                        p: 0,
-                        position: "relative",
                         display: {
                             xs: 'none',
-                            sm: "flex",
+                            sm: 'flex'
                         },
-                        flexDirection: "column",
+                        flex: 1,
+                        borderTopLeftRadius: 5,
+                        borderBottomLeftRadius: 5,
+                        overflow: 'hidden',
+                        position: 'relative',
+                    }}
+                >
+                    <Box
+                        component="img"
+                        src="/LoginBg.png"
+                        alt="Background"
+                        sx={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            position: 'absolute',
+                        }}
+                    />
+                </Box>
+
+                {/* RIGHT SIDE */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderTopRightRadius: 5,
+                        borderTopRightRadius: 5,
+                        p: { xs: 4, sm: 5, md: 6 },
                     }}
                 >
                     <Box
                         sx={{
-                            flex: 1,
-                            position: "relative",
-                            width: "100%",
-                            height: "100%",
-                        }}
-                    >
-                        <Box
-                            component="img"
-                            src="/NonAuthBackground.png"
-                            alt="Background"
-                            sx={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                            }}
-                        />
-                        <Box
-                            component="img"
-                            src="/BaseLogo.png"
-                            alt="Logo"
-                            sx={{
-                                position: "absolute",
-                                top: "50%",
-                                left: "50%",
-                                transform: "translate(-50%, -50%)",
-                                maxWidth: "50%",
-                            }}
-                        />
+                            width: '100%',
+                        }}>
+                        {children}
                     </Box>
-                </Grid>
-            </Grid>
+                </Box>
+            </Paper>
         </Container>
     );
 };
-
-
 export default NonAuthLayout;

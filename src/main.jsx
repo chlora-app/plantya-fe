@@ -8,7 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import '../index.css'
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import globalTheme from './themes/globalTheme';
+import darkTheme from './themes/globalTheme';
 import '@mdi/font/css/materialdesignicons.min.css';
 
 // ReactSession.setStoreType("localStorage");
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ThemeProvider theme={globalTheme}>
+        <ThemeProvider theme={darkTheme}>
           <CssBaseline />
           <App />
         </ThemeProvider>

@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 const baseColors = {
-  green: '#07AB0E',
+  green: '#007C4F',
   red: '#DC3545',
   blue: '#1976D2',
   darkBlue: '#24427D',
@@ -9,9 +9,13 @@ const baseColors = {
   grey: '#676767',
   black: '#16181A',
   deepBlack: '#121314',
-  line: '#2c2e31',
   hover: '#1F1F1F',
-  yellow: "#ff8c00ff",
+  yellow: "#FFC107",
+
+  bgHeaderTable: "#27272A",
+  buttonSuccess: "#007C4F",
+  buttonGrey: "#27272A",
+  line: '#2c2e31',
 };
 
 const globalTheme = createTheme({
@@ -20,7 +24,7 @@ const globalTheme = createTheme({
   },
   palette: {
     primary: {
-      main: baseColors.darkBlue
+      main: baseColors.green,
     },
     secondary: {
       main: baseColors.black,
@@ -41,6 +45,7 @@ const globalTheme = createTheme({
     background: {
       default: baseColors.deepBlack,
       paper: baseColors.black,
+      tableHead: baseColors.bgHeaderTable,
     },
 
     text: {
@@ -55,7 +60,14 @@ const globalTheme = createTheme({
 
     custom: {
       line: baseColors.line,
-    }
+    },
+
+    button: {
+      success: baseColors.buttonSuccess,
+      grey: baseColors.buttonGrey,
+    },
+
+
 
   },
 
@@ -67,44 +79,71 @@ const globalTheme = createTheme({
         root: ({ theme }) => ({
           // Styling Textfield for Login and Register
           "&.auth-field": {
+
             "& .MuiOutlinedInput-root": {
               marginTop: 1,
               backgroundColor: theme.palette.background.paper,
               borderRadius: "15px",
               transition: "all 0.3s ease",
 
-              "& fieldset": {
-                borderColor: "transparent",
-                borderWidth: "1px",
+              "&.Mui-disabled": {
+                backgroundColor: '#3a3a3a', // Latar belakang lebih terang
+
+                // Target elemen input secara spesifik untuk warna teks
+                "& .MuiInputBase-input": {
+                  color: '#b0b0b0', // Teks yang lebih terang
+                  WebkitTextFillColor: '#b0b0b0', // Untuk mengatasi autofill
+                },
+
+                // Target border secara spesifik
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: '#555555',
+                },
+
+                // Target ikon secara spesifik
+                "& .MuiInputAdornment-root .MuiSvgIcon-root": {
+                  color: '#b0b0b0',
+                },
               },
 
-              "&:hover": {
-                backgroundColor: "transparent !important",
+
+              "& fieldset": {
+                borderColor: theme.palette.custom.line,
+                borderWidth: "0.7px",
+              },
+
+              "&:hover:not(.Mui-disabled)": {
+                // backgroundColor: "transparent !important",
 
                 "& fieldset": {
-                  borderColor: theme.palette.text.secondary,
+                  borderColor: theme.palette.custom.line,
+                  borderWidth: "2px",
                 },
               },
               "&.Mui-focused": {
-                backgroundColor: "transparent !important",
+                // backgroundColor: "transparent !important",
 
                 "& fieldset": {
-                  borderColor: theme.palette.text.secondary,
+                  borderColor: theme.palette.custom.line,
+                  borderWidth: "2px",
                 },
               },
               "&.Mui-focused fieldset": {
-                borderColor: theme.palette.text.secondary,
+                borderColor: theme.palette.custom.line,
+                borderWidth: "2px",
                 backgroundColor: "transparent"
               },
 
               "&.Mui-autofilled": {
                 "& fieldset": {
-                  borderColor: theme.palette.text.secondary,
+                  borderColor: theme.palette.custom.line,
+                  borderWidth: "2px",
                   backgroundColor: "transparent"
                 }
               },
               "& .MuiInputBase-input::placeholder": {
-                borderColor: theme.palette.text.secondary,
+                borderColor: theme.palette.custom.line,
+                borderWidth: "2px",
                 backgroundColor: "transparent"
               },
               "& input:-webkit-autofill": {

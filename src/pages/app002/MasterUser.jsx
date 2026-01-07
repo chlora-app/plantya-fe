@@ -1,4 +1,11 @@
 import React, { useState, useEffect, useCallback, act } from "react";
+import RootPageCustom from "../../components/common/RootPageCustom";
+import TableCustom from "../../components/common/TableCustom";
+import { getUser, deleteUser, getUserDeleted, restoreUser } from "../../utils/ListApi";
+import UserAdd from "./UserAdd";
+import UserEdit from "./UserEdit";
+import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
+import Icon from '@mdi/react';
 import {
     Container,
     Typography,
@@ -13,13 +20,6 @@ import {
     Tabs,
     Box
 } from "@mui/material";
-import RootPageCustom from "../../components/common/RootPageCustom";
-import TableCustom from "../../components/common/TableCustom";
-import { getUser, deleteUser, getUserDeleted, restoreUser } from "../../utils/ListApi";
-import UserAdd from "./UserAdd";
-import UserEdit from "./UserEdit";
-import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
-import Icon from '@mdi/react';
 import {
     mdiTrashCanOutline,
     mdiSquareEditOutline,

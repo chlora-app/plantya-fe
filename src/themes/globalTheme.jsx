@@ -1,36 +1,45 @@
 import { createTheme } from "@mui/material/styles";
 
 const baseColors = {
-  green: '#007C4F',
-  red: '#DC3545',
-  blue: '#1976D2',
-  darkBlue: '#24427D',
-  white: '#FAFAFA',
-  grey: '#676767',
-  black: '#16181A',
-  deepBlack: '#121314',
-  hover: '#1F1F1F',
+  // Brand Colors
+  green: "#007C4F",
+  greenLight: "#00A86B",
+  red: "#DC3545",
+  blue: "#1976D2",
+  lightBlue: "#60A5FA",
+  darkBlue: "#24427D",
   yellow: "#FFC107",
 
-  bgHeaderTable: "#27272A",
-  buttonSuccess: "#007C4F",
-  buttonGrey: "#27272A",
-  line: '#2c2e31',
+  // Neutral Colors
+  white: "#FFFFFF",
+  grey: "#A3B2AC",
+
+  // Background Colors untuk DARK MODE
+  darkBlack: "#1A1A1A",
+  lightBlack: "#2A2A2A",
+  darkGrey: "#222222",
 };
 
-const globalTheme = createTheme({
-  typography: {
-    fontFamily: "Poppins, sans-serif",
-  },
+const darkTheme = createTheme({
   palette: {
+    mode: "dark",
+
+    tonalOffset: 0,
+    contrastThreshold: 0,
+
+    // Brand Colors
     primary: {
       main: baseColors.green,
+      light: baseColors.greenLight,
     },
     secondary: {
-      main: baseColors.black,
+      main: baseColors.grey,
+      dark: baseColors.darkGrey,
     },
     info: {
       main: baseColors.blue,
+      light: baseColors.lightBlue,
+      dark: baseColors.darkBlue,
     },
     success: {
       main: baseColors.green,
@@ -42,214 +51,182 @@ const globalTheme = createTheme({
       main: baseColors.yellow,
     },
 
+    // Background Colors - DARK MODE
     background: {
-      default: baseColors.deepBlack,
-      paper: baseColors.black,
-      tableHead: baseColors.bgHeaderTable,
+      default: baseColors.darkBlack, // #1A1A1A
+      paper: baseColors.lightBlack, // #2A2A2A
     },
 
+    // Text Colors - DARK MODE
     text: {
-      primary: baseColors.white,
-      secondary: baseColors.grey,
+      primary: baseColors.white, // #FFFFFF
+      secondary: baseColors.grey, // #A3B2AC
     },
+
+    divider: "#2c2e31",
 
     action: {
-      hover: baseColors.hover,
-      active: baseColors.line,
+      hover: "#1F1F1F",
+      selected: "#1F1F1F",
     },
+  },
 
-    custom: {
-      line: baseColors.line,
-    },
-
-    button: {
-      success: baseColors.buttonSuccess,
-      grey: baseColors.buttonGrey,
-    },
-
-
-
+  typography: {
+    fontFamily: "Poppins, sans-serif",
   },
 
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: ({ ownerState, theme }) => ({
+          backgroundColor: `${baseColors.lightBlack} !important`,
+          backgroundImage: "none !important",
+          ...(ownerState?.variant === "elevation" && {
+            backgroundColor: `${baseColors.lightBlack} !important`,
+          }),
+          ...(ownerState?.variant === "outlined" && {
+            backgroundColor: `${baseColors.lightBlack} !important`,
+          }),
+        }),
+      },
+    },
 
-    // Textfield Styling
     MuiTextField: {
       styleOverrides: {
         root: ({ theme }) => ({
-          // Styling Textfield for Login and Register
           "&.auth-field": {
-
             "& .MuiOutlinedInput-root": {
               marginTop: 1,
-              backgroundColor: theme.palette.background.paper,
+              backgroundColor: theme.palette.secondary.dark,
               borderRadius: "15px",
               transition: "all 0.3s ease",
 
               "&.Mui-disabled": {
-                backgroundColor: '#3a3a3a', // Latar belakang lebih terang
-
-                // Target elemen input secara spesifik untuk warna teks
+                backgroundColor: "#3a3a3a",
                 "& .MuiInputBase-input": {
-                  color: '#b0b0b0', // Teks yang lebih terang
-                  WebkitTextFillColor: '#b0b0b0', // Untuk mengatasi autofill
+                  color: "#b0b0b0",
+                  WebkitTextFillColor: "#b0b0b0",
                 },
-
-                // Target border secara spesifik
                 "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: '#555555',
+                  borderColor: "#555555",
                 },
-
-                // Target ikon secara spesifik
                 "& .MuiInputAdornment-root .MuiSvgIcon-root": {
-                  color: '#b0b0b0',
+                  color: "#b0b0b0",
                 },
               },
 
-
               "& fieldset": {
-                borderColor: theme.palette.custom.line,
                 borderWidth: "0.7px",
               },
 
               "&:hover:not(.Mui-disabled)": {
-                // backgroundColor: "transparent !important",
-
                 "& fieldset": {
-                  borderColor: theme.palette.custom.line,
                   borderWidth: "2px",
                 },
               },
+
               "&.Mui-focused": {
-                // backgroundColor: "transparent !important",
-
                 "& fieldset": {
-                  borderColor: theme.palette.custom.line,
                   borderWidth: "2px",
                 },
               },
+
               "&.Mui-focused fieldset": {
-                borderColor: theme.palette.custom.line,
                 borderWidth: "2px",
-                backgroundColor: "transparent"
               },
 
               "&.Mui-autofilled": {
                 "& fieldset": {
-                  borderColor: theme.palette.custom.line,
                   borderWidth: "2px",
-                  backgroundColor: "transparent"
-                }
+                },
               },
+
               "& .MuiInputBase-input::placeholder": {
-                borderColor: theme.palette.custom.line,
                 borderWidth: "2px",
-                backgroundColor: "transparent"
               },
+
               "& input:-webkit-autofill": {
                 WebkitBoxShadow: "0 0 0 1000px transparent inset !important",
                 boxShadow: "0 0 0 1000px transparent inset !important",
-                backgroundColor: "transparent !important",
-                backgroundImage: "none !important",
                 WebkitTextFillColor: `${theme.palette.text.primary} !important`,
                 transition: "background-color 5000s ease-in-out 0s !important",
               },
+
               "& input:-webkit-autofill::placeholder": {
                 color: theme.palette.text.secondary,
-                backgroundColor: "transparent"
               },
+
               "& input:-webkit-autofill:hover::placeholder": {
                 color: theme.palette.text.secondary,
               },
-              // 
+
               "& input:-webkit-autofill:focus::placeholder": {
                 color: theme.palette.text.secondary,
               },
+
               "& input": {
                 color: theme.palette.text.secondary,
-                backgroundColor: "transparent",
               },
+
               "& input:not(:placeholder-shown)": {
                 color: theme.palette.text.primary,
               },
             },
+
             "& .MuiInputBase-input::placeholder": {
               color: theme.palette.text.secondary,
               opacity: 1,
             },
 
             "& .MuiFormHelperText-root": {
-              backgroundColor: 'transparent',
               marginTop: "5px",
-              marginBottom: '-20px'
+              marginBottom: "-20px",
             },
           },
-        })
+        }),
       },
     },
 
-    // Styling Button
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
-          // Style for Login / Regist Button
-          '&.auth-button': {
-            color: theme.palette.text.primary,
+          "&.auth-button": {
             backgroundColor: theme.palette.primary.main,
-            borderStyle: 'none',
-            borderRadius: '15px',
+            color: theme.palette.text.primary,
+            borderRadius: 15,
             fontWeight: 600,
-            '&:hover': {
-              borderWidth: "1px",
-              borderStyle: 'solid',
-              borderColor: theme.palette.info.main,
+            "&:hover": {
               backgroundColor: theme.palette.info.main,
-              transition: "all 0.7s ease",
             },
           },
 
-          // Button Signup / Sign in Direction
-          '&.linkto-button': {
-            fontWeight: 600,
+          "&.linkto-button": {
             color: theme.palette.info.main,
             textTransform: "none",
             "&:hover": {
-              textDecoration: 'underline',
-              backgroundColor: 'transparent'
-            }
+              textDecoration: "underline",
+              backgroundColor: "transparent",
+            },
           },
         }),
       },
     },
 
-    // Styling Divider
     MuiDivider: {
       styleOverrides: {
         root: ({ theme }) => ({
-          // 
-          '&.auth-divider': {
-            border: '1px solid',
-            borderColor: theme.palette.custom.line,
-          },
+          borderColor: theme.palette.divider,
         }),
-      }
+      },
     },
-
-    MuiPopover: {
-      styleOverrides: {
-        paper: ({ theme }) => ({
-          '&.sidebar-popover': {
-            backgroundColor: theme.palette.background.paper,
-            borderRadius: 10,
-            border: `1px solid ${theme.palette.custom.line}`,
-            transition: "opacity 0.5s ease-in-out, transform 0.5s ease-in-out"
-          }
-        })
-      }
-    }
-
-    // Other Component if needed
   },
 });
 
-export default globalTheme;
+// Export untuk kompatibilitas future
+export const lightTheme = {};
+export const themes = {
+  dark: darkTheme,
+  light: null,
+};
+
+export default darkTheme;
