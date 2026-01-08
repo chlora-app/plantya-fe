@@ -11,13 +11,16 @@ const baseColors = {
   yellow: "#FFC107",
 
   // Neutral Colors
-  white: "#FFFFFF",
+  white: "#FFFFFF", // Text White Global
   grey: "#A3B2AC",
 
-  // Background Colors untuk DARK MODE
+  // Background Colors for Main and Paper
   darkBlack: "#1A1A1A",
   lightBlack: "#2A2A2A",
-  darkGrey: "#222222",
+
+  // Textfield config color
+  darkGrey: "#222222", // Background Textfield
+  lightGrey: "#AAAAAA" // Placeholder color
 };
 
 const darkTheme = createTheme({
@@ -35,6 +38,7 @@ const darkTheme = createTheme({
     secondary: {
       main: baseColors.grey,
       dark: baseColors.darkGrey,
+      contrastText: baseColors.white,
     },
     info: {
       main: baseColors.blue,
@@ -49,6 +53,7 @@ const darkTheme = createTheme({
     },
     warning: {
       main: baseColors.yellow,
+      contrastText: baseColors.white,
     },
 
     // Background Colors - DARK MODE
@@ -59,11 +64,12 @@ const darkTheme = createTheme({
 
     // Text Colors - DARK MODE
     text: {
-      primary: baseColors.white, // #FFFFFF
-      secondary: baseColors.grey, // #A3B2AC
+      primary: baseColors.white,
+      secondary: baseColors.grey,
+      secondaryLight: baseColors.lightGrey
     },
 
-    divider: "#2c2e31",
+    divider: baseColors.grey,
 
     action: {
       hover: "#1F1F1F",
@@ -153,16 +159,16 @@ const darkTheme = createTheme({
               },
 
               // Input styling
-              "& input": { color: theme.palette.text.secondary },
+              "& input": { color: theme.palette.text.secondaryLight },
               "& input:not(:placeholder-shown)": { color: theme.palette.text.primary },
               "& .MuiInputBase-input::placeholder": {
-                color: theme.palette.text.secondary,
+                color: theme.palette.text.secondaryLight,
                 borderWidth: "2px"
               },
             },
 
             "& .MuiInputBase-input::placeholder": {
-              color: theme.palette.text.secondary,
+              color: theme.palette.text.secondaryLight,
               opacity: 1,
             },
 
@@ -200,7 +206,7 @@ const darkTheme = createTheme({
           },
 
           "&.linkto-button": {
-            color: theme.palette.primary.light,
+            color: theme.palette.primary.main,
             textTransform: "none",
             "&:hover": {
               textDecoration: "underline",

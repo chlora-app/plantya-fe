@@ -15,7 +15,7 @@ import '@mdi/font/css/materialdesignicons.min.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/plantya'>
       <AuthProvider>
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />

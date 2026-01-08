@@ -8,21 +8,20 @@ import {
     Typography,
     InputAdornment,
     Grid,
-    Divider
+    Divider,
+    IconButton
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import PageSpinner from "../../components/common/PageSpinner";
-import axiosInstance from "../../utils/AxiosInstance";
-import { useAuth } from "../../context/AuthContext";
-import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import IconButton from '@mui/material/IconButton';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AlertAuthMessage from "../../components/common/AlertAuthMessage";
+import { useAuth } from "../../context/AuthContext";
+import { useTheme } from '@mui/material/styles';
 import { loginApi } from "../../utils/ListApi";
+import Icon from '@mdi/react';
+import { mdiEmailOutline, mdiLockOutline, mdiEyeOutline, mdiEyeOffOutline } from '@mdi/js';
 
 const Login = () => {
+    const theme = useTheme();
     const { login } = useAuth();
     const [showAlert, setShowAlert] = useState(false)
     const [message, setMessage] = useState("");
@@ -141,7 +140,8 @@ const Login = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     width: '100%',
-                    p: { xs: 3, sm: 4 },
+                    px: { xs: 3, sm: 4 },
+                    py: { xs: 1, sm: 2 },
                     gap: 4,
                 }}
             >
@@ -194,13 +194,16 @@ const Login = () => {
                             helperText={formik.touched.username && formik.errors.username}
                             slotProps={{
                                 input: {
+                                    spellCheck: false,
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <MailOutlineOutlinedIcon
-                                                sx={{
-                                                    color: formik.values.username === "" ? 'text.secondary' : 'text.primary',
-                                                    mx: 1
-                                                }}
+                                            <Icon
+                                                path={mdiEmailOutline}
+                                                size={1}
+                                                color={
+                                                    formik.values.username === "" ? theme.palette.text.secondaryLight : theme.palette.text.primary
+                                                }
+                                                className="mx-2"
                                             />
                                         </InputAdornment>
                                     ),
@@ -213,7 +216,8 @@ const Login = () => {
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 1
+                            gap: 1,
+                            mb: 2
                         }}
                     >
                         <Typography variant="body2">Password</Typography>
@@ -232,26 +236,36 @@ const Login = () => {
                             helperText={formik.touched.password && formik.errors.password}
                             slotProps={{
                                 input: {
+                                    spellCheck: false,
+                                    autoComplete: 'off',
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <LockOutlinedIcon
-                                                sx={{
-                                                    color: formik.values.password === "" ? 'text.secondary' : 'text.primary',
-                                                    mx: 1
-                                                }} />
+                                            <Icon
+                                                path={mdiLockOutline}
+                                                size={1}
+                                                color={
+                                                    formik.values.password === "" ? theme.palette.text.secondaryLight : theme.palette.text.primary
+                                                }
+                                                className="mx-2"
+                                            />
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton
-                                                sx={{
-                                                    color: formik.values.password === "" ? 'text.secondary' : 'text.primary',
-                                                    mx: 1
-                                                }}
+                                                aria-label={showPassword ? "Hide password" : "Show password"}
                                                 onClick={() => setShowPassword(!showPassword)}
                                                 edge="end"
+                                                size="small"
+                                                sx={{
+                                                    color: formik.values.password === "" ? theme.palette.text.secondaryLight : theme.palette.text.primary,
+                                                    mr: 0.5,
+                                                }}
                                             >
-                                                {showPassword ? <VisibilityOutlinedIcon /> : <VisibilityOff />}
+                                                <Icon
+                                                    path={showPassword ? mdiEyeOutline : mdiEyeOffOutline}
+                                                    size={1}
+                                                />
                                             </IconButton>
                                         </InputAdornment>
                                     )
