@@ -25,7 +25,10 @@ import {
     mdiChevronDoubleRight
 } from '@mdi/js';
 
-// StyledTableCell tanpa override padding
+
+
+
+// Pindahkan StyledTableCell ke luar komponen agar tidak dibuat ulang setiap render
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         color: theme.palette.text.primary,
@@ -34,11 +37,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        padding: '8px 16px',
     },
     [`&.${tableCellClasses.body}`]: {
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
+        padding: '8px 16px',
     },
 }));
 
@@ -98,6 +103,7 @@ const TableCustom = (props) => {
     const isFirstPage = page === 0;
     const isLastPage = page + 1 >= totalPages;
 
+    // Gunakan useMemo untuk komponen yang sering berubah
     const renderPageNumbers = useMemo(() => {
         const maxVisiblePages = 3;
         let startPage, endPage;
@@ -157,6 +163,7 @@ const TableCustom = (props) => {
         ));
     }, [page, totalPages]);
 
+    // Optimasi render header columns dengan useMemo
     const headerColumns = useMemo(() => {
         return props.columns.map((column) => (
             <StyledTableCell
@@ -165,6 +172,7 @@ const TableCustom = (props) => {
                 sx={{
                     borderBottom: 'none',
                     minWidth: column.minWidth || 'auto',
+                    padding: { xs: '8px 12px', sm: '8px 12px', md: '8px 16px' },
                 }}
             >
                 {column.sort ? (
@@ -174,7 +182,6 @@ const TableCustom = (props) => {
                             alignItems: 'center',
                             justifyContent: column.headerAlign === 'center' ? 'center' :
                                 column.headerAlign === 'right' ? 'flex-end' : 'flex-start',
-                            gap: 0.5,
                         }}
                         onClick={() => handleRequestSort(null, column.dataField)}
                     >
@@ -182,6 +189,9 @@ const TableCustom = (props) => {
                             variant="body2"
                             component="span"
                             fontWeight="bold"
+                            sx={{
+                                fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' },
+                            }}
                         >
                             {column.text}
                         </Typography>
@@ -195,12 +205,12 @@ const TableCustom = (props) => {
                         }}>
                             {sortField === column.dataField ? (
                                 sortOrder === 'asc' ? (
-                                    <Icon path={mdiMenuUp} size={0.8} />
+                                    <Icon path={mdiMenuUp} size={1} />
                                 ) : (
-                                    <Icon path={mdiMenuDown} size={0.8} />
+                                    <Icon path={mdiMenuDown} size={1} />
                                 )
                             ) : (
-                                <Icon path={mdiMenuSwap} size={0.8} />
+                                <Icon path={mdiMenuSwap} size={1} />
                             )}
                         </Box>
                     </Box>
@@ -217,6 +227,9 @@ const TableCustom = (props) => {
                             variant="body2"
                             component="span"
                             fontWeight="bold"
+                            sx={{
+                                fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' },
+                            }}
                         >
                             {column.text}
                         </Typography>
@@ -226,6 +239,7 @@ const TableCustom = (props) => {
         ));
     }, [props.columns, sortField, sortOrder]);
 
+    // Optimasi render body rows dengan useMemo
     const bodyRows = useMemo(() => {
         if (props.appdata.length === 0 && !props.loadingData) {
             return (
@@ -235,15 +249,13 @@ const TableCustom = (props) => {
                         borderColor: 'secondary.main'
                     }}
                 >
-                    <StyledTableCell 
-                        colSpan={props.columns.length} 
-                        align="center"
+                    <StyledTableCell colSpan={props.columns.length} align="center"
                         sx={{
                             borderBottom: 'none',
                             borderTop: 'none',
                         }}
                     >
-                        <Typography variant="body2">
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' } }}>
                             No records to display
                         </Typography>
                     </StyledTableCell>
@@ -272,7 +284,9 @@ const TableCustom = (props) => {
                                 borderBottom: 'none',
                                 borderTop: 'none',
                                 minWidth: column.minWidth || 'auto',
+                                padding: { xs: '8px 12px', sm: '8px 12px', md: '8px 16px' },
                             }}
+                            size="small"
                         >
                             {column.formatter ? column.formatter(value, row) : value}
                         </StyledTableCell>
@@ -291,16 +305,18 @@ const TableCustom = (props) => {
                     borderColor: 'secondary.main',
                     position: 'relative',
                     overflowX: 'auto',
+                    bgcolor: 'green'
                 }}
             >
-                {/* size="small" akan mengatur padding secara otomatis */}
                 <Table
                     size="small"
                     aria-label="a dense table"
+                    width="100%"
                     sx={{
                         border: 'none',
                         tableLayout: 'auto',
-                        minWidth: '100%',
+                        width: 'max-content',
+                        minWidth: '100%'
                     }}
                 >
                     <TableHead
@@ -538,5 +554,6 @@ TableCustom.propTypes = {
     sortOrder: PropTypes.string,
     onRequestSort: PropTypes.func,
 };
+
 
 export default TableCustom;

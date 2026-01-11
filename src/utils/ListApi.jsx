@@ -15,6 +15,10 @@ export const restoreUser = (userId) => axiosInstance("user").post(`/api/users/de
 
 // app003 - Master Cluster
 export const getCluster = (params, config = {}) => axiosInstance("iot").get("/api/clusters", { params, ...config });
+export const addCluster = (res) => axiosInstance("iot").post("/api/clusters", res)
+export const editCluster = (clusterId, res, config = {}) => axiosInstance("iot").patch(`/api/clusters/${clusterId}`, res, config)
+
+
 
 
 // app004 - Master Device

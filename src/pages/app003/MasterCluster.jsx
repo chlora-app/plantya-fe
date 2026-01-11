@@ -20,18 +20,14 @@ import { getCluster, deleteUser, getUserDeleted, restoreUser } from "../../utils
 // import UserEdit from "./UserEdit";
 import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
 import { Trash2, SquarePen, Plus, Search, RotateCcw } from "lucide-react";
+import ClusterAdd from "./ClusterAdd";
 
 const MasterCluster = () => {
     // State First Page, Message, and Loading Effect
     const [firstRender, setFirstRender] = useState(false)
     const [app002p01Page, setApp002p01Page] = useState(true);
     const [active, setActive] = useState("activeCluster")
-    const handleTabChange = (event, newValue) => {
-        setActive(newValue);
-        setRole("")
-        setSearch("")
-        refreshTable()
-    };
+
     const [app002Msg, setApp002setMsg] = useState("");
     const [app002MsgStatus, setApp002setMsgStatus] = useState("");
     const [loadingData, setLoadingData] = useState(false);
@@ -279,11 +275,6 @@ const MasterCluster = () => {
         }
     });
 
-    useEffect(() => {
-        if (app002p01Page && active == "deletedCluster") {
-            getAllDeletedUser(app002UserDeletedDataParam);
-        }
-    }, [app002UserDeletedDataParam, active]);
 
     // Search and Filtering (Free Text and Role)
     const roleOptions = [
@@ -303,25 +294,12 @@ const MasterCluster = () => {
                 "role": event,
                 "search": ""
             }))
-        } else if (active == "deletedCluster") {
-            setApp002UserDeletedDataParam(prev => ({
-                ...prev,
-                "page": 1,
-                "role": event,
-                "search": ""
-            }))
         }
     }
 
     const handleSearchState = () => {
         if (active == "activeUser") {
             setApp002UserDataParam(prev => ({
-                ...prev,
-                page: 1,
-                search: search
-            }))
-        } else if (active == "deletedCluster") {
-            setApp002UserDeletedDataParam(prev => ({
                 ...prev,
                 page: 1,
                 search: search
@@ -471,248 +449,128 @@ const MasterCluster = () => {
                             }}
                         >
 
-                            <Tabs
-                                value={active}
-                                onChange={handleTabChange}
-                            >
-                                <Tab label="Active Cluster" value="activeCluster"
-                                    sx={{
-                                        textTransform: 'none',
-                                    }}
-                                />
-                                <Tab label="Deleted Cluster" value="deletedCluster"
-                                    sx={{
-                                        textTransform: 'none',
-                                    }}
-                                />
-                            </Tabs>
-
-
                         </Grid>
 
                         {/* Tab Active User */}
-                        {active === "activeCluster" && (
-                            <Box >
-                                <Grid container alignItems="center" size={12} sx={{ mb: 2, justifyContent: 'space-between' }}>
-                                    <Grid
-                                        size={{ xs: 4, sm: 3 }}
-                                        sx={{
-                                            pr: 2
+                        <Box >
+                            <Grid container alignItems="center" size={12} sx={{ mb: 2, justifyContent: 'space-between' }}>
+                                <Grid
+                                    size={{ xs: 4, sm: 3 }}
+                                    sx={{
+                                        pr: 2
+                                    }}
+                                >
+                                    <TextField
+                                        fullWidth
+                                        placeholder="Search"
+                                        value={search}
+                                        onChange={(e) => {
+                                            setSearch(e.target.value)
                                         }}
-                                    >
-                                        <TextField
-                                            fullWidth
-                                            placeholder="Search"
-                                            value={search}
-                                            onChange={(e) => {
-                                                setSearch(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    handleSearchState()
-                                                }
-                                            }}
-                                            size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
-
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                            slotProps={{
-                                                input: {
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            aria-label="search button"
-                                                            onClick={handleSearchState}
-                                                            edge="end"
-                                                            size="small"
-                                                            sx={{
-                                                                color: 'text.secondary'
-                                                            }}
-                                                        >
-                                                            <Search size={18} />
-                                                        </IconButton>
-                                                    ),
-                                                }
-                                            }}
-                                        />
-                                    </Grid>
-
-
-
-                                    <Grid
-                                        container
-                                        size={{ xs: 4, sm: 7 }}
-                                        justifyContent="flex-end"
-                                        alignItems="center"
-                                        sx={{
-                                            pl: 2
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                handleSearchState()
+                                            }
                                         }}
-                                    >
-                                        <Button
-                                            variant="contained"
-                                            color="success"
-                                            endIcon={<Plus size={18} />}
-                                            sx={{
-                                                textTransform: 'none',
-                                                '&:hover': {
-                                                    bgcolor: '#61A05A'
+                                        size="small"
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                                borderRadius: 2,
+                                                '& fieldset': {
+                                                    borderColor: 'custom.line',
+                                                    borderWidth: 1.5,
                                                 },
-                                            }}
-                                            onClick={handleModalAddOpen}
-                                        >
-                                            Add Cluster
-                                        </Button>
-                                    </Grid>
 
+                                                '&:hover fieldset': {
+                                                    borderColor: 'custom.line',
+                                                    borderWidth: 2.5
+                                                },
 
-
+                                                '&.Mui-focused fieldset': {
+                                                    borderColor: 'custom.line',
+                                                    borderWidth: 2.5
+                                                },
+                                            },
+                                        }}
+                                        slotProps={{
+                                            input: {
+                                                endAdornment: (
+                                                    <IconButton
+                                                        aria-label="search button"
+                                                        onClick={handleSearchState}
+                                                        edge="end"
+                                                        size="small"
+                                                        sx={{
+                                                            color: 'text.secondary'
+                                                        }}
+                                                    >
+                                                        <Search size={18} />
+                                                    </IconButton>
+                                                ),
+                                            }
+                                        }}
+                                    />
                                 </Grid>
 
 
 
-                                <TableCustom
-                                    keyField="user_id"
-                                    loadingData={loadingData}
-                                    columns={app002UserColumns}
-                                    appdata={app002UserData}
-                                    appdataTotal={app002UserTotalData}
-                                    totalPage={app002TotalPage}
-                                    rowsPerPageOption={[5, 10, 20, 25]}
-
-                                    page={app002UserDataParam.page - 1}
-                                    rowsPerPage={app002UserDataParam.size}
-                                    sortField={app002UserDataParam.sort}
-                                    sortOrder={app002UserDataParam.order}
-
-
-                                    onPageChange={handleChangePage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                    onRequestSort={handleRequestSort}
-                                />
-                            </Box>
-                        )}
-
-                        {/* Tab Deleted User */}
-                        {active === "deletedCluster" && (
-                            <Box>
-                                <Grid container alignItems="center" size={12} sx={{ mb: 2 }}>
-                                    <Grid
-                                        size={{ xs: 4, sm: 3 }}
+                                <Grid
+                                    container
+                                    size={{ xs: 4, sm: 7 }}
+                                    justifyContent="flex-end"
+                                    alignItems="center"
+                                    sx={{
+                                        pl: 2
+                                    }}
+                                >
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        endIcon={<Plus size={18} />}
                                         sx={{
-                                            pr: 2
+                                            textTransform: 'none',
+                                            '&:hover': {
+                                                bgcolor: '#61A05A'
+                                            },
                                         }}
+                                        onClick={handleModalAddOpen}
                                     >
-                                        <TextField
-                                            fullWidth
-                                            placeholder="Search"
-                                            value={search}
-                                            onChange={(e) => {
-                                                setSearch(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    handleSearchState()
-                                                }
-                                            }}
-                                            size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
-
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                            slotProps={{
-                                                input: {
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            aria-label="search button"
-                                                            onClick={handleSearchState}
-                                                            edge="end"
-                                                            size="small"
-                                                            sx={{
-                                                                color: 'text.secondary'
-                                                            }}
-                                                        >
-                                                            <Search size={18} />
-                                                        </IconButton>
-                                                    ),
-                                                }
-                                            }}
-                                        />
-                                    </Grid>
-
-                                    <Grid
-                                        container
-                                        size={{ xs: 4, sm: 7 }}
-                                        justifyContent="flex-end"
-                                        alignItems="center"
-                                        sx={{
-                                            pl: 2
-                                        }}
-                                    >
-                                    </Grid>
-
-
-
+                                        Add Cluster
+                                    </Button>
                                 </Grid>
 
 
 
-                                <TableCustom
-                                    keyField="user_id"
-                                    loadingData={loadingData}
-                                    columns={app002UserDeletedColumns}
-                                    appdata={app002UserDeletedData}
-                                    appdataTotal={app002UserDeletedTotalData}
-                                    totalPage={app002TotalPageDeleted}
-                                    rowsPerPageOption={[5, 10, 20, 25]}
-
-                                    page={app002UserDeletedDataParam.page - 1}
-                                    rowsPerPage={app002UserDeletedDataParam.size}
-                                    sortField={app002UserDeletedDataParam.sort}
-                                    sortOrder={app002UserDeletedDataParam.order}
+                            </Grid>
 
 
-                                    onPageChange={handleChangePageDeleted}
-                                    onRowsPerPageChange={handleChangeRowsPerPageDeleted}
-                                    onRequestSort={handleRequestSortDeleted}
-                                />
-                            </Box>
-                        )}
+
+                            <TableCustom
+                                keyField="user_id"
+                                loadingData={loadingData}
+                                columns={app002UserColumns}
+                                appdata={app002UserData}
+                                appdataTotal={app002UserTotalData}
+                                totalPage={app002TotalPage}
+                                rowsPerPageOption={[5, 10, 20, 25]}
+
+                                page={app002UserDataParam.page - 1}
+                                rowsPerPage={app002UserDataParam.size}
+                                sortField={app002UserDataParam.sort}
+                                sortOrder={app002UserDataParam.order}
+
+
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                onRequestSort={handleRequestSort}
+                            />
+                        </Box>
 
                     </Stack>
                 </Container>
 
                 {modalAddOpen && (
-                    <UserAdd
+                    <ClusterAdd
                         modalAddOpen={modalAddOpen}
                         setModalAddOpen={setModalAddOpen}
                         refreshTable={refreshTable}
@@ -722,7 +580,7 @@ const MasterCluster = () => {
                         app002MsgStatus={app002MsgStatus}
                         setApp002setMsgStatus={setApp002setMsgStatus}
                     >
-                    </UserAdd>
+                    </ClusterAdd>
                 )}
 
                 {modalEditOpen && (
