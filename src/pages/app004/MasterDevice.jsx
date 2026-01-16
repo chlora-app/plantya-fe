@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
-import { getDevice, deleteDevice, getCluster } from "../../utils/ListApi";
+import { getDevice, addDevice, deleteDevice, getCluster } from "../../utils/ListApi";
 import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
 import { Trash2, SquarePen, Plus, Search, RotateCcw } from "lucide-react";
 import DeviceAdd from "./DeviceAdd";
@@ -191,7 +191,18 @@ const MasterDevice = () => {
 
     // State and Function for Dropdown Cluster
     const [clusterOption, setClusterOption] = useState([])
+    const [deviceTypeOption, setDeviceTypeOption] = useState([
+        { value: "ACTUATOR", label: "Actuator" },
+        { value: "Sensor", label: "Sensor" },
+    ]
+    )
+    const [statusOption, setStatusOption] = useState([
+        { value: "ONLINE", label: "Online" },
+        { value: "OFFLINE", label: "Offline" },
+    ]
+    )
     const getAllCluster = useCallback(async (param) => {
+        debugger
         setLoadingData(true);
         try {
             const response = await getCluster(param);
@@ -447,6 +458,11 @@ const MasterDevice = () => {
                         setApp004setMsg={setApp004setMsg}
                         app004MsgStatus={app004MsgStatus}
                         setApp004setMsgStatus={setApp004setMsgStatus}
+
+                        // Option Cluster
+                        clusterOption={clusterOption}
+                        statusOption={statusOption}
+                        deviceTypeOption={deviceTypeOption}
                     >
                     </DeviceAdd>
                 )}

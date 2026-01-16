@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import { addCluster } from "../../utils/ListApi";
+import { addDevice } from "../../utils/ListApi";
 import FormSpinner from "../../components/common/FormSpinner";
 import { Mail } from "lucide-react";
 
@@ -22,7 +22,8 @@ const DeviceAdd = (props) => {
 
   useEffect(() => {
     if (props.modalAddOpen) {
-      app003p02ValidInput.resetForm()
+      app004p02ValidInput.resetForm()
+      console.log(props.clusterOption)
     }
   }, [props.modalAddOpen])
 
@@ -34,15 +35,20 @@ const DeviceAdd = (props) => {
   }
 
   // Validation Form
-  const app003p02ValidInput = useFormik({
+  const app004p02ValidInput = useFormik({
     initialValues:
     {
-      clusterName: "",
+      device_name: "",
+      device_type: "",
+      cluster_id: "",
+      status: "",
     },
     validationSchema: Yup.object
       ({
-        clusterName: Yup.string()
-          .required("Cluster Name is required."),
+        device_name: Yup.string().required("Device Name is required."),
+        device_type: Yup.string().required("Device Type is required."),
+        cluster_id: Yup.string().required("Cluster Id is required."),
+        status: Yup.string().required("Status is required."),
       }),
 
     onSubmit: async (values, { setSubmitting }) => {
@@ -50,27 +56,25 @@ const DeviceAdd = (props) => {
       setSubmitting(true)
       setLoadingSpinner(true)
       setTextLoading("Processing...")
-      await SaveClusterAction(values)
+      await SaveDeviceAction(values)
       setSubmitting(false)
     },
   });
 
-  const SaveClusterAction = useCallback(async (param) => {
+  const SaveDeviceAction = useCallback(async (param) => {
     try {
-      const response = await addCluster({
-        cluster_name: param.clusterName
-      })
+      const response = await addDevice(param)
       debugger
       if (response.status === 201 || response.status === 200) {
-        props.setApp003setMsg("Cluster Has Been Successfully Added.");
-        props.setApp003setMsgStatus("success");
+        props.setApp004setMsg("Device Has Been Successfully Added.");
+        props.setApp004setMsgStatus("success");
         props.refreshTable();
         handleClose()
       }
     } catch (error) {
       debugger
-      props.setApp003setMsg(error?.response?.data?.detail || "System is Unavailable. Please Try Again Later.")
-      props.setApp003setMsgStatus("error")
+      props.setApp004setMsg(error?.response?.data?.detail || "System is Unavailable. Please Try Again Later.")
+      props.setApp004setMsgStatus("error")
     } finally {
       setLoadingSpinner(false)
       setTextLoading("")
@@ -103,7 +107,7 @@ const DeviceAdd = (props) => {
             pr: 1,
           }}
         >
-          Add Cluster
+          Add Device
 
           <IconButton
             aria-label="close"
@@ -145,12 +149,12 @@ const DeviceAdd = (props) => {
               sx={{
                 color: 'text.primary'
               }}>
-              Add a new cluster and complete the information below
+              Add a new Device and complete the information below
             </DialogContentText>
 
             <Box
               component="form"
-              onSubmit={app003p02ValidInput.handleSubmit}
+              onSubmit={app004p02ValidInput.handleSubmit}
               sx={{
                 width: '100%',
                 display: 'flex',
@@ -166,20 +170,20 @@ const DeviceAdd = (props) => {
                   variant="body2" fontWeight="medium"
                   mb={1}
                 >
-                  Cluster Name
+                  Device Name
                 </Typography>
                 <TextField
                   className="auth-field"
                   variant="outlined"
-                  placeholder="Cluster Name"
-                  name="clusterName"
+                  placeholder="Device Name"
+                  name="device_name"
                   size="medium"
                   fullWidth
-                  value={app003p02ValidInput.values.clusterName}
-                  onChange={app003p02ValidInput.handleChange}
-                  onBlur={app003p02ValidInput.handleBlur}
-                  error={app003p02ValidInput.touched.clusterName && Boolean(app003p02ValidInput.errors.clusterName)}
-                  helperText={app003p02ValidInput.touched.clusterName && app003p02ValidInput.errors.clusterName}
+                  value={app004p02ValidInput.values.device_name}
+                  onChange={app004p02ValidInput.handleChange}
+                  onBlur={app004p02ValidInput.handleBlur}
+                  error={app004p02ValidInput.touched.device_name && Boolean(app004p02ValidInput.errors.device_name)}
+                  helperText={app004p02ValidInput.touched.device_name && app004p02ValidInput.errors.device_name}
                   slotProps={{
                     input: {
                       spellCheck: false,
@@ -187,7 +191,7 @@ const DeviceAdd = (props) => {
                         <InputAdornment position="start">
                           <MailOutlineOutlinedIcon
                             sx={{
-                              color: app003p02ValidInput.values.clusterName === "" ? 'text.secondary' : 'text.primary'
+                              color: app004p02ValidInput.values.device_name === "" ? 'text.secondary' : 'text.primary'
                             }}
                           />
 
@@ -195,6 +199,138 @@ const DeviceAdd = (props) => {
                       ),
                     },
                   }}
+                />
+              </Box>
+
+              <Box>
+                <Typography
+                  variant="body2" fontWeight="medium"
+                  mb={1}
+                >
+                  Device Type
+                </Typography>
+
+                <Autocomplete
+                  fullWidth
+                  options={props.deviceTypeOption}
+                  getOptionLabel={(option) => option.label}
+                  value={props.deviceTypeOption?.find(opt => opt.value === app004p02ValidInput.values.device_type) || null}
+                  onChange={(event, newValue) => { app004p02ValidInput.setFieldValue('device_type', newValue ? newValue.value : '') }}
+                  onBlur={() => app004p02ValidInput.handleBlur('device_type')}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className="auth-field"
+                      placeholder="Device Type"
+                      variant="outlined"
+                      name="device_type"
+                      error={app004p02ValidInput.touched.device_type && Boolean(app004p02ValidInput.errors.device_type)}
+                      helperText={app004p02ValidInput.touched.device_type && app004p02ValidInput.errors.device_type}
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <AdminPanelSettingsIcon
+                                sx={{
+                                  color: app004p02ValidInput.values.device_type ? 'text.primary' : 'text.secondary'
+                                }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+
+              <Box>
+                <Typography
+                  variant="body2" fontWeight="medium"
+                  mb={1}
+                >
+                  Cluster ID
+                </Typography>
+
+                <Autocomplete
+                  fullWidth
+                  options={props.clusterOption}
+                  getOptionLabel={(option) => option.label}
+                  value={props.clusterOption?.find(opt => opt.value === app004p02ValidInput.values.cluster_id) || null}
+                  onChange={(event, newValue) => { app004p02ValidInput.setFieldValue('cluster_id', newValue ? newValue.value : '') }}
+                  onBlur={() => app004p02ValidInput.handleBlur('cluster_id')}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className="auth-field"
+                      placeholder="Cluster Id"
+                      variant="outlined"
+                      name="cluster_id"
+                      error={app004p02ValidInput.touched.cluster_id && Boolean(app004p02ValidInput.errors.cluster_id)}
+                      helperText={app004p02ValidInput.touched.cluster_id && app004p02ValidInput.errors.cluster_id}
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <AdminPanelSettingsIcon
+                                sx={{
+                                  color: app004p02ValidInput.values.cluster_id ? 'text.primary' : 'text.secondary'
+                                }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+
+              <Box>
+                <Typography
+                  variant="body2" fontWeight="medium"
+                  mb={1}
+                >
+                  Status
+                </Typography>
+
+                <Autocomplete
+                  fullWidth
+                  options={props.statusOption}
+                  getOptionLabel={(option) => option.label}
+                  value={props.statusOption?.find(opt => opt.value === app004p02ValidInput.values.statusOption) || null}
+                  onChange={(event, newValue) => { app004p02ValidInput.setFieldValue('status', newValue ? newValue.value : '') }}
+                  onBlur={() => app004p02ValidInput.handleBlur('status')}
+                  isOptionEqualToValue={(option, value) => option.value === value.value}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      className="auth-field"
+                      placeholder="Status"
+                      variant="outlined"
+                      name="status"
+                      error={app004p02ValidInput.touched.status && Boolean(app004p02ValidInput.errors.status)}
+                      helperText={app004p02ValidInput.touched.status && app004p02ValidInput.errors.status}
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <AdminPanelSettingsIcon
+                                sx={{
+                                  color: app004p02ValidInput.values.status ? 'text.primary' : 'text.secondary'
+                                }}
+                              />
+                            </InputAdornment>
+                          ),
+                        },
+                      }}
+                    />
+                  )}
                 />
               </Box>
 
@@ -244,10 +380,10 @@ DeviceAdd.propTypes = {
   modalAddOpen: PropTypes.any,
   setModalAddOpen: PropTypes.any,
   refreshTable: PropTypes.any,
-  app003Msg: PropTypes.any,
-  setApp003setMsg: PropTypes.any,
-  app003MsgStatus: PropTypes.any,
-  setApp003setMsgStatus: PropTypes.any,
+  app004Msg: PropTypes.any,
+  setApp004setMsg: PropTypes.any,
+  app004MsgStatus: PropTypes.any,
+  setApp004setMsgStatus: PropTypes.any,
 };
 
 export default DeviceAdd

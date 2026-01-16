@@ -3,7 +3,7 @@ import axiosInstance from "./AxiosInstance";
 // Login and Register
 export const loginApi = (res) => axiosInstance("auth").post("/api/auth/login", res);
 export const registerApi = (res) => axiosInstance("auth").post("/api/auth/register", res);
-// export const logoutApi = (res) => "/api/auth/logout";
+export const logoutApi = (res) => axiosInstance("auth").post("/api/auth/logout", res);
 
 // app002 - Master User
 export const getUser = (params, config = {}) => axiosInstance("user").get("/api/users", { params, ...config });
@@ -25,4 +25,6 @@ export const deleteCluster = (clusterId) => axiosInstance("iot").delete(`/api/cl
 
 // app004 - Master Device
 export const getDevice = (params, config = {}) => axiosInstance("iot").get("/api/devices", { params, ...config });
+export const addDevice = (res) => axiosInstance("iot").post("/api/device", res)
+
 export const deleteDevice = (deviceId) => axiosInstance("iot").delete(`/api/devices/${deviceId}`)
