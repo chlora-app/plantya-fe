@@ -41,14 +41,12 @@ const DeviceAdd = (props) => {
       device_name: "",
       device_type: "",
       cluster_id: "",
-      status: "",
     },
     validationSchema: Yup.object
       ({
         device_name: Yup.string().required("Device Name is required."),
         device_type: Yup.string().required("Device Type is required."),
         cluster_id: Yup.string().required("Cluster Id is required."),
-        status: Yup.string().required("Status is required."),
       }),
 
     onSubmit: async (values, { setSubmitting }) => {
@@ -279,50 +277,6 @@ const DeviceAdd = (props) => {
                               <AdminPanelSettingsIcon
                                 sx={{
                                   color: app004p02ValidInput.values.cluster_id ? 'text.primary' : 'text.secondary'
-                                }}
-                              />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
-                    />
-                  )}
-                />
-              </Box>
-
-              <Box>
-                <Typography
-                  variant="body2" fontWeight="medium"
-                  mb={1}
-                >
-                  Status
-                </Typography>
-
-                <Autocomplete
-                  fullWidth
-                  options={props.statusOption}
-                  getOptionLabel={(option) => option.label}
-                  value={props.statusOption?.find(opt => opt.value === app004p02ValidInput.values.statusOption) || null}
-                  onChange={(event, newValue) => { app004p02ValidInput.setFieldValue('status', newValue ? newValue.value : '') }}
-                  onBlur={() => app004p02ValidInput.handleBlur('status')}
-                  isOptionEqualToValue={(option, value) => option.value === value.value}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      className="auth-field"
-                      placeholder="Status"
-                      variant="outlined"
-                      name="status"
-                      error={app004p02ValidInput.touched.status && Boolean(app004p02ValidInput.errors.status)}
-                      helperText={app004p02ValidInput.touched.status && app004p02ValidInput.errors.status}
-                      slotProps={{
-                        input: {
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AdminPanelSettingsIcon
-                                sx={{
-                                  color: app004p02ValidInput.values.status ? 'text.primary' : 'text.secondary'
                                 }}
                               />
                             </InputAdornment>

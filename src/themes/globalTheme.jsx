@@ -14,9 +14,16 @@ const baseColors = {
   white: "#FFFFFF", // Text White Global
   grey: "#A3B2AC",
 
-  // Background Colors for Main and Paper
-  darkBlack: "#1A1A1A",
-  lightBlack: "#2A2A2A",
+  // =========== Start Revision Color Design ==========
+
+  neutralBlack: "#121212", // First Background
+  darkBlack: "#1A1A1A ", // Second Background
+  midnightBlack: "#0D0D0D", // Third Background
+
+  // =========== End Revision Color Design ==========
+
+
+
 
   // Textfield config color
   darkGrey: "#222222", // Background Textfield
@@ -58,8 +65,9 @@ const darkTheme = createTheme({
 
     // Background Colors - DARK MODE
     background: {
-      default: baseColors.darkBlack, // #1A1A1A
-      paper: baseColors.lightBlack, // #2A2A2A
+      default: baseColors.neutralBlack,
+      paper: baseColors.darkBlack,
+      elevated: baseColors.midnightBlack,
     },
 
     // Text Colors - DARK MODE
@@ -85,13 +93,13 @@ const darkTheme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: ({ ownerState, theme }) => ({
-          backgroundColor: `${baseColors.lightBlack} !important`,
+          backgroundColor: `${baseColors.darkBlack} !important`,
           backgroundImage: "none !important",
           ...(ownerState?.variant === "elevation" && {
-            backgroundColor: `${baseColors.lightBlack} !important`,
+            backgroundColor: `${baseColors.darkBlack} !important`,
           }),
           ...(ownerState?.variant === "outlined" && {
-            backgroundColor: `${baseColors.lightBlack} !important`,
+            backgroundColor: `${baseColors.darkBlack} !important`,
           }),
         }),
       },

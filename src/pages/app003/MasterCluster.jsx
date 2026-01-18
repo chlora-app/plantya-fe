@@ -71,7 +71,7 @@ const MasterCluster = () => {
             minWidth: '100px',
         },
         {
-            dataField: "total_device",
+            dataField: "total_devices",
             text: "Total Device",
             sort: true,
             headerAlign: "center",

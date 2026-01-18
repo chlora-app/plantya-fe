@@ -196,17 +196,16 @@ const MasterDevice = () => {
         { value: "Sensor", label: "Sensor" },
     ]
     )
-    const [statusOption, setStatusOption] = useState([
-        { value: "ONLINE", label: "Online" },
-        { value: "OFFLINE", label: "Offline" },
-    ]
-    )
     const getAllCluster = useCallback(async (param) => {
         debugger
         setLoadingData(true);
         try {
             const response = await getCluster(param);
-            setClusterOption(response?.data?.clusters ? response.data.clusters : []);
+            debugger
+            setClusterOption(response?.data?.clusters ? response.data.clusters.map(cluster => ({
+                value: cluster.cluster_id,
+                label: cluster.cluster_name,
+            })) : []);
         } catch (error) {
             console.error("Gagal mengambil data:", error);
 
@@ -461,7 +460,6 @@ const MasterDevice = () => {
 
                         // Option Cluster
                         clusterOption={clusterOption}
-                        statusOption={statusOption}
                         deviceTypeOption={deviceTypeOption}
                     >
                     </DeviceAdd>

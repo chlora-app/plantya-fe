@@ -1,18 +1,20 @@
 import React from "react";
-import { Box, Grid, Container, Paper, Typography, Card, CardContent } from "@mui/material"
+import { Box, Grid, Container, Paper, Typography, Card, CardContent, Stack } from "@mui/material"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Icon from "@mdi/react";
-import { mdiCircleMedium, mdiAccessPoint, mdiWater } from '@mdi/js';
+import { mdiAccessPoint, mdiSprout, mdiChip, mdiBrain } from '@mdi/js';
 import { useTheme } from '@mui/material/styles';
 import LoginBg from "../assets/LoginBg.webp";
 import SmallIcon from "../assets/SmallIcon.png";
+import Lottie from "lottie-react";
+import nonAuthIcon from "../assets/Icon/nonAuthIcon.json"
+
 
 // Import Swiper styles
+import { Pagination, Autoplay, Mousewheel, FreeMode } from 'swiper/modules'
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { Pagination, Navigation } from 'swiper/modules';
-
 
 
 // import required modules
@@ -22,26 +24,23 @@ const NonAuthLayout = ({ children }) => {
 
     const cardContent = [
         {
-            icon: mdiWater,
-            color: theme.palette.info.light,
-            title: 'Humidity',
-            desc: "Test Humidity",
+            icon: mdiAccessPoint,
+            color: theme.palette.primary.main,
+            title: 'Realtime Monitoring',
+            desc: "Instant visibility into your plantation’s performance.",
         },
         {
-            icon: "Later",
-            title: 'Temperature',
-            desc: "Test Temperature",
+            icon: mdiChip,
+            color: theme.palette.primary.main,
+            title: 'Smart IoT Integration',
+            desc: "A unified network of smart farming devices.",
         },
         {
-            icon: "Later",
-            title: 'Temperature 2',
-            desc: "Test Temperature 2",
+            icon: mdiBrain,
+            color: theme.palette.primary.main,
+            title: 'Machine Learning Insights',
+            desc: "Intelligence that evolves with your crops.",
         },
-        {
-            icon: "Later",
-            title: 'pH',
-            desc: "Test pH",
-        }
     ]
 
     return (
@@ -58,25 +57,31 @@ const NonAuthLayout = ({ children }) => {
             }}
         >
             <Paper
-                elevation={4}
+                elevation={0}
                 sx={{
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
-                    width: { xs: '100%', sm: "90%", md: '85%', lg: "80%" },
-                    height: { xs: '100%', sm: '85%', md: "80%" },
+                    width: '90%',
+                    height: '90%',
                     maxWidth: '1200px',
                     maxHeight: '800px',
                     borderRadius: 5,
                     overflow: 'hidden',
+                    boxShadow: `0px 18px 45px rgba(0, 0, 0, 0.55),0px 0px 90px rgba(0, 124, 79, 0.25)`,
                 }}
             >
                 {/* LEFT SIDE */}
                 <Box
+                    bgcolor={"background.elevated"}
                     sx={{
                         display: {
                             xs: 'none',
                             md: 'flex'
                         },
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        py: 5,
+                        px: 7,
                         flex: 1,
                         borderTopLeftRadius: 5,
                         borderBottomLeftRadius: 5,
@@ -84,117 +89,143 @@ const NonAuthLayout = ({ children }) => {
                         position: 'relative',
                     }}
                 >
-                    <Box
-                        component="img"
-                        src={LoginBg}
-                        alt="Background"
-                        sx={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            position: 'absolute',
-                            zIndex: 1,
-                        }}
-                    />
 
-                    <Box
+                    <Stack>
+                        <Box display={"flex"} flexDirection={"row"} gap={1.3} textAlign={"center"} alignItems={"center"}>
+                            <Icon path={mdiSprout} size={1.5} className="bg-success rounded-2 p-1" />
+                            <Typography variant="h5" fontWeight="medium">Plantya</Typography>
+                        </Box>
+                    </Stack>
+
+                    <Stack
                         sx={{
-                            position: 'absolute',
-                            zIndex: 2,
-                            textAlign: 'left',
-                            color: 'white',
-                            width: '100%',
-                            height: '100%',
+                            width: '60%',
+                            height: '40%',
+                            alignSelf: 'center',
                             display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            p: 5,
-                            // bgcolor: 'darkRed'
+                            alignItems: 'center',
+                            justifyContent: 'center',
                         }}
                     >
-                        <Box >
-                            <Box display={"flex"} flexDirection={"row"} alignItems={"center"} gap={1} bgcolor={"rgba(0, 0, 0, 0.5)"} borderRadius={25} width={"fit-content"} px={2} py={1}>
-                                <img
-                                    src={SmallIcon}
-                                    alt="Logo"
-                                    style={{
-                                        height: 30,
-                                        width: 30,
-                                    }}
-                                />
-                                <Typography variant="h5" fontWeight="medium">Plantya</Typography>
-                            </Box>
-                        </Box>
+                        <Lottie
+                            animationData={nonAuthIcon}
+                            loop
+                            style={{ width: "100%", height: "100%" }}
+                        />
+                    </Stack>
 
-                        <Box display={"flex"} flexDirection={"column"} gap={2}>
-                            <Box>
-                                <Typography variant="h6" fontWeight="medium">
-                                    Smart Monitoring for
-                                </Typography>
-                                <Typography variant="h6" fontWeight="medium">
+
+                    <Stack
+                        alignItems="center"
+                        textAlign="center"
+                        spacing={1}
+                    >
+                        <Box>
+                            <Typography variant="h5" fontWeight="medium" lineHeight={1.2}>
+                                Smart Monitoring for
+                                <br />
+                                <Box component="span" color="success.main">
                                     Modern Growth.
-                                </Typography>
-                            </Box>
-                            <Box sx={{ opacity: 0.8 }}>
-                                <Typography variant="body2" fontWeight="light">
-                                    Harness the power of machine learning to optimize your
-                                </Typography>
-                                <Typography variant="body2" fontWeight="light">
-                                    plantation's yield. Real-time insights, right at your fingertips.
-                                </Typography>
-                            </Box>
+                                </Box>
+                            </Typography>
 
-                            <Box display={"flex"} flexDirection={"row"} sx={{ bgcolor: 'darkRed' }}>
-                                <Card sx={{ width: '80%', borderRadius: 4 }}> {/* Atur lebar card sesuai kebutuhan */}
-                                    <Box display={"flex"} flexDirection={"row"} justifyContent={"space-between"} py={1} px={2}>
-                                        <Box display={"flex"} flexDirection={"row"} gap={1} alignItems={"center"} letterSpacing={1}>
-                                            <Icon path={mdiCircleMedium} size={1} color={theme.palette.primary.main} />
-                                            <Typography variant="body2" fontWeight={"normal"}>LIVE METRICS</Typography>
-                                        </Box>
-                                        <Box>
-                                            <Icon path={mdiAccessPoint} size={0.9} />
-                                        </Box>
-                                    </Box>
-
-
-                                    <Swiper
-                                        slidesPerView={"auto"} // Tampilkan card sesuai lebar masing-masing
-                                        freeMode={true} // Mode bebas scroll
-                                        loop={true} // Infinite loop - kembali ke depan setelah habis
-                                        grabCursor={true} // Kursor berubah jadi grab saat hover
-                                        mousewheel={true} // Enable mouse wheel scroll (opsional)
-                                    >
-                                        {cardContent.map((item) => (
-                                            <SwiperSlide key={item.id}> {/* Width auto untuk card yang fleksibel */}
-
-                                                <CardContent
-                                                    sx={{
-                                                        bgcolor: 'red',
-                                                        display: 'flex',
-                                                        flexDirection: 'row',
-                                                        gap: 2
-                                                    }}>
-                                                    <Box bgcolor={"yellow"} alignItems={"center"} display={"flex"}>
-                                                        <Icon path={item.icon} size={1.6} color={item.color} />
-                                                    </Box>
-
-                                                    <Box>
-                                                        <Typography>{item.title}</Typography>
-                                                        <Typography>{item.desc}</Typography>
-                                                    </Box>
-                                                </CardContent>
-
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-                                </Card>
-                            </Box>
                         </Box>
-                    </Box>
+
+                        <Box sx={{ opacity: 0.8 }}>
+                            <Typography variant="body2" fontWeight="light">
+                                Harness the power of machine learning to
+                            </Typography>
+                            <Typography variant="body2" fontWeight="light">
+                                optimize your plantation's yield.
+                            </Typography>
+                        </Box>
+                    </Stack>
+
+                    <Stack>
+                        <Box display={"flex"} justifyContent={"center"} flexDirection={"row"}
+                            sx={{
+                                '& .swiper': {
+                                    background: 'transparent',
+                                },
+                                '& .swiper-pagination': {
+                                    position: 'relative',
+                                    mt: -1
+                                },
+                                '& .swiper-pagination-bullet': {
+                                    backgroundColor: 'rgba(255,255,255,0.3)',
+                                    opacity: 1,
+                                },
+                                '& .swiper-pagination-bullet-active': {
+                                    backgroundColor: 'success.main',
+                                },
+                            }}
+                        >
+                            <Card
+                                sx={{
+                                    width: '90%',
+                                    borderRadius: 4,
+                                    overflow: 'hidden',
+                                    boxShadow: `0px 18px 45px rgba(0, 0, 0, 0.55),0px 0px 90px rgba(0, 124, 79, 0.25)`,
+
+                                }}
+                            >
+                                <Swiper
+                                    modules={[Pagination, Autoplay, Mousewheel, FreeMode]}
+                                    slidesPerView={1}
+                                    spaceBetween={12}
+                                    loop
+                                    grabCursor
+                                    mousewheel={{ forceToAxis: true }}
+                                    freeMode={false}
+                                    autoplay={{ delay: 3000, disableOnInteraction: false }}
+                                    pagination={{ clickable: true }}
+                                    autoHeight
+                                >
+                                    {cardContent.map((item) => (
+                                        <SwiperSlide
+                                            key={item.id}
+                                            style={{
+                                                width: 'auto',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <CardContent
+                                                sx={{
+                                                    width: '100%',
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    gap: 4,
+                                                    py: 3,
+                                                    px: 4
+                                                }}
+                                            >
+                                                <Box display="flex" alignItems="center">
+                                                    <Icon path={item.icon} size={1.2} color={item.color} />
+                                                </Box>
+
+                                                <Box>
+                                                    <Typography variant="body2" fontWeight={"medium"}>
+                                                        {item.title}
+                                                    </Typography>
+                                                    <Typography variant="caption" fontWeight={"light"} sx={{ opacity: 0.7 }}>
+                                                        {item.desc}
+                                                    </Typography>
+                                                </Box>
+                                            </CardContent>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            </Card>
+
+                        </Box>
+                    </Stack>
+
+                </Box >
 
 
 
-                </Box>
+                {/* </Box> */}
 
                 {/* RIGHT SIDE */}
                 <Box
@@ -218,7 +249,7 @@ const NonAuthLayout = ({ children }) => {
                         {children}
                     </Box>
                 </Box>
-            </Paper>
+            </Paper >
         </Container >
     );
 };
