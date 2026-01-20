@@ -16,7 +16,7 @@ const Logout = () => {
     useEffect(() => {
         logout()
         handleLogout()
-        navigate("/login", { replace: true });
+        navigate("/plantya/login", { replace: true });
     }, [navigate]);
 
     return null;

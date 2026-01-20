@@ -116,7 +116,7 @@ const Register = () => {
                         resetModalState();
                         setLoadingSpinner(false);
                         setTextLoading("");
-                        navigate("/login");
+                        navigate("/plantya/login");
                     }, 1000);
                 }, 3000);
             } catch (error) {

@@ -52,7 +52,7 @@ const Header = (props) => {
 
     const handleLogout = () => {
         handleProfileMenuClose();
-        navigate("/logout");
+        navigate("/plantya/logout");
     };
 
     const handleAccountInfo = () => {

@@ -32,7 +32,7 @@ import {
 // Set all Menu 
 export const appMenuStructure = [
     {
-        path: "/dashboard",
+        path: "/plantya/dashboard",
         component: LazyLoadRoutes(() => import("../pages/app001/Dashboard")),
         text: "Dashboard",
         icon: mdiViewDashboardOutline,
@@ -45,19 +45,19 @@ export const appMenuStructure = [
         sub: [
             {
                 text: "Master User",
-                path: "/app002/master-user",
+                path: "/plantya/app002/master-user",
                 component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")),
                 icon: mdiAccountOutline
             },
             {
                 text: "Master Cluster",
-                path: "/app003/master-cluster",
+                path: "/plantya/app003/master-cluster",
                 component: LazyLoadRoutes(() => import("../pages/app003/MasterCluster")),
                 icon: mdiHomeThermometerOutline
             },
             {
                 text: "Master Device",
-                path: "/app004/master-device",
+                path: "/plantya/app004/master-device",
                 component: LazyLoadRoutes(() => import("../pages/app004/MasterDevice")),
                 icon: mdiAccessPointNetwork
             },
@@ -70,34 +70,34 @@ export const appMenuStructure = [
         sub: [
             {
                 text: "Table",
-                path: "/testing",
+                path: "/plantya/testing",
                 component: "",
                 icon: mdiChartBoxOutline
             },
             {
                 text: "Graph",
-                path: "/master-data/graph",
+                path: "/plantya/master-data/graph",
                 component: "",
                 icon: mdiChartBoxOutline
             },
         ],
     },
     {
-        path: "/settings",
+        path: "/plantya/settings",
         component: "",
         text: "Settings",
         icon: mdiCogOutline,
         section: "main"
     },
     {
-        path: "/support",
+        path: "/plantya/support",
         component: "/test",
         text: "Support",
         icon: mdiFaceAgent,
         section: "footer"
     },
     {
-        path: "/about",
+        path: "/plantya/about",
         component: "",
         text: "About",
         icon: mdiInformationOutline,
@@ -124,9 +124,9 @@ const createRoute = (items) => {
 
 const AuthProtectedRoutes = createRoute(appMenuStructure)
 const PublicRoutes = [
-    { path: "/login", component: <Login /> },
-    { path: "/register", component: <Register /> },
-    { path: "/logout", component: <Logout /> }
+    { path: "/plantya/login", component: <Login /> },
+    { path: "/plantya/register", component: <Register /> },
+    { path: "/plantya/logout", component: <Logout /> }
 ]
 
 export { AuthProtectedRoutes, PublicRoutes }

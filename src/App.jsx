@@ -16,7 +16,7 @@ const App = () => {
         path="/"
         element={
           loginStatus ?
-            (<Navigate to="/dashboard" replace />) : (<Navigate to="/login" replace />)
+            (<Navigate to="/plantya/dashboard" replace />) : (<Navigate to="/plantya/login" replace />)
         }
       />
 
