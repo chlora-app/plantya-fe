@@ -1,22 +1,24 @@
 import React, { useMemo, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from "react-router-dom";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+
 import App from "../src/App"
-import 'bootstrap/dist/css/bootstrap.min.css'
+import createAppTheme from './themes';
+
 import { AuthProvider } from './context/AuthContext';
-import '../index.css'
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
-import themeConfig from './themes/globalTheme';
+
+import 'bootstrap/dist/css/bootstrap.min.css'
 import '@mdi/font/css/materialdesignicons.min.css';
+import '../index.css'
+
 
 const Root = () => {
   const [mode, setMode] = useState("dark");
 
-  const theme = useMemo(
-    () => themeConfig(mode),
-    [mode]
-  );
+  const theme = useMemo(() =>
+    createAppTheme(mode),
+    [mode]);
 
   const toggleTheme = () => {
     setMode(prev => (prev === "dark" ? "light" : "dark"))

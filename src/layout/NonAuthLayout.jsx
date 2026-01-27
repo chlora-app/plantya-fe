@@ -172,10 +172,7 @@ const NonAuthLayout = (props) => {
                                     width: '90%',
                                     borderRadius: 4,
                                     overflow: 'hidden',
-boxShadow: `
-  0px 6px 16px rgba(0, 0, 0, 0.25),
-  0px 0px 24px rgba(0, 124, 79, 0.18)
-`,
+                                    boxShadow: `0px 6px 16px rgba(0, 0, 0, 0.25), 0px 0px 24px rgba(0, 124, 79, 0.18)`,
                                 }}
                             >
                                 <Swiper
