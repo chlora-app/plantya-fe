@@ -8,19 +8,22 @@ import {
     Typography,
     InputAdornment,
     Grid,
-    Divider
+    Divider,
+    Stack
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import PageSpinner from "../../components/common/PageSpinner";
 import axiosInstance from "../../utils/AxiosInstance";
 import { useAuth } from "../../context/AuthContext";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import IconButton from '@mui/material/IconButton';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-// import { textFieldCustom } from "../../themes/globalTheme"
+import {
+    AccountCircleIcon,
+    MailOutlineOutlinedIcon,
+    LockOutlinedIcon,
+    VisibilityOutlinedIcon,
+    VisibilityOff,
+} from '@/assets/Icon/muiIcon';
+
 import { registerApi } from "../../utils/ListApi";
 import PopupModal from "../../components/common/PopupModal";
 
@@ -157,136 +160,134 @@ const Register = () => {
                 onClose={() => setShowModal(false)}
             />
 
-            {/* Main Grid */}
-            <Grid
-                container
-                size={10}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
+            {/* Main Container */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    px: { xs: 1, sm: 2 },
+                    py: { xs: 1, sm: 2 },
+                    gap: 2,
+                }}
             >
-                {/* Header Grid */}
-                <Grid
-                    size={12}
+                {/* HEADER */}
+                <Stack
                     sx={{
-                        textAlign: 'center',
-                        mt: 2,
-                        color: "text.primary",
-                        // bgcolor: 'red'
+                        textAlign: 'left',
+                        width: '100%',
+                        display: "flex",
+                        flexDirection: 'column',
                     }}
                 >
-                    <Typography variant="h3" fontWeight="bold" >
-                        Hello!
-                    </Typography>
-                    <Typography variant="h5" fontWeight="light">
-                        Create your account
-                    </Typography>
-                </Grid>
+                    <Typography variant="h5" fontWeight="medium" >Create Account</Typography>
+                    <Typography variant="body1" fontWeight="light" color="secondary">Join us to start monitoring your plantation.</Typography>
+                </Stack>
 
-                {/* Body and Footer Grid */}
-                <Grid
-                    size={{ xs: 10, sm: 10, md: 8, lg: 7, xl: 7 }}
-                    alignItems="center"
+                {/* BODY (Form Container) */}
+                <Box
+                    component="form"
+                    onSubmit={formik.handleSubmit}
                     sx={{
-                        mt: 1,
-                        mb: 2,
-                        // bgcolor: 'darkBlue',
+                        width: '100%',
                         display: 'flex',
                         flexDirection: 'column',
-                        maxWidth: '420px'
-
-
+                        justifyContent: 'center',
+                        gap: 2.5,
                     }}
                 >
 
-                    {/* Body Section */}
-                    <Typography variant="h4" fontWeight="medium" color="text.primary"
+                    <Stack
                         sx={{
-                            mb: 2,
-                            textAlign: 'center'
-                        }}>
-                        Sign Up
-                    </Typography>
-
-                    <Box
-                        component="form"
-                        onSubmit={formik.handleSubmit}
-                        sx={{
-                            width: '100%',
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'center',
-                            gap: 3,
+                            gap: 1
                         }}
                     >
-                        <Box>
-                            <Typography
-                                variant="body2" fontWeight="medium"
-                            >
-                                Username
-                            </Typography>
-                            <TextField
-                                className="auth-field"
-                                placeholder="Username"
-                                name="username"
-                                size="medium"
-                                fullWidth
-                                value={formik.values.username}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.username && Boolean(formik.errors.username)}
-                                helperText={formik.touched.username && formik.errors.username}
-                                slotProps={{
-                                    input: {
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <AccountCircleIcon
-                                                    sx={{
-                                                        color: formik.values.username === "" ? 'text.secondary' : 'text.primary'
-                                                    }} />
-                                            </InputAdornment>
-                                        ),
-                                    },
-                                }}
+                        <Typography
+                            variant="body2" fontWeight="medium"
+                        >
+                            Username
+                        </Typography>
+                        <TextField
+                            className="auth-field"
+                            placeholder="Username"
+                            name="username"
+                            size="medium"
+                            fullWidth
+                            value={formik.values.username}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.username && Boolean(formik.errors.username)}
+                            helperText={formik.touched.username && formik.errors.username}
+                            slotProps={{
+                                input: {
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AccountCircleIcon
+                                                sx={{
+                                                    color: formik.values.username === "" ? 'text.secondary' : 'text.primary'
+                                                }} />
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
 
-                            />
-                        </Box>
+                        />
+                    </Stack>
 
-                        <Box>
-                            <Typography
-                                variant="body2" fontWeight="medium"
-                            >
-                                Email
-                            </Typography>
-                            <TextField
-                                className="auth-field"
-                                variant="outlined"
-                                placeholder="Email"
-                                name="email"
-                                size="medium"
-                                fullWidth
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email}
-                                slotProps={{
-                                    input: {
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <MailOutlineOutlinedIcon
-                                                    sx={{
-                                                        color: formik.values.email === "" ? 'text.secondary' : 'text.primary'
-                                                    }} />
-                                            </InputAdornment>
-                                        ),
-                                    },
-                                }}
+                    <Stack
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1
+                        }}
+                    >
+                        <Typography variant="body2">Email</Typography>
+                        <TextField
+                            className="auth-field"
+                            variant="outlined"
+                            placeholder="Email"
+                            name="email"
+                            size="medium"
+                            fullWidth
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
+                            slotProps={{
+                                input: {
+                                    spellCheck: false,
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <MailOutlineOutlinedIcon
+                                                sx={{
+                                                    color: formik.values.email === "" ? 'text.secondary' : 'text.primary'
+                                                }} />
+                                        </InputAdornment>
+                                    ),
+                                },
+                            }}
+                        />
+                    </Stack>
 
-                            />
-                        </Box>
-
-                        <Box>
+                    <Stack
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: 1
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1
+                            }}
+                        >
                             <Typography
                                 variant="body2" fontWeight="medium"
                             >
@@ -316,7 +317,7 @@ const Register = () => {
                                             </InputAdornment>
                                         ),
                                         endAdornment: (
-                                            <InputAdornment position="end">
+                                            <InputAdornment position="start">
                                                 <IconButton
                                                     onClick={() => setShowPassword(!showPassword)}
                                                     edge="end"
@@ -333,7 +334,13 @@ const Register = () => {
                             />
                         </Box>
 
-                        <Box>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1
+                            }}
+                        >
                             <Typography
                                 variant="body2" fontWeight="medium"
                             >
@@ -363,7 +370,7 @@ const Register = () => {
                                             </InputAdornment>
                                         ),
                                         endAdornment: (
-                                            <InputAdornment position="end">
+                                            <InputAdornment position="start">
                                                 <IconButton
                                                     onClick={() => setShowRePassword(!showRePassword)}
                                                     edge="end"
@@ -379,68 +386,69 @@ const Register = () => {
                                 }}
                             />
                         </Box>
+                    </Stack>
 
-                        <Button
-                            type="submit"
-                            variant="outlined"
-                            size="large"
-                            fullWidth
-                            className="auth-button"
-                            sx={{
-                                mt: 1,
-                                minHeight: 56,
-                            }}
-                            disabled={formik.isSubmitting}
-                        >
-                            {formik.isSubmitting ? "Processing..." : "Register"}
-                        </Button>
 
-                        {/* Footer Section */}
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', my: 1, width: '90%' }}>
-                                <Divider
-                                    className="auth-divider"
+                    <Button
+                        type="submit"
+                        variant="outlined"
+                        size="large"
+                        fullWidth
+                        className="auth-button"
+                        sx={{
+                            mt: 1,
+                            minHeight: 56,
+                        }}
+                        disabled={formik.isSubmitting}
+                    >
+                        {formik.isSubmitting ? "Processing..." : "Create Account"}
+                    </Button>
 
-                                    sx={{
-                                        flexGrow: 1,
-                                        opacity: '100%'
-                                    }}
-                                />
-                                <Typography variant="body1" sx={{ mx: 2 }}>OR</Typography>
-                                <Divider
-                                    className="auth-divider"
-                                    sx={{
-                                        flexGrow: 1,
-                                        opacity: '100%'
-                                    }}
-                                />
-                            </Box>
 
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', my: 1, width: '90%' }}>
+                            <Divider
+                                className="auth-divider"
+                                sx={{
+                                    flexGrow: 1,
+                                    opacity: '100%'
+                                }}
+                            />
+                            <Typography variant="body1" sx={{ mx: 2 }}>OR</Typography>
+                            <Divider
+                                className="auth-divider"
+                                sx={{
+                                    flexGrow: 1,
+                                    opacity: '100%'
+                                }}
+                            />
+                        </Box>
 
-                                <Typography
-                                    variant="body2"
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+
+                            <Typography
+                                variant="body2"
+                            >
+                                Already have an account?
+                                <Button
+                                    component={Link}
+                                    to="/login"
+                                    className="linkto-button"
                                 >
-                                    Have an account?
-                                    <Button
-                                        component={Link}
-                                        to="/login"
-                                        className="linkto-button"
-                                    >
-                                        Sign In
-                                    </Button>
-                                </Typography>
-                            </Box>
-
+                                    Sign In
+                                </Button>
+                            </Typography>
                         </Box>
                     </Box>
-                </Grid>
-            </Grid>
+
+                </Box>
+            </Box>
+
         </React.Fragment >
     );
 };

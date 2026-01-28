@@ -74,7 +74,7 @@ const buildComponents = () => ({
                         },
 
                         "& .MuiInputBase-input::placeholder": {
-                            color: theme.palette.text.secondaryLight,
+                            opacity: 1
                         },
 
                         /* ===== Autofill Webkit ===== */

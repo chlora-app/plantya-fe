@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Container, Paper, Typography, Card, CardContent, Stack } from "@mui/material"
+import { Box, Grid, Container, Paper, Typography, Card, CardContent, Stack, IconButton } from "@mui/material"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Icon from "@mdi/react";
 import { mdiAccessPoint, mdiSprout, mdiChip, mdiBrain, mdiWhiteBalanceSunny } from '@mdi/js';
@@ -8,7 +8,7 @@ import LoginBg from "../assets/LoginBg.webp";
 import SmallIcon from "../assets/SmallIcon.png";
 import Lottie from "lottie-react";
 import PropTypes from 'prop-types';
-import nonAuthIcon from "../assets/Icon/nonAuthIcon.json"
+import nonAuthIcon from "../assets/Icon//animation/nonAuthIcon.json"
 
 
 // Import Swiper styles
@@ -75,7 +75,6 @@ const NonAuthLayout = (props) => {
                 <Box
                     bgcolor={"background.elevated"}
                     sx={{
-                        cursor: "pointer",
                         display: {
                             xs: 'none',
                             md: 'flex'
@@ -83,7 +82,7 @@ const NonAuthLayout = (props) => {
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         py: 5,
-                        px: 7,
+                        px: 5,
                         flex: 1,
                         borderTopLeftRadius: 5,
                         borderBottomLeftRadius: 5,
@@ -93,15 +92,35 @@ const NonAuthLayout = (props) => {
                 >
 
                     <Stack display={"flex"} flexDirection={"row"} justifyContent={"space-between"}>
-                        <Box display={"flex"} flexDirection={"row"} gap={1.3} textAlign={"center"} alignItems={"center"}>
-                            <Icon path={mdiSprout} size={1.5} className="bg-success rounded-2 p-1" />
+                        <Box
+                            display={"flex"}
+                            flexDirection={"row"}
+                            gap={1.5}
+                            textAlign={"center"}
+                            alignItems={"center"}
+                        >
+                            <Box
+                                bgcolor={"primary.main"}
+                                p={1}
+                                borderRadius={2}
+                                display={"flex"}
+                                alignItems={"center"}
+                                justifyContent={"center"}
+                                color={"text.light"}
+                            >
+                                <Icon path={mdiSprout} size={1} />
+                            </Box>
                             <Typography variant="h5" fontWeight="medium">Plantya</Typography>
                         </Box>
-                        <Box bgcolor={"background.paper"} color={"warning.main"} sx={{ borderRadius: '999px' }}
+
+                        <IconButton
+                            color={"warning"}
+                            sx={{ borderRadius: '999px', bgcolor: 'background.paper' }}
                             onClick={props.toggleTheme}
                         >
-                            <Icon path={mdiWhiteBalanceSunny} size={2} className="p-2" />
-                        </Box>
+                            <Icon path={mdiWhiteBalanceSunny} size={1} />
+                        </IconButton>
+
                     </Stack>
 
                     <Stack

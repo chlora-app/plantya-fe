@@ -22,7 +22,6 @@ const colors = {
         primaryLight: "#111827",
         secondaryDark: "#A3B2AC",
         secondaryLight: "#6B7280",
-        muted: "#9CA3AF",
     },
 
     /* ================= BACKGROUND ================= */
