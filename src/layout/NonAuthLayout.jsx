@@ -126,7 +126,7 @@ const NonAuthLayout = (props) => {
                             color={"primary.main"}
                         >
                             <Icon path={mdiSprout} size={1} />
-                            <Typography variant="h5" fontWeight="medium" color="text.primary">Plantya</Typography>
+                            <Typography variant="h2" fontWeight="medium" color="text.primary">Plantya</Typography>
                         </Box>
                     </Stack>
 
@@ -154,7 +154,7 @@ const NonAuthLayout = (props) => {
                         spacing={1}
                     >
                         <Box>
-                            <Typography variant="h5" fontWeight="medium" >
+                            <Typography variant="h2" fontWeight="medium" >
                                 Smart Monitoring for
                                 <br />
                                 <Box color="success.main">
@@ -165,10 +165,10 @@ const NonAuthLayout = (props) => {
                         </Box>
 
                         <Box sx={{ opacity: 0.8 }}>
-                            <Typography variant="body2" fontWeight="light">
+                            <Typography variant="h6" fontWeight="light">
                                 Harness the power of machine learning to
                             </Typography>
-                            <Typography variant="body2" fontWeight="light">
+                            <Typography variant="h6" fontWeight="light">
                                 optimize your plantation's yield.
                             </Typography>
                         </Box>
@@ -237,10 +237,10 @@ const NonAuthLayout = (props) => {
                                                 </Box>
 
                                                 <Box>
-                                                    <Typography variant="body2" fontWeight={"medium"}>
+                                                    <Typography variant="h6" fontWeight={"medium"}>
                                                         {item.title}
                                                     </Typography>
-                                                    <Typography variant="caption" fontWeight={"light"} sx={{ opacity: 0.7 }}>
+                                                    <Typography variant="body1" fontWeight={"light"} sx={{ opacity: 0.7 }}>
                                                         {item.desc}
                                                     </Typography>
                                                 </Box>
@@ -265,7 +265,8 @@ const NonAuthLayout = (props) => {
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        p: 5,
+                        px: 5,
+                        py: 3,
                         flex: 1,
                         borderBottomLeftRadius: { xs: 5, md: 0 },
                         borderBottomRightRadius: { xs: 5, md: 0 },

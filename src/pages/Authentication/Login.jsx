@@ -166,8 +166,8 @@ const Login = () => {
                         flexDirection: 'column',
                         justifyContent: 'center',
                     }}>
-                    <Typography variant="h5" fontWeight="medium" >Welcome Back</Typography>
-                    <Typography variant="body1" fontWeight="light" color="text.primary">Please enter your details to access the dashboard.</Typography>
+                    <Typography variant="h2" fontWeight="medium" >Welcome Back</Typography>
+                    <Typography variant="h6" fontWeight="light" color="text.primary">Please enter your details to access the dashboard.</Typography>
                 </Stack>
 
                 {/* BODY (Form Container) */}
@@ -193,14 +193,14 @@ const Login = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',
-                                gap: 4,
+                                gap: 2.5,
                             }}
                         >
-                            <Stack>
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Email or User ID</Typography>
                                 <TextField
                                     className="auth-field"
                                     variant="outlined"
-                                    label="Email or User ID"
                                     placeholder="Enter your email or user id"
                                     name="username"
                                     size="large"
@@ -226,11 +226,11 @@ const Login = () => {
                                 />
                             </Stack>
 
-                            <Stack>
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Password</Typography>
                                 <TextField
                                     className="auth-field"
                                     variant="outlined"
-                                    label="Password"
                                     placeholder="Enter your password"
                                     name="password"
                                     type={showPassword ? 'text' : 'password'}
@@ -304,7 +304,7 @@ const Login = () => {
                             </Box>
 
                             <Typography
-                                variant="body2"
+                                variant="body1"
                             >
                                 Don't have an account?
                                 <Button

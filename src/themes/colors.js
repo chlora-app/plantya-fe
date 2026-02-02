@@ -12,8 +12,8 @@ const colors = {
     
     /* ================= TEXT ================= */
     text: {
-        black: "#111827",
-        white: "#FFFFFF",
+        black: "#000000",
+        white: "#FAFAFA",
         muted: "#9CA3AF",
     },
 

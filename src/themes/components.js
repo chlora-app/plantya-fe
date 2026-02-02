@@ -29,6 +29,8 @@ const buildComponents = () => ({
                         borderRadius: "15px",
                         transition: "all 0.3s ease",
 
+
+
                         "&.Mui-disabled": {
                             backgroundColor: theme.palette.action.disabledBackground,
 

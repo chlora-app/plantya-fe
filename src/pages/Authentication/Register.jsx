@@ -187,8 +187,8 @@ const Register = () => {
                         justifyContent: 'center',
                     }}
                 >
-                    <Typography variant="h5" fontWeight="medium" >Create Account</Typography>
-                    <Typography variant="body1" fontWeight="light" color="text.primary">Join us to start monitoring your plantation.</Typography>
+                    <Typography variant="h2" fontWeight="medium" >Create Account</Typography>
+                    <Typography variant="h6" fontWeight="light" color="text.primary">Join us to start monitoring your plantation.</Typography>
                 </Stack>
 
                 {/* BODY (Form Container) */}
@@ -215,13 +215,13 @@ const Register = () => {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',
-                                gap: 4,
+                                gap: 2.5,
                             }}
                         >
-                            <Stack>
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Username</Typography>
                                 <TextField
                                     className="auth-field"
-                                    label="Username"
                                     placeholder="Enter your username"
                                     name="username"
                                     size="medium"
@@ -248,11 +248,11 @@ const Register = () => {
                                 />
                             </Stack>
 
-                            <Stack>
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Email</Typography>
                                 <TextField
                                     className="auth-field"
                                     variant="outlined"
-                                    label="Email"
                                     placeholder="Enter your email address"
                                     name="email"
                                     size="medium"
@@ -280,11 +280,11 @@ const Register = () => {
                                 />
                             </Stack>
 
-                            <Stack>
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Password</Typography>
                                 <TextField
                                     className="auth-field"
                                     variant="outlined"
-                                    label="Password"
                                     placeholder="Enter your password"
                                     name="password"
                                     type={showPassword ? 'text' : 'password'}
@@ -324,16 +324,11 @@ const Register = () => {
                                 />
                             </Stack>
 
-                            <Stack
-                                sx={{
-                                    display: 'flex',
-                                    gap: 1
-                                }}
-                            >
+                            <Stack spacing={0.3}>
+                                <Typography variant="h6">Confirm Password</Typography>
                                 <TextField
                                     className="auth-field"
                                     variant="outlined"
-                                    label="Confirm password"
                                     placeholder="Confirm your password"
                                     name="rePassword"
                                     type={showRePassword ? 'text' : 'password'}
@@ -406,7 +401,7 @@ const Register = () => {
 
 
                             <Typography
-                                variant="body2"
+                                variant="body1"
                             >
                                 Already have an account?
                                 <Button
