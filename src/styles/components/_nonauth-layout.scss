@@ -1,0 +1,39 @@
+.nonauth {
+    &-root {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    &-theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10;
+    }
+
+    &-paper {
+        width: 90%;
+        max-width: 1200px;
+        max-height: 800px;
+        display: flex;
+        overflow: hidden;
+    }
+
+    &-left {
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    &-right {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-between;
+    }
+
+}

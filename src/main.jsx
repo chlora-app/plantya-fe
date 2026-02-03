@@ -31,12 +31,10 @@ const Root = () => {
     <BrowserRouter basename="/plantya">
       <AuthProvider>
         <ThemeProviderCustom>
-          {(theme) => (
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <App />
-            </ThemeProvider>
-          )}
+          <ThemeProvider>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
         </ThemeProviderCustom>
       </AuthProvider>
     </BrowserRouter>

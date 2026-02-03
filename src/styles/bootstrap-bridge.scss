@@ -2,7 +2,6 @@
    Bootstrap ↔ MUI Color Bridge
    ====================================== */
 
-/* ===== Bootstrap core colors ===== */
 :root {
   --bs-primary: var(--mui-palette-primary-main);
   --bs-secondary: var(--mui-palette-secondary-main);
@@ -15,42 +14,4 @@
   --bs-dark: var(--mui-palette-background-default);
 
   --bs-muted: var(--mui-palette-text-secondary);
-}
-
-/* ===== Buttons ===== */
-.btn-primary {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
-}
-
-.btn-primary:hover {
-  background-color: var(--mui-palette-primary-light);
-  border-color: var(--mui-palette-primary-light);
-}
-
-/* ===== Text ===== */
-.text-muted {
-  color: var(--bs-muted) !important;
-}
-
-.text-dark {
-  color: var(--mui-palette-text-primary) !important;
-}
-
-.text-light {
-  color: var(--mui-palette-text-primary) !important;
-}
-
-/* ===== Background ===== */
-.bg-light {
-  background-color: var(--mui-palette-background-paper) !important;
-}
-
-.bg-dark {
-  background-color: var(--mui-palette-background-default) !important;
-}
-
-/* ===== Border ===== */
-.border {
-  border-color: var(--mui-palette-divider) !important;
 }

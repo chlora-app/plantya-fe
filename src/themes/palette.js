@@ -1,3 +1,5 @@
+// src/styles/buildPalette.js
+
 import colors from "./colors";
 
 const buildPalette = (mode = "dark") => {
@@ -6,59 +8,58 @@ const buildPalette = (mode = "dark") => {
     return {
         mode,
 
-        /* ================= BRAND ================= */
         primary: {
-            main: colors.brand.primary,
-            light: colors.brand.primaryLight,
+            main: colors.brand.primary.main,
+            light: colors.brand.primary.light,
+            dark: colors.brand.primary.dark,
         },
 
-        success: {
-            main: colors.brand.primary,
+        secondary: {
+            main: colors.brand.secondary.main,
+            light: colors.brand.secondary.light,
+            dark: colors.brand.secondary.dark,
         },
 
         info: {
-            main: colors.brand.info,
-            light: colors.brand.infoLight,
-            dark: colors.brand.infoDark,
+            main: colors.brand.info.main,
+            light: colors.brand.info.light,
+            dark: colors.brand.info.dark,
         },
 
         warning: {
-            main: colors.brand.warning,
+            main: colors.brand.warning.main,
+            light: colors.brand.warning.light,
+            dark: colors.brand.warning.dark,
         },
 
         error: {
-            main: colors.brand.danger,
+            main: colors.brand.error.main,
+            light: colors.brand.error.light,
+            dark: colors.brand.error.dark,
         },
 
+        success: {
+            main: colors.brand.success.main,
+            light: colors.brand.success.light,
+            dark: colors.brand.success.dark,
+        },
 
-        /* ================= BACKGROUND ================= */
         background: {
-            default: isDark
-                ? colors.background.dark
-                : colors.background.light,
-
-            paper: isDark
-                ? colors.background.paperDark
-                : colors.background.paperLight,
-
-            elevated: isDark
-                ? colors.background.elevatedDark
-                : colors.background.elevatedLight,
+            default: isDark ? colors.background.default.dark : colors.background.default.light,
+            paper: isDark ? colors.background.paper.dark : colors.background.paper.light,
+            elevated: isDark ? colors.background.elevated.dark : colors.background.elevated.light,
         },
-
         text: {
-            primary: isDark ? colors.text.white : colors.text.black,
-            secondary: colors.text.muted,
-            contastText: colors.text.white
+            primary: isDark ? colors.text.primary.dark : colors.text.primary.light,
+            secondary: colors.text.secondary,
+            dark: colors.text.primary.light,
+            light: colors.text.primary.dark,
         },
 
-        divider: isDark
-            ? colors.border.subtle
-            : colors.border.default,
+        divider: isDark ? colors.border.subtle : colors.border.default,
 
         action: {
-            hover: isDark ? "#1F1F1F" : "#E5E7EB",
-            selected: isDark ? "#1F1F1F" : "#E5E7EB",
+            disabledBackground: isDark ? colors.surface.inputDisabledDark : colors.surface.inputDisabled,
         },
     };
 };

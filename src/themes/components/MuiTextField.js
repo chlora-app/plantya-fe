@@ -1,24 +1,4 @@
-const buildComponents = () => ({
-    /* ================= PAPER ================= */
-    MuiPaper: {
-        styleOverrides: {
-            root: ({ theme }) => ({
-                backgroundColor: theme.palette.background.paper,
-                backgroundImage: "none",
-            }),
-        },
-    },
-
-    /* ================= DIVIDER ================= */
-    MuiDivider: {
-        styleOverrides: {
-            root: ({ theme }) => ({
-                borderColor: theme.palette.divider,
-            }),
-        },
-    },
-
-    /* ================= TEXT FIELD ================= */
+const MuiTextField = {
     MuiTextField: {
         styleOverrides: {
             root: ({ theme }) => ({
@@ -28,8 +8,6 @@ const buildComponents = () => ({
                         backgroundColor: theme.palette.background.paper,
                         borderRadius: "15px",
                         transition: "all 0.3s ease",
-
-
 
                         "&.Mui-disabled": {
                             backgroundColor: theme.palette.action.disabledBackground,
@@ -71,7 +49,7 @@ const buildComponents = () => ({
                         },
 
                         "& .MuiInputBase-input::placeholder": {
-                            opacity: 1
+                            opacity: 1,
                         },
 
                         /* ===== Autofill Webkit ===== */
@@ -103,35 +81,6 @@ const buildComponents = () => ({
             }),
         },
     },
+};
 
-
-    MuiButton: {
-        styleOverrides: {
-            root: ({ theme }) => ({
-                "&.auth-button": {
-                    backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.text.contastText,
-                    borderRadius: 15,
-                    fontWeight: 500,
-                    letterSpacing: 1,
-
-                    "&:hover": {
-                        backgroundColor: theme.palette.primary.light,
-                    },
-                },
-
-                "&.linkto-button": {
-                    color: theme.palette.primary.main,
-                    textTransform: "none",
-
-                    "&:hover": {
-                        textDecoration: "underline",
-                        backgroundColor: "transparent",
-                    },
-                },
-            }),
-        },
-    },
-});
-
-export default buildComponents;
+export default MuiTextField;

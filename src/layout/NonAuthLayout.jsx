@@ -49,32 +49,11 @@ const NonAuthLayout = (props) => {
     ]
 
     return (
-        <Container
-            maxWidth={false}
-            disableGutters
-            sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                bgcolor: 'background.default',
-                p: { xs: 0, sm: 2 },
-                position: 'relative', // Tambahkan position: relative untuk container
-            }}
-        >
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: 20,
-                    right: 20,
-                    zIndex: 10,
-                }}
-            >
+        <Container maxWidth={false} className="nonauth-root">
+            <Box className="nonauth-theme-toggle">
                 <IconButton
                     sx={{
                         color: mode == "dark" ? "warning.main" : "text.primary",
-                        borderRadius: '50%',
                         bgcolor: 'background.paper'
                     }}
                     onClick={toggleTheme}
@@ -83,51 +62,25 @@ const NonAuthLayout = (props) => {
                 </IconButton>
             </Box>
 
-            <Paper
-                elevation={0}
-                sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    width: '90%',
-                    height: '90%',
-                    maxWidth: '1200px',
-                    maxHeight: '800px',
-                    borderRadius: 5,
-                    overflow: 'hidden',
-                    boxShadow: `0px 18px 45px rgba(0, 0, 0, 0.55),0px 0px 90px rgba(0, 124, 79, 0.25)`,
-                }}
-            >
-
-                {/* LEFT SIDE */}
+            <Paper elevation={10} className="nonauth-paper">
                 <Box
+                    className="nonauth-left"
+                    display={{ xs: 'none', md: 'flex' }}
                     bgcolor={"background.elevated"}
-                    sx={{
-                        display: { xs: 'none', md: 'flex' },
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        p: 5,
-                        flex: 1,
-                        borderTopLeftRadius: 5,
-                        borderBottomLeftRadius: 5,
-                        overflow: 'hidden',
-                    }}
+                    p={5}
                 >
-
-                    <Stack display={"flex"} flexDirection={"row"} >
-                        <Box
-                            bgcolor={"background.paper"}
-                            gap={1.5}
-                            py={0.5}
-                            px={1}
+                    <Stack display={"flex"} flexDirection={"row"} gap={1}>
+                        {/* <Box
                             borderRadius={2}
+                            gap={1.5}
                             display={"flex"}
                             alignItems={"start"}
                             justifyContent={"center"}
                             color={"primary.main"}
-                        >
-                            <Icon path={mdiSprout} size={1} />
-                            <Typography variant="h2" fontWeight="medium" color="text.primary">Plantya</Typography>
-                        </Box>
+                        > */}
+                        <Icon path={mdiSprout} size={1} className="text-primary"/>
+                        <Typography variant="h2" fontWeight="medium" color="text.primary">Plantya</Typography>
+                        {/* </Box> */}
                     </Stack>
 
                     <Stack
@@ -139,6 +92,7 @@ const NonAuthLayout = (props) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
+
                     >
                         <Lottie
                             animationData={nonAuthIcon}
@@ -213,9 +167,9 @@ const NonAuthLayout = (props) => {
                                     pagination={{ clickable: true }}
                                     autoHeight
                                 >
-                                    {cardContent.map((item) => (
+                                    {cardContent.map((item, index) => (
                                         <SwiperSlide
-                                            key={item.id}
+                                            key={index}
                                             style={{
                                                 width: 'auto',
                                                 display: 'flex',
@@ -255,27 +209,12 @@ const NonAuthLayout = (props) => {
 
                 </Box >
 
-
-
-                {/* </Box> */}
-
-                {/* RIGHT SIDE */}
                 <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        px: 5,
-                        py: 3,
-                        flex: 1,
-                        borderBottomLeftRadius: { xs: 5, md: 0 },
-                        borderBottomRightRadius: { xs: 5, md: 0 },
-                        borderTopRightRadius: 5,
-                        borderTopLeftRadius: 5,
-                    }}
+                    className="nonauth-right"
+                    px={5}
+                    py={3}
                 >
                     {props.children}
-
                 </Box>
             </Paper >
         </Container >
