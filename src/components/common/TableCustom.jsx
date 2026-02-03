@@ -33,7 +33,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.background.tableHead,
-        borderBottom: `1px solid ${theme.palette.secondary.main}`,
+        borderBottom: `1px solid ${theme.palette.primary.main}`,
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -139,8 +139,8 @@ const TableCustom = (props) => {
                 onClick={() => handleChangePage(null, pageNum - 1)}
                 sx={{
                     border: "1px solid",
-                    borderColor: pageNum === page + 1 ? 'primary.main' : 'secondary.main',
-                    borderRadius: 2,
+                    borderColor: pageNum === page + 1 ? 'primary.main' : 'primary.main',
+                    borderRadius: 1,
                     minWidth: { xs: 32, sm: 32, md: 36 },
                     height: { xs: 32, sm: 32, md: 36 },
                     display: 'flex',
@@ -246,7 +246,7 @@ const TableCustom = (props) => {
                 <TableRow
                     sx={{
                         borderBottom: '1px solid',
-                        borderColor: 'secondary.main'
+                        borderColor: 'primary.main'
                     }}
                 >
                     <StyledTableCell colSpan={props.columns.length} align="center"
@@ -271,7 +271,7 @@ const TableCustom = (props) => {
                 key={row[props.keyField]}
                 sx={{
                     borderBottom: '1px solid',
-                    borderColor: 'secondary.main'
+                    borderColor: 'primary.main'
                 }}
             >
                 {props.columns.map((column) => {
@@ -300,12 +300,12 @@ const TableCustom = (props) => {
         <>
             <TableContainer
                 sx={{
-                    borderRadius: 2,
+                    borderRadius: 1,
                     border: '1px solid',
-                    borderColor: 'secondary.main',
+                    borderColor: 'primary.main',
                     position: 'relative',
                     overflowX: 'auto',
-                    bgcolor: 'green'
+                    // bgcolor: 'green'
                 }}
             >
                 <Table
@@ -323,7 +323,7 @@ const TableCustom = (props) => {
                         sx={{
                             bgcolor: 'background.tableHead',
                             borderBottom: '1px solid',
-                            borderBottomColor: 'secondary.main',
+                            borderBottomColor: 'primary.main',
                             position: 'sticky',
                             top: 0,
                             zIndex: 1,
@@ -383,8 +383,8 @@ const TableCustom = (props) => {
                         onClick={() => !isFirstPage && handleChangePage(null, 0)}
                         sx={{
                             border: "1px solid",
-                            borderColor: 'secondary.main',
-                            borderRadius: 2,
+                            borderColor: 'primary.main',
+                            borderRadius: 1,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -410,8 +410,8 @@ const TableCustom = (props) => {
                         onClick={() => !isFirstPage && handleChangePage(null, page - 1)}
                         sx={{
                             border: "1px solid",
-                            borderColor: 'secondary.main',
-                            borderRadius: 2,
+                            borderColor: 'primary.main',
+                            borderRadius: 1,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -442,8 +442,8 @@ const TableCustom = (props) => {
                         onClick={() => !isLastPage && handleChangePage(null, page + 1)}
                         sx={{
                             border: "1px solid",
-                            borderColor: 'secondary.main',
-                            borderRadius: 2,
+                            borderColor: 'primary.main',
+                            borderRadius: 1,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -469,8 +469,8 @@ const TableCustom = (props) => {
                         onClick={() => !isLastPage && handleChangePage(null, totalPages - 1)}
                         sx={{
                             border: "1px solid",
-                            borderColor: 'secondary.main',
-                            borderRadius: 2,
+                            borderColor: 'primary.main',
+                            borderRadius: 1,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',

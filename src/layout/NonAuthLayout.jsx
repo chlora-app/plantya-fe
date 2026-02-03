@@ -69,30 +69,16 @@ const NonAuthLayout = (props) => {
                     bgcolor={"background.elevated"}
                     p={5}
                 >
-                    <Stack display={"flex"} flexDirection={"row"} gap={1}>
-                        {/* <Box
-                            borderRadius={2}
-                            gap={1.5}
-                            display={"flex"}
-                            alignItems={"start"}
-                            justifyContent={"center"}
-                            color={"primary.main"}
-                        > */}
-                        <Icon path={mdiSprout} size={1} color="primary" />
+                    <Stack display={"flex"} flexDirection={"row"} gap={1.5} >
+                        <Icon path={mdiSprout} size={1} className="text-brand" />
                         <Typography variant="h2" fontWeight="medium" color="text.primary">Plantya</Typography>
-                        {/* </Box> */}
                     </Stack>
 
                     <Stack
-                        sx={{
-                            width: '60%',
-                            height: '40%',
-                            alignSelf: 'center',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-
+                        display={"flex"}
+                        alignSelf={"center"}
+                        width={"60%"}
+                        height={"40%"}
                     >
                         <Lottie
                             animationData={nonAuthIcon}
@@ -110,19 +96,16 @@ const NonAuthLayout = (props) => {
                         <Box>
                             <Typography variant="h2" fontWeight="medium" >
                                 Smart Monitoring for
-                                <br />
-                                <Box color="success.main">
-                                    Modern Growth.
-                                </Box>
                             </Typography>
-
+                            <Typography variant="h2" fontWeight="medium" color="primary">
+                                Modern Growth.
+                            </Typography>
                         </Box>
 
                         <Box sx={{ opacity: 0.8 }}>
                             <Typography variant="h6" fontWeight="light">
                                 Harness the power of machine learning to
-                            </Typography>
-                            <Typography variant="h6" fontWeight="light">
+                                <br />
                                 optimize your plantation's yield.
                             </Typography>
                         </Box>
@@ -150,7 +133,6 @@ const NonAuthLayout = (props) => {
                             <Card
                                 sx={{
                                     width: '90%',
-                                    borderRadius: 4,
                                     overflow: 'hidden',
                                     boxShadow: `0px 6px 16px rgba(0, 0, 0, 0.25), 0px 0px 24px rgba(0, 124, 79, 0.18)`,
                                 }}

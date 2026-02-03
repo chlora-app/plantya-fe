@@ -23,6 +23,10 @@ textarea {
     border-color: var(--mui-palette-primary-light);
 }
 
+.text-brand {
+    color: var(--color-primary) !important;
+}
+
 .text-primary {
     color: var(--mui-palette-primary-main) !important;
 }

@@ -198,9 +198,8 @@ const MasterDevice = () => {
         { value: "Sensor", label: "Sensor" },
     ])
     const [statusOption, setStatusOption] = useState([
-        { value: "ACTIVE", label: "Active" },
+        { value: "ONLINE", label: "Online" },
         { value: "OFFLINE", label: "Offline" },
-        { value: "INACTIVE", label: "Inactive" },
     ])
     const getAllCluster = useCallback(async (param) => {
         debugger
