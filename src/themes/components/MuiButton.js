@@ -4,8 +4,8 @@ const MuiButton = {
             root: ({ theme }) => ({
                 "&.auth-button": {
                     backgroundColor: theme.palette.primary.main,
-                    color: theme.palette.primary.contrastText, // fix typo dari sebelumnya
-                    borderRadius: 15,
+                    color: theme.palette.text.light,
+                    // borderRadius: 15,
                     fontWeight: 500,
                     letterSpacing: 1,
 

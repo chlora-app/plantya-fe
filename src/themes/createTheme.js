@@ -10,7 +10,7 @@ const createAppTheme = (mode = "dark") => {
         components: buildComponents(),
         typography: typography,
         shape: {
-            borderRadius: 25
+            borderRadius: "15px"
         },
 
     })

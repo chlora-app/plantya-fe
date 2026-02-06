@@ -66,12 +66,11 @@ const Login = () => {
             setMessage("");
 
             try {
-                debugger
                 const response = await handleLogin(values)
                 login(response.data.data)
                 navigate("/")
+                resetForm()
             } catch (error) {
-                debugger
                 setShowAlert(true)
                 if (error.response) {
                     setMessage(error.response.data.detail);
@@ -81,7 +80,7 @@ const Login = () => {
             } finally {
                 setSubmitting(false);
                 setLoadingSpinner(false);
-                resetForm()
+
 
                 setTimeout(() => {
                     setShowAlert(false);
@@ -126,7 +125,6 @@ const Login = () => {
                     <Typography variant="h6" fontWeight="light" color="text.primary">Please enter your details to access the dashboard.</Typography>
                 </Stack>
 
-                {/* BODY (Form Container) */}
                 <Stack width={"100%"}>
                     <Box
                         component="form"
@@ -211,6 +209,7 @@ const Login = () => {
                                             endAdornment: (
                                                 <InputAdornment position="start">
                                                     <IconButton
+                                                        tabIndex={-1}
                                                         onClick={() => setShowPassword(!showPassword)}
                                                         edge="end"
                                                         sx={{

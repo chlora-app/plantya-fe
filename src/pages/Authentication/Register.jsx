@@ -106,7 +106,7 @@ const Register = () => {
                 setTypeModal("success");
                 setHeaderMessageModal("Register Success!");
                 setMessageModal(response?.data?.message || "");
-
+                resetForm();
                 setTimeout(() => {
                     setShowModal(false);
                     setLoadingSpinner(true);
@@ -122,12 +122,10 @@ const Register = () => {
             } catch (error) {
                 setLoadingSpinner(false);
                 setTextLoading("");
-
                 setShowModal(true);
                 setTypeModal("error");
                 setHeaderMessageModal("Register Failed!");
-                setMessageModal(error?.response?.data?.message || "System is Unavailable. Please Try Again Later.");
-
+                setMessageModal(error?.response?.data?.detail || "System is Unavailable. Please Try Again Later.");
                 setTimeout(() => {
                     setShowModal(false);
                     resetModalState();
@@ -137,7 +135,6 @@ const Register = () => {
                 setSubmitting(false);
                 setShowPassword(false);
                 setShowRePassword(false);
-                resetForm();
             }
         },
     });
@@ -295,6 +292,7 @@ const Register = () => {
                                             endAdornment: (
                                                 <InputAdornment position="start">
                                                     <IconButton
+                                                        tabIndex={-1}
                                                         onClick={() => setShowPassword(!showPassword)}
                                                         edge="end"
                                                         sx={{
@@ -342,6 +340,7 @@ const Register = () => {
                                             endAdornment: (
                                                 <InputAdornment position="start">
                                                     <IconButton
+                                                        tabIndex={-1}
                                                         onClick={() => setShowRePassword(!showRePassword)}
                                                         edge="end"
                                                         sx={{

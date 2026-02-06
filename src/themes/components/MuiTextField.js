@@ -6,7 +6,7 @@ const MuiTextField = {
                     "& .MuiOutlinedInput-root": {
                         marginTop: 1,
                         backgroundColor: theme.palette.background.paper,
-                        borderRadius: "15px",
+                        // borderRadius: 15,
                         transition: "all 0.3s ease",
 
                         "&.Mui-disabled": {

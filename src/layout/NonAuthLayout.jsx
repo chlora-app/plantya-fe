@@ -54,6 +54,7 @@ const NonAuthLayout = (props) => {
         <Container maxWidth={false} className="nonauth-root">
             <Box className="nonauth-theme-toggle">
                 <IconButton
+                    tabIndex={-1}
                     sx={{
                         color: mode == "dark" ? "warning.main" : "text.primary",
                         bgcolor: 'background.elevated'
