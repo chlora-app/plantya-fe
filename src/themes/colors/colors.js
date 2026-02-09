@@ -47,15 +47,15 @@ const colors = {
     /* ================= BACKGROUND ================= */
     background: {
         default: {
-            light: "#F6F7F9",
+            light: "#F3F4F6",
             dark: "#111315",
         },
         paper: {
-            light: "#FAFAFA",
+            light: "#F7F8FA",
             dark: "#1A1D21",
         },
         elevated: {
-            light: "#F0F2F5",
+            light: "#ECEFF3",
             dark: "#22262B",
         },
     },
@@ -70,7 +70,8 @@ const colors = {
 
     /* ================= BORDER / DIVIDER ================= */
     border: {
-        default: "#D1D5DB",
+        // default: "#D1D5DB",
+        default: "#6f7072",
         subtle: "#99A19E",
     },
 };

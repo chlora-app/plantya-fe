@@ -179,15 +179,6 @@ const MasterDeviceEdit = (props) => {
                                     fullWidth
                                     disabled
                                     value={app004p03ValidInput.values.device_id}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircleIcon sx={{ color: 'text.secondary' }} />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -210,21 +201,6 @@ const MasterDeviceEdit = (props) => {
                                     onBlur={app004p03ValidInput.handleBlur}
                                     error={app004p03ValidInput.touched.device_name && Boolean(app004p03ValidInput.errors.device_name)}
                                     helperText={app004p03ValidInput.touched.device_name && app004p03ValidInput.errors.device_name}
-                                    slotProps={{
-                                        input: {
-                                            spellCheck: false,
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <MailOutlineOutlinedIcon
-                                                        sx={{
-                                                            color: app004p03ValidInput.values.device_name === "" ? 'text.secondary' : 'text.primary'
-                                                        }}
-                                                    />
-
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -253,20 +229,6 @@ const MasterDeviceEdit = (props) => {
                                             name="device_type"
                                             error={app004p03ValidInput.touched.device_type && Boolean(app004p03ValidInput.errors.device_type)}
                                             helperText={app004p03ValidInput.touched.device_type && app004p03ValidInput.errors.device_type}
-                                            slotProps={{
-                                                input: {
-                                                    ...params.InputProps,
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AdminPanelSettingsIcon
-                                                                sx={{
-                                                                    color: app004p03ValidInput.values.device_type ? 'text.primary' : 'text.secondary'
-                                                                }}
-                                                            />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
                                         />
                                     )}
                                 />
@@ -297,20 +259,6 @@ const MasterDeviceEdit = (props) => {
                                             name="cluster_id"
                                             error={app004p03ValidInput.touched.cluster_id && Boolean(app004p03ValidInput.errors.cluster_id)}
                                             helperText={app004p03ValidInput.touched.cluster_id && app004p03ValidInput.errors.cluster_id}
-                                            slotProps={{
-                                                input: {
-                                                    ...params.InputProps,
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AdminPanelSettingsIcon
-                                                                sx={{
-                                                                    color: app004p03ValidInput.values.cluster_id ? 'text.primary' : 'text.secondary'
-                                                                }}
-                                                            />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
                                         />
                                     )}
                                 />
@@ -340,20 +288,6 @@ const MasterDeviceEdit = (props) => {
                                             name="status"
                                             error={app004p03ValidInput.touched.status && Boolean(app004p03ValidInput.errors.status)}
                                             helperText={app004p03ValidInput.touched.status && app004p03ValidInput.errors.status}
-                                            slotProps={{
-                                                input: {
-                                                    ...params.InputProps,
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AdminPanelSettingsIcon
-                                                                sx={{
-                                                                    color: app004p03ValidInput.values.status ? 'text.primary' : 'text.secondary'
-                                                                }}
-                                                            />
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
                                         />
                                     )}
                                 />

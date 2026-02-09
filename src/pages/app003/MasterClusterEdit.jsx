@@ -173,15 +173,6 @@ const MasterClusterEdit = (props) => {
                                     fullWidth
                                     disabled
                                     value={app003p03ValidInput.values.clusterId}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircleIcon sx={{ color: 'text.secondary' }} />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -204,19 +195,6 @@ const MasterClusterEdit = (props) => {
                                     onBlur={app003p03ValidInput.handleBlur}
                                     error={app003p03ValidInput.touched.clusterName && Boolean(app003p03ValidInput.errors.clusterName)}
                                     helperText={app003p03ValidInput.touched.clusterName && app003p03ValidInput.errors.clusterName}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <MailOutlineOutlinedIcon
-                                                        sx={{
-                                                            color: app003p03ValidInput.values.clusterName === "" ? 'text.secondary' : 'text.primary'
-                                                        }}
-                                                    />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 

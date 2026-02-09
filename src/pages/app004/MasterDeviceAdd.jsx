@@ -182,21 +182,6 @@ const MasterDeviceAdd = (props) => {
                   onBlur={app004p02ValidInput.handleBlur}
                   error={app004p02ValidInput.touched.device_name && Boolean(app004p02ValidInput.errors.device_name)}
                   helperText={app004p02ValidInput.touched.device_name && app004p02ValidInput.errors.device_name}
-                  slotProps={{
-                    input: {
-                      spellCheck: false,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailOutlineOutlinedIcon
-                            sx={{
-                              color: app004p02ValidInput.values.device_name === "" ? 'text.secondary' : 'text.primary'
-                            }}
-                          />
-
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
                 />
               </Box>
 
@@ -225,20 +210,6 @@ const MasterDeviceAdd = (props) => {
                       name="device_type"
                       error={app004p02ValidInput.touched.device_type && Boolean(app004p02ValidInput.errors.device_type)}
                       helperText={app004p02ValidInput.touched.device_type && app004p02ValidInput.errors.device_type}
-                      slotProps={{
-                        input: {
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AdminPanelSettingsIcon
-                                sx={{
-                                  color: app004p02ValidInput.values.device_type ? 'text.primary' : 'text.secondary'
-                                }}
-                              />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
                     />
                   )}
                 />
@@ -269,20 +240,6 @@ const MasterDeviceAdd = (props) => {
                       name="cluster_id"
                       error={app004p02ValidInput.touched.cluster_id && Boolean(app004p02ValidInput.errors.cluster_id)}
                       helperText={app004p02ValidInput.touched.cluster_id && app004p02ValidInput.errors.cluster_id}
-                      slotProps={{
-                        input: {
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AdminPanelSettingsIcon
-                                sx={{
-                                  color: app004p02ValidInput.values.cluster_id ? 'text.primary' : 'text.secondary'
-                                }}
-                              />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
                     />
                   )}
                 />

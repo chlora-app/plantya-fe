@@ -180,21 +180,6 @@ const MasterClusterAdd = (props) => {
                   onBlur={app003p02ValidInput.handleBlur}
                   error={app003p02ValidInput.touched.clusterName && Boolean(app003p02ValidInput.errors.clusterName)}
                   helperText={app003p02ValidInput.touched.clusterName && app003p02ValidInput.errors.clusterName}
-                  slotProps={{
-                    input: {
-                      spellCheck: false,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailOutlineOutlinedIcon
-                            sx={{
-                              color: app003p02ValidInput.values.clusterName === "" ? 'text.secondary' : 'text.primary'
-                            }}
-                          />
-
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
                 />
               </Box>
 

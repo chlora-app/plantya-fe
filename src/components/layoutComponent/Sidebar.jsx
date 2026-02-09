@@ -16,13 +16,17 @@ import { Link, useLocation } from "react-router-dom";
 import { ExpandMore } from "@mui/icons-material";
 import MenuRoutes from "../../routes/MenuRoutes";
 import Icon from '@mdi/react';
-import SmallIcon from "../../assets/SmallIcon.png"
-import BaseLogo from "../../assets/BaseLogo.png"
+import SmallIcon from "../../assets/images/SmallIcon.png"
+import BaseLogo from "../../assets/images/BaseLogo.png"
+import BaseLogoDark from "../../assets/images/BaseLogoDark.png"
+import { useThemeMode } from "../../context/ThemeContext";
+import { mdiSprout } from "@mdi/js";
 
 
 
 
 const Sidebar = (props) => {
+    const { mode } = useThemeMode();
     const location = useLocation();
     const [openMenuIndex, setOpenMenuIndex] = useState(null)
     const [anchorEl, setAnchorEl] = useState(null);
@@ -108,7 +112,7 @@ const Sidebar = (props) => {
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                backgroundColor: "background.paper",
+                backgroundColor: "layout.sidebar",
                 transition: "width 0.3s ease",
             }}
         >
@@ -120,20 +124,25 @@ const Sidebar = (props) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    borderBottom: "1px solid",
-                    borderBottomColor: 'action.active',
+                    // borderBottom: "1px solid",
+                    // borderBottomColor: 'divider',
                     transition: "all 0.3s ease",
+                    gap:2
                 }}
             >
-                <img
-                    src={props.isCollapsed ? SmallIcon : BaseLogo}
+                {/* <img
+                    src={props.isCollapsed ? SmallIcon : mode == "dark" ? BaseLogo : BaseLogoDark}
                     alt="Logo"
                     style={{
                         height: props.isCollapsed ? 30 : 40,
                         width: props.isCollapsed ? 30 : 'auto',
                         transition: "all 0.3s ease",
                     }}
-                />
+                /> */}
+                <Icon path={mdiSprout} size={1} className="text-brand" />
+                <Typography variant="h2" letterSpacing={1} fontWeight={"bold"} mt={0.75}>
+                    Plantya
+                </Typography>
             </Box>
 
             {/* Container Main and Footer Sidebar */}
@@ -152,8 +161,8 @@ const Sidebar = (props) => {
                 {/* Main Sidebar */}
                 <Box
                     sx={{
-                        borderBottom: "1px solid",
-                        borderBottomColor: 'action.active',
+                        // borderBottom: "1px solid",
+                        // borderBottomColor: 'divider',
                         color: 'text.secondary', /////
                     }}
                 >
@@ -245,17 +254,17 @@ const Sidebar = (props) => {
                                                     "&.Mui-selected": {
                                                         backgroundColor: "action.hover",
                                                         borderRadius: 35,
-                                                        color: 'text.secondary'
+                                                        color: 'primary.main'
                                                     },
                                                     "&:hover": {
                                                         bgcolor: "action.hover",
-                                                        color: 'text.secondary',
+                                                        color: 'text.primary',
                                                         borderRadius: 35,
                                                         transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                     },
                                                     "&.Mui-selected:hover": {
                                                         bgcolor: "action.hover",
-                                                        color: 'text.secondary',
+                                                        color: 'text.primary',
                                                     },
 
                                                 }}
@@ -336,7 +345,7 @@ const Sidebar = (props) => {
                                                         display: 'flex',
                                                         flexDirection: 'column',
                                                         gap: 1,
-                                                        color: 'text.secondary' /////
+                                                        color: 'text.primary' /////
                                                     }}
                                                 >
                                                     {item.sub?.map((sub, subIndex) => (
@@ -351,16 +360,16 @@ const Sidebar = (props) => {
                                                                 pl: 0,
                                                                 "&.Mui-selected": {
                                                                     bgcolor: "action.hover",
-                                                                    color: 'text.secondary'
+                                                                    color: 'text.primary'
                                                                 },
                                                                 "&:hover": {
                                                                     bgcolor: "action.hover",
-                                                                    color: 'text.secondary',
+                                                                    color: 'text.primary',
                                                                     transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                                 },
                                                                 "&.Mui-selected:hover": {
                                                                     bgcolor: "action.hover",
-                                                                    color: 'text.secondary'
+                                                                    color: 'text.primary'
                                                                 },
                                                             }}
                                                         >
@@ -403,8 +412,8 @@ const Sidebar = (props) => {
                                                             gap: 1,
                                                             width: '80%',
                                                             ml: '20%',
-                                                            borderLeft: '1px solid',
-                                                            borderLeftColor: 'action.active',
+                                                            // borderLeft: '1px solid',
+                                                            // borderLeftColor: 'divider',
                                                             pl: 1,
                                                         }}
                                                     >
@@ -424,15 +433,15 @@ const Sidebar = (props) => {
                                                                     px: 0,
                                                                     "&.Mui-selected": {
                                                                         bgcolor: "action.hover",
-                                                                        color: 'text.secondary'
+                                                                        color: 'text.primary'
                                                                     },
                                                                     "&:hover": {
                                                                         bgcolor: "action.hover",
-                                                                        color: 'text.secondary',
+                                                                        color: 'text.primary',
                                                                     },
                                                                     "&.Mui-selected:hover": {
                                                                         bgcolor: "action.hover",
-                                                                        color: 'text.secondary'
+                                                                        color: 'text.primary'
                                                                     },
                                                                 }}
                                                             >
@@ -480,7 +489,7 @@ const Sidebar = (props) => {
                 {/* Footer Sidebar */}
                 <Box
                     sx={{
-                        color: 'text.secondary', /////
+                        color: 'text.primary', /////
                     }}
                 >
                     <Box sx={{ pt: 2, pb: 1 }}>
@@ -558,18 +567,18 @@ const Sidebar = (props) => {
                                                     "&.Mui-selected": {
                                                         bgcolor: "action.hover",
                                                         borderRadius: 35,
-                                                        color: 'text.secondary'
+                                                        color: 'text.primary'
                                                     },
                                                     "&:hover":
                                                     {
                                                         bgcolor: "action.hover",
                                                         borderRadius: 35,
-                                                        color: 'text.secondary',
+                                                        color: 'text.primary',
                                                         transition: "background-color 0.4s ease-in-out, color 0.4s ease-in-out"
                                                     },
                                                     "&.Mui-selected:hover": {
                                                         bgcolor: "action.hover",
-                                                        color: 'text.secondary',
+                                                        color: 'text.primary',
                                                     },
 
                                                 }}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Container, Box } from "@mui/material";
+import { Container, Box, Paper } from "@mui/material";
 import AlertMessage from "./AlertMessage";
 
 const RootPageCustom = (props) => {
@@ -21,7 +21,17 @@ const RootPageCustom = (props) => {
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
-                {props.children}
+                <Paper
+                    elevation={0}
+                    sx={{
+                        bgcolor: "background.paper",
+                        boxShadow: (theme) => theme.shadows[2],
+                        borderRadius: 2,
+                        p: 2,
+                    }}
+                >
+                    {props.children}
+                </Paper>
             </Container>
         </React.Fragment>
     )

@@ -194,15 +194,6 @@ const MasterUserEdit = (props) => {
                                     fullWidth
                                     disabled
                                     value={app002p03ValidInput.values.userId}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircleIcon sx={{ color: 'text.secondary' }} />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -225,19 +216,6 @@ const MasterUserEdit = (props) => {
                                     onBlur={app002p03ValidInput.handleBlur}
                                     error={app002p03ValidInput.touched.email && Boolean(app002p03ValidInput.errors.email)}
                                     helperText={app002p03ValidInput.touched.email && app002p03ValidInput.errors.email}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <MailOutlineOutlinedIcon
-                                                        sx={{
-                                                            color: app002p03ValidInput.values.email === "" ? 'text.secondary' : 'text.primary'
-                                                        }}
-                                                    />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -259,18 +237,6 @@ const MasterUserEdit = (props) => {
                                     onBlur={app002p03ValidInput.handleBlur}
                                     error={app002p03ValidInput.touched.name && Boolean(app002p03ValidInput.errors.name)}
                                     helperText={app002p03ValidInput.touched.name && app002p03ValidInput.errors.name}
-                                    slotProps={{
-                                        input: {
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <AccountCircleIcon
-                                                        sx={{
-                                                            color: app002p03ValidInput.values.name === "" ? 'text.secondary' : 'text.primary'
-                                                        }} />
-                                                </InputAdornment>
-                                            ),
-                                        },
-                                    }}
                                 />
                             </Box>
 
@@ -299,20 +265,6 @@ const MasterUserEdit = (props) => {
                                             name="role"
                                             error={app002p03ValidInput.touched.role && Boolean(app002p03ValidInput.errors.role)}
                                             helperText={app002p03ValidInput.touched.role && app002p03ValidInput.errors.role}
-                                            slotProps={{
-                                                input: {
-                                                    ...params.InputProps,
-                                                    startAdornment: (
-                                                        <InputAdornment position="start">
-                                                            <AdminPanelSettingsIcon
-                                                                fontSize="small"
-                                                                sx={{ color: 'text.secondary' }}
-                                                            />
-                                                            {params.InputProps.startAdornment}
-                                                        </InputAdornment>
-                                                    ),
-                                                },
-                                            }}
                                         />
                                     )}
                                 />

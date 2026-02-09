@@ -55,9 +55,8 @@ const AuthLayout = (props) => {
                     top: 0,
                     left: 0,
                     height: '100%',
-                    backgroundColor: "#inherit",
-                    borderRight: "1px solid",
-                    borderRightColor: 'action.active',
+                    // borderRight: "1px solid",
+                    // borderRightColor: 'divider',
                     transform: isMobile && !isMobileOpen ? 'translateX(-100%)' : 'translateX(0)',
                     overflow: "visible",
                     transition: "width 0.3s ease, transform 0.3s ease",
@@ -92,7 +91,7 @@ const AuthLayout = (props) => {
                     display: "flex",
                     flexDirection: "column",
                     minHeight: "100vh",
-                    backgroundColor: "background.default",
+                    backgroundColor: "layout.floor",
                     transition: "margin-left 0.3s ease",
                     overflowX: 'hidden',
                 }}
@@ -110,11 +109,10 @@ const AuthLayout = (props) => {
 
                 {/* Main Content */}
                 <Box
-                    component="main"
                     sx={{
                         flex: 1,
-                        p: 2,
-                        backgroundColor: "background.content",
+                        p: 3,
+                        bgcolor: "layout.floor",
                         overflowY: "auto",
                     }}
                 >
@@ -135,9 +133,9 @@ const AuthLayout = (props) => {
                     width: 35,
                     height: 35,
                     borderRadius: '5px',
-                    backgroundColor: "background.paper",
-                    border: "1px solid",
-                    borderColor: 'action.active',
+                    backgroundColor: "background.elevated",
+                    // border: "1px solid",
+                    // borderColor: 'divider',
                     transition: "left 0.3s ease",
                     display: { xs: 'none', sm: 'flex' },
                     "&:hover": {

@@ -49,6 +49,20 @@ const buildPalette = (mode = "dark") => {
             paper: isDark ? colors.background.paper.dark : colors.background.paper.light,
             elevated: isDark ? colors.background.elevated.dark : colors.background.elevated.light,
         },
+
+        layout: {
+            header: isDark ? "#16191D" : "#FFFFFF",
+            sidebar: isDark
+                ? colors.background.elevated.dark
+                : colors.background.elevated.light,
+            floor: isDark
+                ? colors.background.default.dark
+                : colors.background.default.light,
+            workspace: isDark
+                ? colors.background.paper.dark
+                : colors.background.paper.light,
+        },
+
         text: {
             primary: isDark ? colors.text.primary.dark : colors.text.primary.light,
             secondary: colors.text.secondary,
@@ -56,7 +70,9 @@ const buildPalette = (mode = "dark") => {
             light: colors.text.primary.dark,
         },
 
-        divider: isDark ? colors.border.subtle : colors.border.default,
+        // Test Border
+        // divider: isDark ? colors.border.subtle : colors.border.default,
+        divider: isDark ? colors.border.default : colors.border.default,
 
         action: {
             disabledBackground: isDark ? colors.surface.inputDisabledDark : colors.surface.inputDisabled,

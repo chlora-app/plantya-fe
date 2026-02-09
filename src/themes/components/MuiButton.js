@@ -5,9 +5,7 @@ const MuiButton = {
                 "&.auth-button": {
                     backgroundColor: theme.palette.primary.main,
                     color: theme.palette.text.light,
-                    // borderRadius: 15,
-                    fontWeight: 500,
-                    letterSpacing: 1,
+                    borderRadius: "15px",
 
                     "&:hover": {
                         backgroundColor: theme.palette.primary.light,

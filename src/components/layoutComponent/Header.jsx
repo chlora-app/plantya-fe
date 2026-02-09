@@ -81,12 +81,13 @@ const Header = (props) => {
             <AppBar
                 position="static"
                 sx={{
-                    backgroundColor: "background.default",
-                    zIndex: theme.zIndex.drawer + 1,
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
+                    borderRadius:'0',
+                    backgroundColor: "layout.header",
+                    // zIndex: theme.zIndex.drawer + 1,
+                    // boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
                     height: props.headerHeight,
-                    borderBottom: "1px solid",
-                    borderBottomColor: 'action.active',
+                    // borderBottom: "1px solid",
+                    // borderBottomColor: 'divider',
                     color: 'text.primary'
                 }}
             >
@@ -119,16 +120,16 @@ const Header = (props) => {
                                 width: 35,
                                 height: 35,
                                 borderRadius: '5px',
-                                backgroundColor: "background.paper",
-                                border: "1px solid",
-                                borderColor: 'action.active',
+                                // backgroundColor: "background.default",
+                                // border: "1px solid",
+                                // borderColor: 'divider',
                                 transition: "left 0.3s ease",
                                 "&:hover": {
                                     bgcolor: "background.default",
                                 }
                             }}
                         >
-                            <CodeIcon sx={{ color: "action.active" }} />
+                            <CodeIcon sx={{ color: "divider" }} />
                         </IconButton>
 
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -180,7 +181,11 @@ const Header = (props) => {
                         >
                             <Divider
                                 orientation="vertical"
-                                sx={{ border: '1px solid', height: '100%', borderColor: 'action.active' }}
+                                sx={{ 
+                                    height: '100%', 
+                                    // border: '1px solid', 
+                                    // borderColor: 'divider'
+                                 }}
                             />
                         </Box>
 
@@ -206,7 +211,11 @@ const Header = (props) => {
                         >
                             <Divider
                                 orientation="vertical"
-                                sx={{ border: '1px solid', height: '100%', borderColor: 'action.active' }}
+                                sx={{ 
+                                    // border: '1px solid', 
+                                    // borderColor: 'divider',
+                                    height: '100%', 
+                                 }}
                             />
                         </Box>
                         <IconButton
@@ -242,7 +251,11 @@ const Header = (props) => {
                     }
                 }}
             >
-                <Box sx={{ px: 2, py: 2, borderBottom: "1px solid", textAlign: 'center', borderBottomColor: 'action.active', color: "text.primary" }}>
+                <Box sx={{ px: 2, py: 2, 
+                    // borderBottom: "1px solid", 
+                    // borderBottomColor: 'divider', 
+                    textAlign: 'center', 
+                    color: "text.primary" }}>
                     <Box
                         component="img"
                         src="/GacorBang.jpg"

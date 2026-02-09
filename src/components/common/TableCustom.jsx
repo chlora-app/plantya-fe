@@ -140,7 +140,7 @@ const TableCustom = (props) => {
                 sx={{
                     border: "1px solid",
                     borderColor: pageNum === page + 1 ? 'primary.main' : 'primary.main',
-                    borderRadius: 1,
+                    borderRadius: 2,
                     minWidth: { xs: 32, sm: 32, md: 36 },
                     height: { xs: 32, sm: 32, md: 36 },
                     display: 'flex',
@@ -300,7 +300,7 @@ const TableCustom = (props) => {
         <>
             <TableContainer
                 sx={{
-                    borderRadius: 1,
+                    borderRadius: 2,
                     border: '1px solid',
                     borderColor: 'primary.main',
                     position: 'relative',
@@ -384,7 +384,7 @@ const TableCustom = (props) => {
                         sx={{
                             border: "1px solid",
                             borderColor: 'primary.main',
-                            borderRadius: 1,
+                            borderRadius: 2,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -411,7 +411,7 @@ const TableCustom = (props) => {
                         sx={{
                             border: "1px solid",
                             borderColor: 'primary.main',
-                            borderRadius: 1,
+                            borderRadius: 2,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -443,7 +443,7 @@ const TableCustom = (props) => {
                         sx={{
                             border: "1px solid",
                             borderColor: 'primary.main',
-                            borderRadius: 1,
+                            borderRadius: 2,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
@@ -470,7 +470,7 @@ const TableCustom = (props) => {
                         sx={{
                             border: "1px solid",
                             borderColor: 'primary.main',
-                            borderRadius: 1,
+                            borderRadius: 2,
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',

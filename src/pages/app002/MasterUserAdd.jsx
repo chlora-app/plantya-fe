@@ -194,20 +194,6 @@ const MasterUserAdd = (props) => {
                   onBlur={app002p02ValidInput.handleBlur}
                   error={app002p02ValidInput.touched.email && Boolean(app002p02ValidInput.errors.email)}
                   helperText={app002p02ValidInput.touched.email && app002p02ValidInput.errors.email}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailOutlineOutlinedIcon
-                            sx={{
-                              color: app002p02ValidInput.values.email === "" ? 'text.secondary' : 'text.primary'
-                            }}
-                          />
-
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
                 />
               </Box>
 
@@ -229,20 +215,6 @@ const MasterUserAdd = (props) => {
                   onBlur={app002p02ValidInput.handleBlur}
                   error={app002p02ValidInput.touched.name && Boolean(app002p02ValidInput.errors.name)}
                   helperText={app002p02ValidInput.touched.name && app002p02ValidInput.errors.name}
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircleIcon
-                            sx={{
-                              color: app002p02ValidInput.values.name === "" ? 'text.secondary' : 'text.primary'
-                            }} />
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-
-
                 />
               </Box>
 
@@ -271,20 +243,6 @@ const MasterUserAdd = (props) => {
                       name="role"
                       error={app002p02ValidInput.touched.role && Boolean(app002p02ValidInput.errors.role)}
                       helperText={app002p02ValidInput.touched.role && app002p02ValidInput.errors.role}
-                      slotProps={{
-                        input: {
-                          ...params.InputProps,
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <AdminPanelSettingsIcon
-                                sx={{
-                                  color: app002p02ValidInput.values.role ? 'text.primary' : 'text.secondary'
-                                }}
-                              />
-                            </InputAdornment>
-                          ),
-                        },
-                      }}
                     />
                   )}
                 />
