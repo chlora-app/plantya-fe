@@ -1,30 +1,30 @@
 import axiosInstance from "./AxiosInstance";
 
 // Login and Register
-export const loginApi = (res) => axiosInstance("auth").post("/api/auth/login", res);
-export const registerApi = (res) => axiosInstance("auth").post("/api/auth/register", res);
-export const logoutApi = (res) => axiosInstance("auth").post("/api/auth/logout", res);
+export const loginApi = (res) => axiosInstance().post("/auth/login", res);
+export const registerApi = (res) => axiosInstance().post("/auth/register", res);
+export const logoutApi = (res) => axiosInstance().post("/auth/logout", res);
 
 // app002 - Master User
-export const getUser = (params, config = {}) => axiosInstance("user").get("/api/users", { params, ...config });
-export const getUserDeleted = (params, config = {}) => axiosInstance("user").get("/api/users/deleted", { params, ...config });
-export const addUser = (res) => axiosInstance("user").post("/api/users", res)
-export const editUser = (userId, res, config = {}) => axiosInstance("user").patch(`/api/users/${userId}`, res, config)
-export const deleteUser = (userId) => axiosInstance("user").delete(`/api/users/${userId}`)
-export const restoreUser = (userId) => axiosInstance("user").post(`/api/users/deleted/${userId}/restore`)
+export const getUser = (params, config = {}) => axiosInstance().get("/users", { params, ...config });
+export const getUserDeleted = (params, config = {}) => axiosInstance("user").get("/users/deleted", { params, ...config });
+export const addUser = (res) => axiosInstance().post("/users", res)
+export const editUser = (userId, res, config = {}) => axiosInstance("user").patch(`/users/${userId}`, res, config)
+export const deleteUser = (userId) => axiosInstance().delete(`/users/${userId}`)
+export const restoreUser = (userId) => axiosInstance().post(`/users/deleted/${userId}/restore`)
 
 // app003 - Master Cluster
-export const getCluster = (params, config = {}) => axiosInstance("iot").get("/api/clusters", { params, ...config });
-export const addCluster = (res) => axiosInstance("iot").post("/api/clusters", res)
-export const editCluster = (clusterId, res, config = {}) => axiosInstance("iot").patch(`/api/clusters/${clusterId}`, res, config)
-export const deleteCluster = (clusterId) => axiosInstance("iot").delete(`/api/clusters/${clusterId}`)
+export const getCluster = (params, config = {}) => axiosInstance().get("/clusters", { params, ...config });
+export const addCluster = (res) => axiosInstance().post("/clusters", res)
+export const editCluster = (clusterId, res, config = {}) => axiosInstance().patch(`/clusters/${clusterId}`, res, config)
+export const deleteCluster = (clusterId) => axiosInstance().delete(`/clusters/${clusterId}`)
 
 
 
 
 
 // app004 - Master Device
-export const getDevice = (params, config = {}) => axiosInstance("iot").get("/api/devices", { params, ...config });
-export const addDevice = (res) => axiosInstance("iot").post("/api/devices", res)
-export const editDevice = (deviceId, res, config = {}) => axiosInstance("iot").patch(`/api/devices/${deviceId}`, res, config)
-export const deleteDevice = (deviceId) => axiosInstance("iot").delete(`/api/devices/${deviceId}`)
+export const getDevice = (params, config = {}) => axiosInstance().get("/devices", { params, ...config });
+export const addDevice = (res) => axiosInstance().post("/devices", res)
+export const editDevice = (deviceId, res, config = {}) => axiosInstance().patch(`/devices/${deviceId}`, res, config)
+export const deleteDevice = (deviceId) => axiosInstance().delete(`/devices/${deviceId}`)

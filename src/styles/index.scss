@@ -3,3 +3,5 @@
 @use "bootstrap-overrides";
 @use "bootstrap-bridge";
 @use 'components/nonauth-layout';
+@use 'components/auth-layout';
+@use 'components/sidebar';

@@ -22,10 +22,8 @@ const RootPageCustom = (props) => {
                     msgStatus={props.msgStateGetStatus}
                 />
                 <Paper
-                    elevation={0}
+                    elevation={4}
                     sx={{
-                        bgcolor: "background.paper",
-                        boxShadow: (theme) => theme.shadows[2],
                         borderRadius: 2,
                         p: 2,
                     }}

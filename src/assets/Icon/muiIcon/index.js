@@ -5,4 +5,8 @@ export { default as VisibilityOutlinedIcon } from '@mui/icons-material/Visibilit
 export { default as VisibilityOff } from '@mui/icons-material/VisibilityOff';
 export { default as LightModeIcon } from '@mui/icons-material/LightMode';
 export { default as DarkModeIcon } from '@mui/icons-material/DarkMode';
-export { default as IconButton } from '@mui/icons-material/DarkMode';
+export { default as ArrowBackIosIcon } from '@mui/icons-material/ArrowBackIos';
+export { default as ArrowForwardIosIcon } from '@mui/icons-material/ArrowForwardIos';
+export { default as DashboardIcon } from '@mui/icons-material/Dashboard';
+export { default as LayersIcon } from '@mui/icons-material/Layers';
+export { default as AssessmentOutlinedIcon  } from '@mui/icons-material/AssessmentOutlined';

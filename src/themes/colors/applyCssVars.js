@@ -41,3 +41,4 @@ export const applyCssVars = (mode = "dark") => {
     /* ================= BORDER ================= */
     root.style.setProperty("--color-border", colors.border.default);
 };
+

@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import Sidebar from "../components/layoutComponent/Sidebar";
+import Sidebar from "../components/layoutComponent/Sidebar/Sidebar";
 import Header from "../components/layoutComponent/Header";
-import { IconButton, Box, useTheme, useMediaQuery, Backdrop } from "@mui/material";
-import CodeIcon from '@mui/icons-material/Code';
+import { IconButton, Box, useTheme, useMediaQuery, Backdrop, Drawer } from "@mui/material";
+import { ArrowBackIosIcon, ArrowForwardIosIcon } from "../assets/Icon/muiIcon/index";
 
-
-
-const SIDEBAR_COLLAPSE_WIDTH = 75;
+// Constant Value
+const SIDEBAR_COLLAPSE_WIDTH = 60;
 const SIDEBAR_WIDTH = 250;
 const HEADER_HEIGHT = 70;
 
 const AuthLayout = (props) => {
-
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
-        setIsCollapsed(false)
-        setMobileOpen(false)
+        if (isMobile) {
+            setMobileOpen(false)
+            setIsCollapsed(false)
+        }
     }, [isMobile])
 
 
@@ -37,117 +36,103 @@ const AuthLayout = (props) => {
         setMobileOpen(false);
     };
 
-    const userData = JSON.parse(localStorage.getItem("user"));
-    console.log(userData)
+    const userData = useMemo(() => {
+        const data = localStorage.getItem("user");
+        return data ? JSON.parse(data) : null;
+    }, []);
 
-
+    const drawerWidth = isCollapsed ? SIDEBAR_COLLAPSE_WIDTH : SIDEBAR_WIDTH;
 
     return (
-        // Container
-        <Box sx={{ display: 'flex', minHeight: "100vh" }}>
-
-            {/* Sidebar */}
-            <Box
-                component="aside"
+        <Box className="auth-layout-root">
+            <Drawer
+                variant={isMobile ? "temporary" : "permanent"}
+                open={isMobile ? isMobileOpen : true}
+                onClose={handleMobileClose}
                 sx={{
-                    width: isMobile ? SIDEBAR_WIDTH : (isCollapsed ? SIDEBAR_COLLAPSE_WIDTH : SIDEBAR_WIDTH),
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    height: '100%',
-                    // borderRight: "1px solid",
-                    // borderRightColor: 'divider',
-                    transform: isMobile && !isMobileOpen ? 'translateX(-100%)' : 'translateX(0)',
-                    overflow: "visible",
-                    transition: "width 0.3s ease, transform 0.3s ease",
-                    zIndex: 1300,
+                    zIndex: theme.zIndex.drawer + 1,
+
+                    ...(!isMobile && {
+                        width: drawerWidth,
+                        flexShrink: 0,
+                    }),
+
+                    "& .MuiDrawer-paper": {
+                        width: drawerWidth,
+                        transition: theme.transitions.create("width", {
+                            duration: theme.transitions.duration.standard,
+                        }),
+                    },
                 }}
             >
                 <Sidebar
-                    isCollapsed={isCollapsed}
-                    heightHeader={HEADER_HEIGHT}
                     userData={userData}
+                    heightHeader={HEADER_HEIGHT}
+                    drawerWidth={drawerWidth}
+                    isCollapsed={isCollapsed}
                     isMobileOpen={isMobileOpen}
                     handleMobileClose={handleMobileClose}
+                    toggleSidebar={toggleSidebar}
                 />
-            </Box>
+            </Drawer>
 
-            {
-                isMobile && (
-                    <Backdrop
-                        open={isMobileOpen}
-                        onClick={toggleSidebar}
-                        sx={{ zIndex: 1299, color: 'rgba(0, 0, 0, 0.5)' }}
-                    />
-                )
-            }
 
-            {/* Header and Content Wrapper */}
-            <Box
-                component="main"
-                sx={{
-                    ml: isMobile ? 0 : (isCollapsed ? `${SIDEBAR_COLLAPSE_WIDTH}px` : `${SIDEBAR_WIDTH}px`),
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    minHeight: "100vh",
-                    backgroundColor: "layout.floor",
-                    transition: "margin-left 0.3s ease",
-                    overflowX: 'hidden',
-                }}
-            >
+            {!isMobile && (
+                <IconButton
+                    onClick={toggleSidebar}
+                    className={isCollapsed ? "shadow-sm" : undefined}
+                    sx={{
+                        position: "fixed",
+                        top: HEADER_HEIGHT / 2,
+                        left: drawerWidth,
+                        transform: "translate(-50%, -50%)",
+                        ml: isCollapsed ? 0 : -3,
+                        width: 24,
+                        height: 24,
+                        borderRadius: "50%",
+                        backgroundColor: "background.paper",
+                        border: isCollapsed ? "1px solid" : "",
+                        borderColor: "divider",
+                        zIndex: theme.zIndex.drawer + 10,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                            backgroundColor: "background.paper",
+                        },
+                    }}
+                >
+                    {isCollapsed ?
+                        <ArrowForwardIosIcon sx={{
+                            fontSize: 12,
+                            color: "text.secondary",
+                            ml: 0.1,
+                            "&:hover": {
+                                color: 'primary.main'
+                            },
+                        }} /> :
+                        <ArrowBackIosIcon sx={{
+                            fontSize: 12,
+                            color: "text.secondary",
+                            "&:hover": {
+                                color: 'primary.main'
+                            },
+                        }} />
+                    }
+                </IconButton>
+            )}
 
-                {/* Header */}
-
+            <Box className="auth-layout-wrapper-main">
                 <Header
                     toggleSidebar={toggleSidebar}
-                    isCollapsed={isCollapsed}
                     userData={userData}
+                    drawerWidth={isMobile ? 0 : drawerWidth}
                     headerHeight={HEADER_HEIGHT}
                 />
 
-
-                {/* Main Content */}
-                <Box
-                    sx={{
-                        flex: 1,
-                        p: 3,
-                        bgcolor: "layout.floor",
-                        overflowY: "auto",
-                    }}
-                >
+                <Box component="main" className="auth-layout-content" p={3}>
                     {props.children}
                 </Box>
             </Box>
-
-            <IconButton
-                onClick={toggleSidebar}
-                sx={{
-                    position: "fixed",
-                    top: HEADER_HEIGHT,
-                    left: isCollapsed
-                        ? SIDEBAR_COLLAPSE_WIDTH - 18
-                        : SIDEBAR_WIDTH - 18,
-                    transform: "translateY(-50%)",
-                    zIndex: 1300,
-                    width: 35,
-                    height: 35,
-                    borderRadius: '5px',
-                    backgroundColor: "background.elevated",
-                    // border: "1px solid",
-                    // borderColor: 'divider',
-                    transition: "left 0.3s ease",
-                    display: { xs: 'none', sm: 'flex' },
-                    "&:hover": {
-                        bgcolor: "background.default",
-                    }
-                }}
-            >
-                <CodeIcon sx={{ color: "text.secondary" }} />
-            </IconButton>
-
-        </Box >
-
+        </Box>
     );
 };
 

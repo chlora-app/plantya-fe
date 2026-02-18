@@ -21,26 +21,13 @@ const checkExpiredToken = (key) => {
 // Function Helper Axios
 
 const ENV = import.meta.env.VITE_ENV || "local";
-const SERVICE_HEADERS = {
-    auth: {
-        Accept: "application/json",
-    },
-    iot: {
-        Accept: "application/json",
-    },
-    users: {
-        Accept: "application/json",
-    },
-};
 
-const axiosInstance = (service, additionalConfig = {}) => {
+const axiosInstance = (additionalConfig = {}) => {
     const token = checkExpiredToken("token");
 
-    const baseURL = import.meta.env[`VITE_BASE_URL_${ENV}_${service}`];
+    const baseURL = import.meta.env[`VITE_BASE_URL_${ENV}`];
     if (!baseURL) {
-        throw new Error(
-            `BASE_URL not found for service "${service}" in env "${ENV}"`
-        );
+        throw new Error(`BASE_URL not found for env "${ENV}"`);
     }
 
     return axios.create({

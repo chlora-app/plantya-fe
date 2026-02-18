@@ -1,7 +1,5 @@
 import LazyLoadRoutes from "./LazyLoadRoutes";
 import {
-    mdiViewDashboardOutline,
-    mdiLayersTripleOutline,
     mdiAccountOutline,
     mdiHomeThermometerOutline,
     mdiAccessPointNetwork,
@@ -10,11 +8,17 @@ import {
     mdiInformationOutline
 } from "@mdi/js";
 
+import {
+    DashboardIcon,
+    LayersIcon,
+    AssessmentOutlinedIcon,
+} from "../assets/Icon/muiIcon/index"
+
 const MenuRoutes = [
-    { path: "/app001/dashboard", text: "Dashboard", icon: mdiViewDashboardOutline, component: LazyLoadRoutes(() => import("../pages/app001/Dashboard")), section: "main" },
+    { path: "/app001/dashboard", text: "Dashboard", icon: <DashboardIcon />, component: LazyLoadRoutes(() => import("../pages/app001/Dashboard")), section: "main" },
     {
         text: "Master Data",
-        icon: mdiLayersTripleOutline,
+        icon: <LayersIcon />,
         section: "main",
         sub: [
             { path: "/app002/master/users", text: "Master User", icon: mdiAccountOutline, component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")) },
@@ -24,7 +28,7 @@ const MenuRoutes = [
     },
     {
         text: "Reports",
-        icon: mdiChartBoxOutline,
+        icon: <AssessmentOutlinedIcon />,
         section: "main",
         sub: [
             { path: "/reports/table", text: "Table Report", icon: mdiChartBoxOutline, component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
@@ -32,6 +36,16 @@ const MenuRoutes = [
         ],
     },
     { text: "Support", path: "/support", icon: mdiFaceAgent, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
+    { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
     { text: "About", path: "/about", icon: mdiInformationOutline, section: "footer", component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },
 ]
 

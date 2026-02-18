@@ -9,9 +9,9 @@ const colors = {
             dark: "#006940",
         },
         secondary: { // Mengganti 'info' menjadi 'secondary' yang lebih umum di MUI
-            main: "#1976D2",
-            light: "#60A5FA",
-            dark: "#24427D",
+            main: "#6B7280",
+            light: "#9CA3AF",
+            dark: "#BEC3CC",
         },
         info: { // Tetap pertahankan 'info' jika Anda membutuhkannya
             main: "#1976D2",
@@ -51,7 +51,7 @@ const colors = {
             dark: "#111315",
         },
         paper: {
-            light: "#F7F8FA",
+            light: "#FFFFFF",
             dark: "#1A1D21",
         },
         elevated: {
@@ -71,8 +71,8 @@ const colors = {
     /* ================= BORDER / DIVIDER ================= */
     border: {
         // default: "#D1D5DB",
-        default: "#6f7072",
-        subtle: "#99A19E",
+        default: "#E5E7EB",
+        subtle: "#262A30",
     },
 };
 

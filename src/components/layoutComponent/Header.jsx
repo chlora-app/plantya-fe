@@ -77,18 +77,17 @@ const Header = (props) => {
 
     return (
         <>
-
             <AppBar
                 position="static"
+                elevation={0}
                 sx={{
-                    borderRadius:'0',
+                    borderRadius: '0',
                     backgroundColor: "layout.header",
-                    // zIndex: theme.zIndex.drawer + 1,
-                    // boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
                     height: props.headerHeight,
-                    // borderBottom: "1px solid",
-                    // borderBottomColor: 'divider',
-                    color: 'text.primary'
+                    borderBottom: "1px solid",
+                    borderBottomColor: 'divider',
+                    color: 'text.primary',
+                    zIndex: 1100,
                 }}
             >
                 <Toolbar
@@ -181,11 +180,11 @@ const Header = (props) => {
                         >
                             <Divider
                                 orientation="vertical"
-                                sx={{ 
-                                    height: '100%', 
+                                sx={{
+                                    height: '100%',
                                     // border: '1px solid', 
                                     // borderColor: 'divider'
-                                 }}
+                                }}
                             />
                         </Box>
 
@@ -211,11 +210,11 @@ const Header = (props) => {
                         >
                             <Divider
                                 orientation="vertical"
-                                sx={{ 
+                                sx={{
                                     // border: '1px solid', 
                                     // borderColor: 'divider',
-                                    height: '100%', 
-                                 }}
+                                    height: '100%',
+                                }}
                             />
                         </Box>
                         <IconButton
@@ -251,11 +250,13 @@ const Header = (props) => {
                     }
                 }}
             >
-                <Box sx={{ px: 2, py: 2, 
+                <Box sx={{
+                    px: 2, py: 2,
                     // borderBottom: "1px solid", 
                     // borderBottomColor: 'divider', 
-                    textAlign: 'center', 
-                    color: "text.primary" }}>
+                    textAlign: 'center',
+                    color: "text.primary"
+                }}>
                     <Box
                         component="img"
                         src="/GacorBang.jpg"
