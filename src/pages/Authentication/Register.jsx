@@ -66,12 +66,12 @@ const Register = () => {
         validationSchema: Yup.object
             ({
                 username: Yup.string()
-                    .required("Username is required.")
-                    .min(4, "Username must be at least 4 characters.")
-                    .max(20, "Username must not exceed 20 characters.")
+                    .required("Name is required.")
+                    .min(4, "Name must be at least 4 characters.")
+                    .max(20, "Name must not exceed 20 characters.")
                     .matches(
-                        /^[a-zA-Z0-9_]+$/,
-                        "Username can only contain letters, numbers, and underscores."
+                        /^[A-Za-z\s]+$/,
+                        "Name can only contain letters and spaces."
                     ),
                 email: Yup.string()
                     .required("Email is required.")
@@ -197,8 +197,8 @@ const Register = () => {
                             <Stack>
                                 <TextField
                                     className="auth-field"
-                                    label="Username"
-                                    placeholder="Enter your username"
+                                    label="Name"
+                                    placeholder="Enter your name"
                                     name="username"
                                     size="medium"
                                     fullWidth
