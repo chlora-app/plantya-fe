@@ -11,13 +11,12 @@ const PageSpinner = (props) => {
                 color: "text.secondary",
                 flexDirection: "column",
                 backdropFilter: "blur(4px)",
-                backgroundColor: "rgba(0,0,0,0.3)",
                 transition: "all 0.3s ease-in-out",
             }}
         >
-            <CircularProgress color="inherit" size={60} />
+            <CircularProgress color="white" size={60} />
             {props.text && (
-                <Typography variant="h6" sx={{ mt: 2 }}>
+                <Typography variant="h6" sx={{ mt: 2 }} color="text.white">
                     {props.text}
                 </Typography>
             )}

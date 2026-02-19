@@ -57,12 +57,12 @@ const PopupModal = (props) => {
                     </Box>
 
                     {/* Header Message */}
-                    <Typography variant="h5" sx={{ fontWeight: 600, mb: 1, color: "#fff" }}>
+                    <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
                         {props.headerMessageModal}
                     </Typography>
 
                     {/* Detail Message */}
-                    <Typography variant="body1" sx={{ mb: 2, color: "#ccc" }}>
+                    <Typography variant="body1" sx={{ mb: 2 }}>
                         {props.messageModal}
                     </Typography>
                 </DialogContent>

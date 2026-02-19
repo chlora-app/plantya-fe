@@ -120,12 +120,13 @@ const Register = () => {
                     }, 1000);
                 }, 3000);
             } catch (error) {
+                debugger
                 setLoadingSpinner(false);
                 setTextLoading("");
                 setShowModal(true);
                 setTypeModal("error");
                 setHeaderMessageModal("Register Failed!");
-                setMessageModal(error?.response?.data?.detail || "System is Unavailable. Please Try Again Later.");
+                setMessageModal(error?.response?.data?.message || "System is Unavailable. Please Try Again Later.");
                 setTimeout(() => {
                     setShowModal(false);
                     resetModalState();

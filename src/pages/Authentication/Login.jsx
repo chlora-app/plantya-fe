@@ -7,7 +7,6 @@ import {
     Button,
     Typography,
     InputAdornment,
-    Grid,
     Divider,
     IconButton,
     Stack
@@ -23,8 +22,6 @@ import {
     VisibilityOutlinedIcon,
     VisibilityOff,
 } from '@/assets/Icon/muiIcon';
-import { useThemeMode } from "../../context/ThemeContext";
-
 
 const Login = () => {
     const { login } = useAuth();
@@ -74,7 +71,7 @@ const Login = () => {
             } catch (error) {
                 setShowAlert(true)
                 if (error.response) {
-                    setMessage(error.response.data.detail);
+                    setMessage(error.response.data.message);
                 } else {
                     setMessage("System is Unavailable. Please Try Again Later.");
                 }
