@@ -28,6 +28,7 @@ const axiosInstance = (additionalConfig = {}) => {
     const baseURL = import.meta.env[`VITE_BASE_URL_${ENV}`];
     if (!baseURL) {
         throw new Error(`BASE_URL not found for env "${ENV}"`);
+
     }
 
     return axios.create({

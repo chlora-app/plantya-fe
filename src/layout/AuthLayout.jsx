@@ -90,7 +90,7 @@ const AuthLayout = (props) => {
                         width: 24,
                         height: 24,
                         borderRadius: "50%",
-                        backgroundColor: "background.paper",
+                        backgroundColor: isCollapsed ? "background.paper" : "transparent",
                         border: isCollapsed ? "1px solid" : "",
                         borderColor: "divider",
                         zIndex: theme.zIndex.drawer + 10,
@@ -112,6 +112,7 @@ const AuthLayout = (props) => {
                         <ArrowBackIosIcon sx={{
                             fontSize: 12,
                             color: "text.secondary",
+                            ml: 0.5,
                             "&:hover": {
                                 color: 'primary.main'
                             },

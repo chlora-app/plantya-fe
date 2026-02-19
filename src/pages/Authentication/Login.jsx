@@ -47,6 +47,7 @@ const Login = () => {
 
     // Validation Form
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues:
         {
             username: "",

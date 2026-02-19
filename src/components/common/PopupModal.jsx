@@ -73,7 +73,7 @@ const PopupModal = (props) => {
 
 PopupModal.propTypes = {
     open: PropTypes.bool,
-    type: PropTypes.oneOf(["success", "error"]),
+    type: PropTypes.string,
     headerMessageModal: PropTypes.string,
     messageModal: PropTypes.string,
 };

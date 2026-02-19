@@ -32,10 +32,7 @@ const SidebarBody = (props) => {
                         {props.isCollapsed ? "MAIN" : "MAIN NAVIGATION"}
                     </Typography>
 
-                    <List
-                        className="sidebar-body-child"
-                        sx={{ gap: 1 }}
-                    >
+                    <List className="sidebar-body-child" sx={{ gap: 1 }}>
                         {props.menuItems.map((item, index) => {
                             const isParent = !!item.sub;
                             const isSelected = (!isParent && props.location.pathname === item.path) || (isParent && props.isChildSelected(item));
@@ -74,16 +71,15 @@ const SidebarBody = (props) => {
                                                 } else if (isParent) {
                                                     props.handleToggleMenu(index)
                                                 }
-                                                // if (!isParent && props.isMobileOpen && props.handleMobileClose) {
-                                                //     debugger
-                                                //     props.handleMobileClose();
-                                                // }
+                                                if (!isParent && props.isMobileOpen && props.handleMobileClose) {
+                                                    debugger
+                                                    props.handleMobileClose();
+                                                }
                                             }
                                             }
                                             selected={isSelected}
                                             sx={{
-                                                borderRadius: props.isCollapsed ? '50%' : "15px",
-                                                alignItems: 'center',
+                                                borderRadius: "15px",
                                                 justifyContent: 'space-between',
                                                 transition: "all 0.3s ease",
                                                 pr: 1,
@@ -94,8 +90,6 @@ const SidebarBody = (props) => {
                                                     justifyContent: "center",
                                                     borderRadius: 50,
                                                 }),
-                                                // bgcolor: 'purple',
-
 
                                                 "&.Mui-selected": {
                                                     backgroundColor: "action.hover",
@@ -115,14 +109,14 @@ const SidebarBody = (props) => {
 
                                             }}
                                         >
-                                            <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+                                            <Box display={"flex"} alignItems={"center"} gap={1.2}>
                                                 <ListItemIcon
+                                                    color="inherit"
                                                     sx={{
-                                                        color: 'text.secondary',
-                                                        minWidth: props.isCollapsed ? 0 : 40,
-                                                        // mr: props.isCollapsed ? 0 : 1,
+                                                        color: 'inherit',
+                                                        minWidth: "auto",
                                                         "& svg": {
-                                                            fontSize: props.isCollapsed ? 24 : 20,
+                                                            fontSize: 20,
                                                         },
 
                                                         ".Mui-selected &": {
@@ -143,7 +137,6 @@ const SidebarBody = (props) => {
                                                         primary={item.text}
                                                         sx={{
                                                             display: props.isCollapsed ? "none" : "flex",
-                                                            width: props.isCollapsed ? 0 : 'auto',
                                                             transition: "width 0.3s ease",
                                                             overflow: "hidden",
 
@@ -189,16 +182,17 @@ const SidebarBody = (props) => {
                                         isParent && !props.isCollapsed && (
                                             <Collapse in={props.openMenuIndex === index} timeout={"auto"} unmountOnExit>
                                                 <Box sx={{ mb: 1 }}>
-                                                    <List component="div" disablePadding
+                                                    <List component="div"
+                                                        disablePadding
                                                         sx={{
                                                             display: 'flex',
                                                             flexDirection: 'column',
-                                                            gap: 1,
-                                                            width: '80%',
-                                                            ml: '20%',
-                                                            // borderLeft: '1px solid',
-                                                            // borderLeftColor: 'divider',
-                                                            pl: 1,
+                                                            // gap: 1,
+                                                            width: '90%',
+                                                            ml: '10%',
+                                                            borderLeft: '1px solid',
+                                                            borderLeftColor: 'divider',
+                                                            px: 1,
                                                         }}
                                                     >
                                                         {item.sub.map((sub, subIndex) => (
@@ -216,15 +210,15 @@ const SidebarBody = (props) => {
                                                                     borderRadius: "15px",
                                                                     px: 0,
                                                                     "&.Mui-selected": {
-                                                                        bgcolor: "layout.sidebarActive",
+                                                                        // bgcolor: "layout.sidebarActive",
                                                                         color: 'primary.main'
                                                                     },
                                                                     "&:hover": {
-                                                                        bgcolor: "layout.sidebarActive",
+                                                                        // bgcolor: "layout.sidebarActive",
                                                                         color: 'primary.main',
                                                                     },
                                                                     "&.Mui-selected:hover": {
-                                                                        bgcolor: "layout.sidebarActive",
+                                                                        // bgcolor: "layout.sidebarActive",
                                                                         color: 'primary.main'
                                                                     },
                                                                 }}
@@ -269,10 +263,7 @@ const SidebarBody = (props) => {
                         OTHERS
                     </Typography>
 
-                    <List
-                        className="sidebar-body-child"
-                        sx={{ p: 0, gap: 1 }}
-                    >
+                    <List className="sidebar-body-child" sx={{ gap: 1 }}>
                         {props.footerItems.map((item, index) => {
                             return (
                                 <React.Fragment key={index}>

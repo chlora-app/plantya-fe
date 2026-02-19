@@ -74,7 +74,7 @@ const NonAuthLayout = (props) => {
                 >
                     <Stack direction={"row"} gap={1.5} px={3}>
                         <Icon path={mdiSprout} size={1} className="text-brand" />
-                        <Typography variant="h2" fontWeight="medium" color="text.primary">Plantya</Typography>
+                        <Typography variant="h2" fontWeight="medium" color="text.primary">Chlora</Typography>
                     </Stack>
 
                     <Stack
@@ -183,7 +183,7 @@ const NonAuthLayout = (props) => {
                         className="nonauth-copyright-section"
                     >
                         <Typography variant="body1" color="text.secondary">
-                            © {new Date().getFullYear()} Plantya. All rights reserved.
+                            © {new Date().getFullYear()} Chlora. All rights reserved.
                         </Typography>
                     </Box>
                 </Box>

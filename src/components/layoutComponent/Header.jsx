@@ -292,7 +292,7 @@ const Header = (props) => {
     );
 };
 
-Header.PropTypes = {
+Header.propTypes = {
     ToggleSidebar: PropTypes.any,
     isCollapsed: PropTypes.any,
     userData: PropTypes.any,
