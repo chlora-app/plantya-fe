@@ -29,7 +29,7 @@ const Root = () => {
 
   // theme bug not undefined
   return (
-    <BrowserRouter basename="/plantya">
+    <BrowserRouter basename="/chlora">
       <AuthProvider>
         <ThemeProviderCustom>
           {(theme) => (

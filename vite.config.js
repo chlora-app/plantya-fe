@@ -5,7 +5,7 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.VITE_ENV === "production" ? "/plantya/" : "/plantya/",
+  base: process.env.VITE_ENV === "production" ? "/chlora/" : "/chlora/",
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

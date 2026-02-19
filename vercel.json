@@ -2,21 +2,21 @@
     "redirects": [
         {
             "source": "/",
-            "destination": "/plantya",
+            "destination": "/chlora",
             "permanent": true
         }
     ],
     "rewrites": [
         {
-            "source": "/plantya/assets/:path*",
+            "source": "/chlora/assets/:path*",
             "destination": "/assets/:path*"
         },
         {
-            "source": "/plantya",
+            "source": "/chlora",
             "destination": "/index.html"
         },
         {
-            "source": "/plantya/:path*",
+            "source": "/chlora/:path*",
             "destination": "/index.html"
         }
     ]

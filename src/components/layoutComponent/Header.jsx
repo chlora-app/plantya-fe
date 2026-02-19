@@ -147,7 +147,7 @@ const Header = (props) => {
                                     fontWeight: 'medium'
                                 }}
                             >
-                                Plantya - Role {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
+                                Chlora - Role {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
                             </Typography>
                         </Box>
                     </Box>
