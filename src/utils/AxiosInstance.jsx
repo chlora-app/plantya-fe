@@ -37,6 +37,7 @@ const axiosInstance = (additionalConfig = {}) => {
         //  Wait for Auth from Backend (withCredentials is Required later)
         // Create 2 opt for auth doesnt need credent and other api needs 
         // withCredentials: true,
+        // 
 
         headers: {
             Accept: "application/json",
