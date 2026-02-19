@@ -72,7 +72,7 @@ const Header = (props) => {
     const open = Boolean(anchorEl);
     const id = open ? 'profile-popover' : undefined;
 
-    const userName = props.userData?.username || ""
+    const userName = props.userData?.name || ""
     const userRole = props.userData?.role || ""
 
     return (
