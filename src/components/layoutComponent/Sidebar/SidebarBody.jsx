@@ -12,8 +12,8 @@ import {
     Fade,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ExpandMore } from "@mui/icons-material";
 import SidebarPopover from "./SidebarPopover";
+import { ExpandMoreIcon } from "../../../assets/Icon/muiIcon";
 
 const parentButtonSx = (isCollapsed) => ({
     borderRadius: "15px",
@@ -149,7 +149,7 @@ const SidebarBody = (props) => {
                                             </Box>
 
                                             {isParent && !props.isCollapsed && (
-                                                <ExpandMore
+                                                <ExpandMoreIcon
                                                     sx={{
                                                         transform: props.openMenuIndex === index ? "rotate(180deg)" : "rotate(0deg)",
                                                         transition: "transform 0.3s ease, opacity 0.3s ease",

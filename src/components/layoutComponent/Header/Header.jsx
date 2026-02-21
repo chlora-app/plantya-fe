@@ -23,14 +23,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'; // Icon untuk Account Info
-import MenuIcon from '@mui/icons-material/Menu';
-import CodeIcon from '@mui/icons-material/Code';
-import { useAuth } from "../../context/AuthContext";
-import { useThemeMode } from "../../context/ThemeContext";
+import { MenuIcon } from "../../../assets/Icon/muiIcon";
+import { useAuth } from "../../../context/AuthContext";
+import { useThemeMode } from "../../../context/ThemeContext";
+import RealtimeClock from "./RealtimeClock";
 
 
 const Header = (props) => {
-    const theme = useTheme()
     const { logout } = useAuth();
     const { mode, toggleTheme } = useThemeMode();
 
@@ -43,7 +42,6 @@ const Header = (props) => {
         setAnchorEl(null);
     };
 
-    // Effect Close Popover When Resize 
     useEffect(() => {
         const handleResize = () => {
             if (anchorEl) {
@@ -80,75 +78,34 @@ const Header = (props) => {
             <AppBar
                 position="static"
                 elevation={0}
-                sx={{
-                    borderRadius: '0',
-                    backgroundColor: "layout.header",
-                    height: props.headerHeight,
-                    borderBottom: "1px solid",
-                    borderBottomColor: 'divider',
-                    color: 'text.primary',
-                    zIndex: 1100,
-                }}
-            >
-                <Toolbar
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: 'center',
-                        height: '100%',
-                        px: 2,
-                        py: 0,
-                    }}
-                >
+                sx={{ height: props.headerHeight }}
+                className="header-container"
 
-                    {/* Left Side */}
-                    <Box sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: '100%',
-                    }}
-                    >
-                        <IconButton
-                            onClick={props.toggleSidebar}
-                            sx={{
-                                display: {
-                                    xs: 'flex',
-                                    sm: 'none'
-                                },
-                                mr: 2,
-                                width: 35,
-                                height: 35,
-                                borderRadius: '5px',
-                                // backgroundColor: "background.default",
-                                // border: "1px solid",
-                                // borderColor: 'divider',
-                                transition: "left 0.3s ease",
-                                "&:hover": {
-                                    bgcolor: "background.default",
-                                }
-                            }}
-                        >
-                            <CodeIcon sx={{ color: "divider" }} />
-                        </IconButton>
+            >
+                <Toolbar className="header-toolbar">
+                    <Box display={"flex"} alignItems={"center"}>
+                        {props.isMobile && (
+                            <IconButton
+                                onClick={props.toggleSidebar}
+                                sx={{
+                                    width: 32,
+                                    height: 32,
+                                    borderRadius: '5px',
+                                    transition: "left 0.3s ease",
+                                    "&:hover": {
+                                        bgcolor: "background.default",
+                                    }
+                                }}
+                            >
+                                <MenuIcon sx={{ fontSize: "20px" }} />
+                            </IconButton>
+                        )}
+
 
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography
-                                variant="body1"
-                                sx={{
-                                    fontWeight: 'medium',
-                                }}
-                            >
-                                Welcome Back
-                            </Typography>
 
-                            <Typography
-                                variant="subtitle2"
-                                sx={{
-                                    fontWeight: 'medium'
-                                }}
-                            >
-                                Chlora - Role {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
-                            </Typography>
+                            {!props.isMobile && (<RealtimeClock />)}
+
                         </Box>
                     </Box>
 
@@ -157,7 +114,7 @@ const Header = (props) => {
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            height: '100%',
+                            // bgcolor: 'red'
                         }}
                     >
                         <IconButton
@@ -166,7 +123,7 @@ const Header = (props) => {
                             }}
                             onClick={toggleTheme}
                         >
-                            {mode == "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+                            {mode == "dark" ? <LightModeIcon sx={{ fontSize: "20px" }} /> : <DarkModeIcon sx={{ fontSize: "20px" }} />}
                         </IconButton>
 
                         <Box
@@ -181,7 +138,7 @@ const Header = (props) => {
                             <Divider
                                 orientation="vertical"
                                 sx={{
-                                    height: '100%',
+                                    height: '50%',
                                     // border: '1px solid', 
                                     // borderColor: 'divider'
                                 }}
@@ -195,7 +152,7 @@ const Header = (props) => {
                             }}
                         >
                             <NotificationsNoneOutlinedIcon sx={{
-                                fontSize: '25px'
+                                fontSize: '20px'
                             }} />
                         </IconButton>
 
@@ -213,7 +170,7 @@ const Header = (props) => {
                                 sx={{
                                     // border: '1px solid', 
                                     // borderColor: 'divider',
-                                    height: '100%',
+                                    height: '50%',
                                 }}
                             />
                         </Box>
@@ -224,7 +181,7 @@ const Header = (props) => {
                             sx={{ p: 1 }}
                         >
                             <AccountCircleOutlinedIcon sx={{
-                                fontSize: '25px'
+                                fontSize: '20px'
                             }} />
                         </IconButton>
                     </Box>

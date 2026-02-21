@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import Sidebar from "../components/layoutComponent/Sidebar/Sidebar";
-import Header from "../components/layoutComponent/Header";
-import { IconButton, Box, useTheme, useMediaQuery, Backdrop, Drawer } from "@mui/material";
+import Header from "../components/layoutComponent/Header/Header";
+import { IconButton, Box, useTheme, useMediaQuery, Backdrop, Drawer, Typography } from "@mui/material";
 import { ArrowBackIosIcon, ArrowForwardIosIcon } from "../assets/Icon/muiIcon/index";
+import Footer from "../components/layoutComponent/Footer";
 
 // Constant Value
 const SIDEBAR_COLLAPSE_WIDTH = 60;
@@ -87,8 +88,8 @@ const AuthLayout = (props) => {
                         left: drawerWidth,
                         transform: "translate(-50%, -50%)",
                         ml: isCollapsed ? 0 : -3,
-                        width: 24,
-                        height: 24,
+                        width: 28,
+                        height: 28,
                         borderRadius: "50%",
                         backgroundColor: isCollapsed ? "background.paper" : "transparent",
                         border: isCollapsed ? "1px solid" : "",
@@ -102,7 +103,7 @@ const AuthLayout = (props) => {
                 >
                     {isCollapsed ?
                         <ArrowForwardIosIcon sx={{
-                            fontSize: 12,
+                            fontSize: 14,
                             color: "text.secondary",
                             ml: 0.1,
                             "&:hover": {
@@ -110,7 +111,7 @@ const AuthLayout = (props) => {
                             },
                         }} /> :
                         <ArrowBackIosIcon sx={{
-                            fontSize: 12,
+                            fontSize: 14,
                             color: "text.secondary",
                             ml: 0.5,
                             "&:hover": {
@@ -127,11 +128,14 @@ const AuthLayout = (props) => {
                     userData={userData}
                     drawerWidth={isMobile ? 0 : drawerWidth}
                     headerHeight={HEADER_HEIGHT}
+                    isMobile={isMobile}
                 />
 
                 <Box component="main" className="auth-layout-content" p={2}>
                     {props.children}
                 </Box>
+
+                <Footer />
             </Box>
         </Box>
     );

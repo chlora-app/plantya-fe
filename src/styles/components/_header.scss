@@ -1,0 +1,14 @@
+.header {
+    &-container {
+        border-radius: 0 !important;
+        background-color: var(--color-bg-paper) !important;
+        color: var(--color-text-primary) !important;
+        border-bottom: 1px solid !important;
+        border-color: var(--color-border) !important;
+    }
+
+    &-toolbar {
+        display: flex;
+        justify-content: space-between;
+    }
+}

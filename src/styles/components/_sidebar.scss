@@ -26,6 +26,7 @@
         flex-direction: column;
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         // -ms-overflow-style: none;
         // scrollbar-width: none;
 
@@ -43,13 +44,13 @@
     &-body-parent {
         display: flex;
         flex-direction: column;
-        color: #6B7280;
+        color: var(--color-text-secondary);
     }
 
     &-body-child {
         display: flex;
         flex-direction: column;
-        color: #6B7280;
+        color: var(--color-text-secondary);
         padding-bottom: 0 !important;
         padding-top: 0 !important;
         width: 90%;

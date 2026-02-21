@@ -15,7 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import PageSpinner from "../../components/common/PageSpinner";
 import {
-    AccountCircleIcon,
+    PersonOutlineOutlinedIcon,
     MailOutlineOutlinedIcon,
     LockOutlinedIcon,
     VisibilityOutlinedIcon,
@@ -215,7 +215,7 @@ const Register = () => {
                                             autoCapitalize: "none",
                                             startAdornment: (
                                                 <InputAdornment position="start" >
-                                                    <AccountCircleIcon
+                                                    <PersonOutlineOutlinedIcon
                                                         sx={{
                                                             mx: 0.5,
                                                             color: formik.values.username === "" ? 'text.secondary' : 'text.primary'

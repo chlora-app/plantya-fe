@@ -41,7 +41,7 @@ const colors = {
             light: "#1A1A1A", // Warna teks utama di mode light
             dark: "#F0F0F0",  // Warna teks utama di mode dark
         },
-        secondary: "#9AA0A6", // Warna teks sekunder (sama untuk kedua mode)
+        secondary: "#6B7280", // Warna teks sekunder (sama untuk kedua mode)
     },
 
     /* ================= BACKGROUND ================= */

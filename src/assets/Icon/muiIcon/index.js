@@ -1,4 +1,4 @@
-export { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle';
+export { default as PersonOutlineOutlinedIcon  } from '@mui/icons-material/PersonOutlineOutlined';
 export { default as MailOutlineOutlinedIcon } from '@mui/icons-material/MailOutlineOutlined';
 export { default as LockOutlinedIcon } from '@mui/icons-material/LockOutlined';
 export { default as VisibilityOutlinedIcon } from '@mui/icons-material/VisibilityOutlined';
@@ -12,3 +12,5 @@ export { default as LayersIcon } from '@mui/icons-material/Layers';
 export { default as AssessmentOutlinedIcon } from '@mui/icons-material/AssessmentOutlined';
 export { default as SupportAgentOutlinedIcon } from '@mui/icons-material/SupportAgentOutlined';
 export { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined';
+export { default as ExpandMoreIcon } from '@mui/icons-material/ExpandMore';
+export { default as MenuIcon } from '@mui/icons-material/Menu';

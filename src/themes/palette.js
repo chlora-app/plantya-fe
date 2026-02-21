@@ -1,5 +1,3 @@
-// src/styles/buildPalette.js
-
 import colors from "./colors/colors";
 
 const buildPalette = (mode = "dark") => {
