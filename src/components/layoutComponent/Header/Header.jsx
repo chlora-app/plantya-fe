@@ -18,15 +18,15 @@ import {
 import {
     LightModeIcon,
     DarkModeIcon,
+    PersonOutlineOutlinedIcon,
+    NotificationsIcon,
 } from '@/assets/Icon/muiIcon';
 import LogoutIcon from "@mui/icons-material/Logout";
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'; // Icon untuk Account Info
-import { MenuIcon } from "../../../assets/Icon/muiIcon";
+import { MenuIcon, PersonIcon } from "../../../assets/Icon/muiIcon";
 import { useAuth } from "../../../context/AuthContext";
 import { useThemeMode } from "../../../context/ThemeContext";
 import RealtimeClock from "./RealtimeClock";
+import { capitalizeWords } from "../../common/Regex";
 
 
 const Header = (props) => {
@@ -83,7 +83,7 @@ const Header = (props) => {
 
             >
                 <Toolbar className="header-toolbar">
-                    <Box display={"flex"} alignItems={"center"}>
+                    <Box>
                         {props.isMobile && (
                             <IconButton
                                 onClick={props.toggleSidebar}
@@ -101,89 +101,96 @@ const Header = (props) => {
                             </IconButton>
                         )}
 
-
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-
-                            {!props.isMobile && (<RealtimeClock />)}
-
-                        </Box>
+                        {!props.isMobile && (<RealtimeClock />)}
                     </Box>
 
-                    {/* Right Side */}
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            // bgcolor: 'red'
-                        }}
-                    >
-                        <IconButton
-                            sx={{
-                                color: mode == "dark" ? "warning.main" : "text.primary",
-                            }}
-                            onClick={toggleTheme}
-                        >
-                            {mode == "dark" ? <LightModeIcon sx={{ fontSize: "20px" }} /> : <DarkModeIcon sx={{ fontSize: "20px" }} />}
-                        </IconButton>
-
+                    <Box display={"flex"} alignItems={"center"} gap={1.5}>
                         <Box
+                            p={0.5}
                             sx={{
-                                height: 40,
-                                display: 'flex',
-                                alignItems: 'center',
-                                mx: 1,
+                                position: "relative",
+                                display: "flex",
+                                alignItems: "center",
+                                bgcolor: "background.default",
+                                borderRadius: "999px",
+                                overflow: "hidden",
+                                transition: "background-color 0.3s ease",
                             }}
-
                         >
-                            <Divider
-                                orientation="vertical"
+                            <Box
                                 sx={{
-                                    height: '50%',
-                                    // border: '1px solid', 
-                                    // borderColor: 'divider'
+                                    position: "absolute",
+                                    top: 4,
+                                    left: mode === "light" ? 4 : "calc(50% + 0px)",
+                                    width: "calc(50% - 4px)",
+                                    height: "calc(100% - 8px)",
+                                    bgcolor: "primary.main",
+                                    borderRadius: "999px",
+                                    transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
                                 }}
                             />
+
+                            <IconButton
+                                onClick={() => mode !== "light" && toggleTheme()}
+                                sx={{
+                                    width: 30,
+                                    height: 30,
+                                    color: mode === "light" ? "text.light" : "text.secondary",
+                                    transition: "color 0.3s ease",
+                                }}
+                            >
+                                <LightModeIcon sx={{ fontSize: 16 }} />
+                            </IconButton>
+
+                            <IconButton
+                                onClick={() => mode !== "dark" && toggleTheme()}
+                                sx={{
+                                    width: 30,
+                                    height: 30,
+                                    color: mode === "dark" ? "text.light" : "text.secondary",
+                                    transition: "color 0.3s ease",
+                                }}
+                            >
+                                <DarkModeIcon sx={{ fontSize: 16 }} />
+                            </IconButton>
                         </Box>
 
                         <IconButton
-                            color="inherit"
-                            sx={{
-                                p: 1,
-                            }}
+                            color="text.secondary"
+
                         >
-                            <NotificationsNoneOutlinedIcon sx={{
-                                fontSize: '20px'
-                            }} />
+                            <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
                         </IconButton>
 
-                        <Box
-                            sx={{
-                                height: 40,
-                                display: 'flex',
-                                alignItems: 'center',
-                                mx: 1,
-                            }}
 
-                        >
-                            <Divider
-                                orientation="vertical"
-                                sx={{
-                                    // border: '1px solid', 
-                                    // borderColor: 'divider',
-                                    height: '50%',
-                                }}
-                            />
+                        <Divider
+                            orientation="vertical"
+                            sx={{
+                                height: 24,
+                                alignSelf: "center",
+                            }}
+                        />
+
+                        <Box display={"flex"} gap={1.5}>
+                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-end"} alignItems={"flex-end"}>
+                                <Typography variant="body2" fontWeight={"medium"} lineHeight={1}>
+                                    {userName}
+                                </Typography>
+                                <Typography variant="caption" fontWeight={"normal"} color="text.secondary">
+                                    {capitalizeWords(userRole)}
+                                </Typography>
+                            </Box>
+
+                            <Box bgcolor={"background.default"} borderRadius={"999px"}>
+                                <IconButton
+                                    onClick={handleProfileMenuOpen}
+                                    aria-describedby={id}
+                                // sx={{ bgcolor: "background.default" }}
+                                >
+                                    <PersonIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
+                                </IconButton>
+                            </Box>
                         </Box>
-                        <IconButton
-                            color="inherit"
-                            onClick={handleProfileMenuOpen}
-                            aria-describedby={id}
-                            sx={{ p: 1 }}
-                        >
-                            <AccountCircleOutlinedIcon sx={{
-                                fontSize: '20px'
-                            }} />
-                        </IconButton>
                     </Box>
                 </Toolbar>
             </AppBar>

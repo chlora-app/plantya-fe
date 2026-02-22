@@ -33,33 +33,34 @@ const RealtimeClock = () => {
     return (
         <>
             <Box>
-                <Typography variant="caption" color={"text.secondary"} letterSpacing={1} fontWeight={"medium"}>
-                    {date.toUpperCase()}
-                </Typography>
-            </Box>
-            <Box display={"flex"} gap={1}>
-                <Typography
-                    fontFamily={"monospace"}
-                    variant="body1"
-                    fontWeight={"bold"}
-                    letterSpacing={1}
-                    color="text.secondary"
-                    sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {time}
-                </Typography>
-                <Box
-                    display={"flex"}
-                    alignItems={"center"}
-                    px={0.7}
-                    borderRadius={"5px"}
-                    bgcolor={"layout.sidebarActive"}
-                >
-                    {time && (
-                        <Typography variant="caption" fontWeight={"bold"} color={"primary.main"}>
-                            LIVE
-                        </Typography>
-                    )}
-
+                <Box>
+                    <Typography variant="caption" color={"text.secondary"} letterSpacing={1} fontWeight={"medium"}>
+                        {date.toUpperCase()}
+                    </Typography>
+                </Box>
+                <Box display={"flex"} gap={1}>
+                    <Typography
+                        fontFamily={"monospace"}
+                        variant="body1"
+                        fontWeight={"bold"}
+                        letterSpacing={1}
+                        color="text.secondary"
+                        sx={{ fontVariantNumeric: "tabular-nums" }}>
+                        {time}
+                    </Typography>
+                    <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        px={0.7}
+                        borderRadius={"5px"}
+                        bgcolor={"layout.sidebarActive"}
+                    >
+                        {time && (
+                            <Typography variant="caption" fontWeight={"bold"} color={"primary.main"}>
+                                LIVE
+                            </Typography>
+                        )}
+                    </Box>
                 </Box>
             </Box>
         </>

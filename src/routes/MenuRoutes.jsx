@@ -11,7 +11,7 @@ import {
 import {
     DashboardIcon,
     LayersIcon,
-    AssessmentOutlinedIcon,
+    AssessmentIcon,
     SupportAgentOutlinedIcon,
     InfoOutlinedIcon
 } from "../assets/Icon/muiIcon/index"
@@ -30,7 +30,7 @@ const MenuRoutes = [
     },
     {
         text: "Reports",
-        icon: <AssessmentOutlinedIcon />,
+        icon: <AssessmentIcon />,
         section: "main",
         sub: [
             { path: "/reports/table", text: "Table Report", icon: mdiChartBoxOutline, component: LazyLoadRoutes(() => import("../pages/app002/MasterUser")), },

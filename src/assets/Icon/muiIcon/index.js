@@ -1,4 +1,4 @@
-export { default as PersonOutlineOutlinedIcon  } from '@mui/icons-material/PersonOutlineOutlined';
+export { default as PersonOutlineOutlinedIcon } from '@mui/icons-material/PersonOutlineOutlined';
 export { default as MailOutlineOutlinedIcon } from '@mui/icons-material/MailOutlineOutlined';
 export { default as LockOutlinedIcon } from '@mui/icons-material/LockOutlined';
 export { default as VisibilityOutlinedIcon } from '@mui/icons-material/VisibilityOutlined';
@@ -9,8 +9,10 @@ export { default as ArrowBackIosIcon } from '@mui/icons-material/ArrowBackIos';
 export { default as ArrowForwardIosIcon } from '@mui/icons-material/ArrowForwardIos';
 export { default as DashboardIcon } from '@mui/icons-material/Dashboard';
 export { default as LayersIcon } from '@mui/icons-material/Layers';
-export { default as AssessmentOutlinedIcon } from '@mui/icons-material/AssessmentOutlined';
+export { default as AssessmentIcon } from '@mui/icons-material/Assessment';
 export { default as SupportAgentOutlinedIcon } from '@mui/icons-material/SupportAgentOutlined';
 export { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined';
 export { default as ExpandMoreIcon } from '@mui/icons-material/ExpandMore';
 export { default as MenuIcon } from '@mui/icons-material/Menu';
+export { default as NotificationsIcon } from '@mui/icons-material/Notifications';
+export { default as PersonIcon } from '@mui/icons-material/Person';
