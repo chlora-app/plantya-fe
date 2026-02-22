@@ -13,5 +13,49 @@
         align-items: center !important;
     }
 
-    
+    &-iconMobile {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 5px !important;
+        transition: left 0.3s ease !important;
+    }
+
+    &-switchMode {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-color: var(--color-bg-default);
+        border-radius: 999px;
+        overflow: hidden;
+        transition: background-color 0.3s ease;
+    }
+
+    &-switchModeAnim {
+        position: absolute;
+        background-color: var(--color-primary);
+        border-radius: 999px;
+        transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &-buttonAnim {
+        width: 30px;
+        height: 30px;
+        transition: color 0.3s ease;
+    }
+
+    &-profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    &-profileIcon {
+        background-color: var(--color-bg-default);
+        border-radius: 999px;
+    }
+
+    // Popover
+
+
 }

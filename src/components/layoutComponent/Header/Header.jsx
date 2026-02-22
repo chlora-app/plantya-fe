@@ -87,15 +87,7 @@ const Header = (props) => {
                         {props.isMobile && (
                             <IconButton
                                 onClick={props.toggleSidebar}
-                                sx={{
-                                    width: 32,
-                                    height: 32,
-                                    borderRadius: '5px',
-                                    transition: "left 0.3s ease",
-                                    "&:hover": {
-                                        bgcolor: "background.default",
-                                    }
-                                }}
+                                className="header-iconMobile"
                             >
                                 <MenuIcon sx={{ fontSize: "20px" }} />
                             </IconButton>
@@ -104,88 +96,53 @@ const Header = (props) => {
                         {!props.isMobile && (<RealtimeClock />)}
                     </Box>
 
-                    <Box display={"flex"} alignItems={"center"} gap={1.5}>
-                        <Box
-                            p={0.5}
-                            sx={{
-                                position: "relative",
-                                display: "flex",
-                                alignItems: "center",
-                                bgcolor: "background.default",
-                                borderRadius: "999px",
-                                overflow: "hidden",
-                                transition: "background-color 0.3s ease",
-                            }}
-                        >
+                    <Box display={"flex"} gap={1} >
+                        <Box p={0.5} className="header-switchMode" >
                             <Box
-                                sx={{
-                                    position: "absolute",
-                                    top: 4,
-                                    left: mode === "light" ? 4 : "calc(50% + 0px)",
-                                    width: "calc(50% - 4px)",
-                                    height: "calc(100% - 8px)",
-                                    bgcolor: "primary.main",
-                                    borderRadius: "999px",
-                                    transition: "all 0.3s cubic-bezier(.4,0,.2,1)",
-                                }}
+                                className="header-switchModeAnim"
+                                sx={{ top: 4, left: mode === "light" ? 4 : "calc(50% + 0px)", width: "calc(50% - 4px)", height: "calc(100% - 8px)" }}
                             />
 
                             <IconButton
                                 onClick={() => mode !== "light" && toggleTheme()}
-                                sx={{
-                                    width: 30,
-                                    height: 30,
-                                    color: mode === "light" ? "text.light" : "text.secondary",
-                                    transition: "color 0.3s ease",
-                                }}
+                                sx={{ color: mode === "light" ? "text.light" : "text.secondary", }}
+                                className="header-buttonAnim"
                             >
                                 <LightModeIcon sx={{ fontSize: 16 }} />
                             </IconButton>
 
                             <IconButton
                                 onClick={() => mode !== "dark" && toggleTheme()}
-                                sx={{
-                                    width: 30,
-                                    height: 30,
-                                    color: mode === "dark" ? "text.light" : "text.secondary",
-                                    transition: "color 0.3s ease",
-                                }}
+                                sx={{ color: mode === "dark" ? "text.light" : "text.secondary", }}
+                                className="header-buttonAnim"
                             >
                                 <DarkModeIcon sx={{ fontSize: 16 }} />
                             </IconButton>
                         </Box>
 
                         <IconButton
-                            color="text.secondary"
-
+                            onClick={() => alert("Feature for Notification Modal")}
                         >
                             <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
                         </IconButton>
 
 
-                        <Divider
-                            orientation="vertical"
-                            sx={{
-                                height: 24,
-                                alignSelf: "center",
-                            }}
-                        />
+                        <Divider orientation="vertical" sx={{ height: 24, alignSelf: "center", }} />
 
-                        <Box display={"flex"} gap={1.5}>
-                            <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-end"} alignItems={"flex-end"}>
-                                <Typography variant="body2" fontWeight={"medium"} lineHeight={1}>
+                        <Box display={"flex"} gap={1}>
+                            <Box className="header-profile">
+                                <Typography variant="body1" fontWeight={"medium"} lineHeight={1}>
                                     {userName}
                                 </Typography>
-                                <Typography variant="caption" fontWeight={"normal"} color="text.secondary">
+                                <Typography variant="body2" fontWeight={"medium"} color="text.secondary">
                                     {capitalizeWords(userRole)}
                                 </Typography>
                             </Box>
 
-                            <Box bgcolor={"background.default"} borderRadius={"999px"}>
+                            <Box className="header-profileIcon">
                                 <IconButton
                                     onClick={handleProfileMenuOpen}
                                     aria-describedby={id}
-                                // sx={{ bgcolor: "background.default" }}
                                 >
                                     <PersonIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
                                 </IconButton>
