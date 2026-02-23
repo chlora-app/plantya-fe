@@ -21,7 +21,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import nonAuthIcon from "../assets/Icon/animation/nonAuthIcon.json"
 import Lottie from "lottie-react";
 import {
-    LightModeIcon,
+    SunnyIcon,
     DarkModeIcon,
 } from '@/assets/Icon/muiIcon';
 import { Pagination, Autoplay, Mousewheel, FreeMode } from 'swiper/modules'
@@ -61,7 +61,7 @@ const NonAuthLayout = (props) => {
                     }}
                     onClick={toggleTheme}
                 >
-                    {mode == "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+                    {mode == "dark" ? <SunnyIcon /> : <DarkModeIcon />}
                 </IconButton>
             </Box>
 

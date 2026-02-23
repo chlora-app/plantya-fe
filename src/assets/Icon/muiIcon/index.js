@@ -3,7 +3,7 @@ export { default as MailOutlineOutlinedIcon } from '@mui/icons-material/MailOutl
 export { default as LockOutlinedIcon } from '@mui/icons-material/LockOutlined';
 export { default as VisibilityOutlinedIcon } from '@mui/icons-material/VisibilityOutlined';
 export { default as VisibilityOff } from '@mui/icons-material/VisibilityOff';
-export { default as LightModeIcon } from '@mui/icons-material/LightMode';
+export { default as SunnyIcon } from '@mui/icons-material/Sunny';
 export { default as DarkModeIcon } from '@mui/icons-material/DarkMode';
 export { default as ArrowBackIosIcon } from '@mui/icons-material/ArrowBackIos';
 export { default as ArrowForwardIosIcon } from '@mui/icons-material/ArrowForwardIos';
@@ -17,3 +17,4 @@ export { default as MenuIcon } from '@mui/icons-material/Menu';
 export { default as NotificationsIcon } from '@mui/icons-material/Notifications';
 export { default as PersonIcon } from '@mui/icons-material/Person';
 export { default as LogoutIcon } from '@mui/icons-material/Logout';
+export { default as ManageAccountsIcon } from '@mui/icons-material/ManageAccounts';

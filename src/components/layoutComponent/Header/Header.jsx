@@ -16,13 +16,13 @@ import {
     Divider
 } from "@mui/material";
 import {
-    LightModeIcon,
+
     DarkModeIcon,
     PersonOutlineOutlinedIcon,
     NotificationsIcon,
 } from '@/assets/Icon/muiIcon';
 import LogoutIcon from "@mui/icons-material/Logout";
-import { MenuIcon, PersonIcon } from "../../../assets/Icon/muiIcon";
+import { MenuIcon, PersonIcon, SunnyIcon } from "../../../assets/Icon/muiIcon";
 import { useAuth } from "../../../context/AuthContext";
 import { useThemeMode } from "../../../context/ThemeContext";
 import RealtimeClock from "./RealtimeClock";
@@ -102,24 +102,26 @@ const Header = (props) => {
 
                                 <IconButton
                                     onClick={() => mode !== "light" && toggleTheme()}
-                                    sx={{ color: mode === "light" ? "text.light" : "text.secondary", }}
+                                    sx={{ color: mode === "light" ? "primary.main" : "text.secondary", }}
                                     className="header-buttonAnim"
                                 >
-                                    <LightModeIcon sx={{ fontSize: 16 }} />
+                                    <SunnyIcon sx={{ fontSize: 16 }} />
                                 </IconButton>
 
                                 <IconButton
                                     onClick={() => mode !== "dark" && toggleTheme()}
-                                    sx={{ color: mode === "dark" ? "text.light" : "text.secondary", }}
+                                    sx={{ color: mode === "dark" ? "primary.main" : "text.secondary", }}
                                     className="header-buttonAnim"
                                 >
                                     <DarkModeIcon sx={{ fontSize: 16 }} />
                                 </IconButton>
                             </Box>
 
-                            <IconButton onClick={() => alert("Feature for Notification Modal")}>
-                                <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
-                            </IconButton>
+                            <Box className="header-profileIcon">
+                                <IconButton onClick={() => alert("Feature for Notification Modal")}>
+                                    <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
+                                </IconButton>
+                            </Box>
                         </Box>
 
                         <Divider orientation="vertical" sx={{ height: 24, alignSelf: "center", borderWidth: '1.5px' }} />
@@ -128,9 +130,6 @@ const Header = (props) => {
                             <Box className="header-profile">
                                 <Typography variant="body1" fontWeight={"medium"} lineHeight={1} noWrap>
                                     {userName}
-                                </Typography>
-                                <Typography variant="body2" fontWeight={"medium"}>
-                                    {userRole}
                                 </Typography>
                             </Box>
 
