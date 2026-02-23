@@ -27,25 +27,29 @@ import { useAuth } from "../../../context/AuthContext";
 import { useThemeMode } from "../../../context/ThemeContext";
 import RealtimeClock from "./RealtimeClock";
 import { capitalizeWords } from "../../common/Regex";
+import PopoverHeader from "./PopoverHeader";
 
 
 const Header = (props) => {
     const { logout } = useAuth();
     const { mode, toggleTheme } = useThemeMode();
-
-
     const [anchorEl, setAnchorEl] = useState(null);
+    const userName = props.userData?.name || ""
+    const userRole = capitalizeWords(props.userData?.role) || ""
+    const open = Boolean(anchorEl);
+    const id = open ? 'profile-popover' : undefined;
+
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleProfileMenuClose = () => {
+    const handlePopoverMenuClose = () => {
         setAnchorEl(null);
     };
 
     useEffect(() => {
         const handleResize = () => {
             if (anchorEl) {
-                handleProfileMenuClose();
+                handlePopoverMenuClose();
             }
         };
         window.addEventListener('resize', handleResize);
@@ -56,22 +60,14 @@ const Header = (props) => {
 
 
     const handleLogout = () => {
-        handleProfileMenuClose();
+        handlePopoverMenuClose();
         logout()
     };
 
     const handleAccountInfo = () => {
-        handleProfileMenuClose();
-        // Tambahkan logic navicasi or something
-        // navigate("/account-info");
-        console.log("Navigate to Account Info");
+        handlePopoverMenuClose();
+        alert("Direction to Profile Menu")
     };
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'profile-popover' : undefined;
-
-    const userName = props.userData?.name || ""
-    const userRole = props.userData?.role || ""
 
     return (
         <>
@@ -96,46 +92,45 @@ const Header = (props) => {
                         {!props.isMobile && (<RealtimeClock />)}
                     </Box>
 
-                    <Box display={"flex"} gap={1} >
-                        <Box p={0.5} className="header-switchMode" >
-                            <Box
-                                className="header-switchModeAnim"
-                                sx={{ top: 4, left: mode === "light" ? 4 : "calc(50% + 0px)", width: "calc(50% - 4px)", height: "calc(100% - 8px)" }}
-                            />
+                    <Box display={"flex"} gap={1.5} >
+                        <Box display={"flex"} gap={1}>
+                            <Box p={0.5} className="header-switchMode" >
+                                <Box
+                                    className="header-switchModeAnim"
+                                    sx={{ top: 4, left: mode === "light" ? 4 : "calc(50% + 0px)", width: "calc(50% - 4px)", height: "calc(100% - 8px)" }}
+                                />
 
-                            <IconButton
-                                onClick={() => mode !== "light" && toggleTheme()}
-                                sx={{ color: mode === "light" ? "text.light" : "text.secondary", }}
-                                className="header-buttonAnim"
-                            >
-                                <LightModeIcon sx={{ fontSize: 16 }} />
-                            </IconButton>
+                                <IconButton
+                                    onClick={() => mode !== "light" && toggleTheme()}
+                                    sx={{ color: mode === "light" ? "text.light" : "text.secondary", }}
+                                    className="header-buttonAnim"
+                                >
+                                    <LightModeIcon sx={{ fontSize: 16 }} />
+                                </IconButton>
 
-                            <IconButton
-                                onClick={() => mode !== "dark" && toggleTheme()}
-                                sx={{ color: mode === "dark" ? "text.light" : "text.secondary", }}
-                                className="header-buttonAnim"
-                            >
-                                <DarkModeIcon sx={{ fontSize: 16 }} />
+                                <IconButton
+                                    onClick={() => mode !== "dark" && toggleTheme()}
+                                    sx={{ color: mode === "dark" ? "text.light" : "text.secondary", }}
+                                    className="header-buttonAnim"
+                                >
+                                    <DarkModeIcon sx={{ fontSize: 16 }} />
+                                </IconButton>
+                            </Box>
+
+                            <IconButton onClick={() => alert("Feature for Notification Modal")}>
+                                <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
                             </IconButton>
                         </Box>
 
-                        <IconButton
-                            onClick={() => alert("Feature for Notification Modal")}
-                        >
-                            <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
-                        </IconButton>
+                        <Divider orientation="vertical" sx={{ height: 24, alignSelf: "center", borderWidth: '1.5px' }} />
 
-
-                        <Divider orientation="vertical" sx={{ height: 24, alignSelf: "center", }} />
-
-                        <Box display={"flex"} gap={1}>
+                        <Box display={"flex"} gap={1.5}>
                             <Box className="header-profile">
-                                <Typography variant="body1" fontWeight={"medium"} lineHeight={1}>
+                                <Typography variant="body1" fontWeight={"medium"} lineHeight={1} noWrap>
                                     {userName}
                                 </Typography>
-                                <Typography variant="body2" fontWeight={"medium"} color="text.secondary">
-                                    {capitalizeWords(userRole)}
+                                <Typography variant="body2" fontWeight={"medium"}>
+                                    {userRole}
                                 </Typography>
                             </Box>
 
@@ -150,66 +145,19 @@ const Header = (props) => {
                         </Box>
                     </Box>
                 </Toolbar>
-            </AppBar>
+            </AppBar >
 
-            <Popover
+            <PopoverHeader
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                onClose={handleProfileMenuClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                slotProps={{
-                    paper: {
-                        className: 'sidebar-popover',
-                        sx: {
-                            mt: 1,
-                            minWidth: { xs: '200px', sm: '230px' },
-                            maxWidth: { xs: '90vw', sm: 'none' },
-                            overflow: 'hidden',
-                        }
-                    }
-                }}
-            >
-                <Box sx={{
-                    px: 2, py: 2,
-                    // borderBottom: "1px solid", 
-                    // borderBottomColor: 'divider', 
-                    textAlign: 'center',
-                    color: "text.primary"
-                }}>
-                    <Box
-                        component="img"
-                        src="/GacorBang.jpg"
-                        alt="Profile"
-                        sx={{ width: 75, height: 75, borderRadius: "50%", objectFit: "cover", mb: 2 }}
-                    />
-                    <Typography variant="h6">
-                        {userName}
-                    </Typography>
-                    <Typography variant="body1">
-                        {userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase()}
-                    </Typography>
-                </Box>
-
-                <List sx={{ display: 'flex', p: 0, color: 'text.primary' }}>
-                    <ListItemButton onClick={handleAccountInfo} sx={{ flex: 1, borderRadius: 1, m: 1 }}>
-                        <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
-                            <PersonOutlineOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Profile" />
-                    </ListItemButton>
-                    <ListItemButton onClick={handleLogout} sx={{ flex: 1, borderRadius: 1, m: 1 }}>
-                        <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
-                            <LogoutIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Logout" />
-                    </ListItemButton>
-                </List>
-            </Popover>
+                handlePopoverMenuClose={handlePopoverMenuClose}
+                userName={userName}
+                userRole={userRole}
+                handleAccountInfo={handleAccountInfo}
+                handleLogout={handleLogout}
+            />
         </>
-
-
     );
 };
 

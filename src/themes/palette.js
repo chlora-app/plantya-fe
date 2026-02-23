@@ -70,6 +70,7 @@ const buildPalette = (mode = "dark") => {
         text: {
             primary: isDark ? colors.text.primary.dark : colors.text.primary.light,
             secondary: colors.text.secondary,
+            secondaryLighter: colors.text.secondaryLighter,
             dark: colors.text.primary.light,
             light: colors.text.primary.dark,
         },

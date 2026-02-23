@@ -16,3 +16,4 @@ export { default as ExpandMoreIcon } from '@mui/icons-material/ExpandMore';
 export { default as MenuIcon } from '@mui/icons-material/Menu';
 export { default as NotificationsIcon } from '@mui/icons-material/Notifications';
 export { default as PersonIcon } from '@mui/icons-material/Person';
+export { default as LogoutIcon } from '@mui/icons-material/Logout';

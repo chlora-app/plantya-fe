@@ -34,29 +34,32 @@ const RealtimeClock = () => {
         <>
             <Box>
                 <Box>
-                    <Typography variant="caption" color={"text.secondary"} letterSpacing={1} fontWeight={"medium"}>
-                        {date.toUpperCase()}
+                    <Typography variant="body1" color={"text.primary"} fontWeight={"medium"}>
+                        {date}
                     </Typography>
                 </Box>
-                <Box display={"flex"} gap={1}>
+                <Box display={"flex"} gap={0.2}>
                     <Typography
-                        fontFamily={"monospace"}
-                        variant="body1"
-                        fontWeight={"bold"}
+                        variant="body2"
+                        fontWeight={"medium"}
                         letterSpacing={1}
-                        color="text.secondary"
-                        sx={{ fontVariantNumeric: "tabular-nums" }}>
+                        color="text.primary"
+                        sx={{
+                            fontVariantNumeric: "tabular-nums",
+                            fontFeatureSettings: '"tnum"',
+                            minWidth: "57px",
+                        }}>
                         {time}
                     </Typography>
                     <Box
                         display={"flex"}
                         alignItems={"center"}
-                        px={0.7}
-                        borderRadius={"5px"}
+                        px={1}
+                        borderRadius={"10px"}
                         bgcolor={"layout.sidebarActive"}
                     >
                         {time && (
-                            <Typography variant="caption" fontWeight={"bold"} color={"primary.main"}>
+                            <Typography variant="body2" fontWeight={"bold"} color={"primary.main"}>
                                 LIVE
                             </Typography>
                         )}
