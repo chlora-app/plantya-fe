@@ -4,7 +4,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const BreadCrumb = ({ items }) => {
     return (
-        <Stack>
+        <Stack mb={2}>
             <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="small" />}
                 aria-label="breadcrumb"
