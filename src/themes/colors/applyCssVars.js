@@ -28,4 +28,9 @@ export const applyCssVars = (mode = "dark") => {
 
     /* ================= BORDER ================= */
     root.style.setProperty("--color-border", palette.divider);
+
+
+    /* ================= ACTION ================= */
+    root.style.setProperty("--color-action-hover", palette.action.hover);
+    root.style.setProperty("--color-action-selected", palette.action.selected);
 };

@@ -80,7 +80,17 @@ const buildPalette = (mode = "dark") => {
             : colors.border.default,
 
         action: {
-            disabledBackground: isDark ? colors.surface.inputDisabledDark : colors.surface.inputDisabled,
+            hover: isDark
+                ? "rgba(255,255,255,0.08)"
+                : "rgba(0,0,0,0.04)",
+
+            selected: isDark
+                ? "rgba(255,255,255,0.16)"
+                : "rgba(0,0,0,0.08)",
+
+            disabledBackground: isDark
+                ? colors.surface.inputDisabledDark
+                : colors.surface.inputDisabled,
         },
     };
 };

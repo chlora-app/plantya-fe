@@ -60,7 +60,7 @@
     &-body-child-popover {
         display: flex;
         flex-direction: column;
-        color: #6B7280;
+        color: var(--color-text-secondary);
         padding-bottom: 0 !important;
         padding-top: 0 !important;
     }

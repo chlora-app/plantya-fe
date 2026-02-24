@@ -83,7 +83,7 @@ const Header = (props) => {
                         {props.isMobile && (
                             <IconButton
                                 onClick={props.toggleSidebar}
-                                className="header-iconMobile"
+                                className="header-icon"
                             >
                                 <MenuIcon sx={{ fontSize: "20px" }} />
                             </IconButton>
@@ -102,7 +102,13 @@ const Header = (props) => {
 
                                 <IconButton
                                     onClick={() => mode !== "light" && toggleTheme()}
-                                    sx={{ color: mode === "light" ? "primary.main" : "text.secondary", }}
+                                    sx={{
+                                        color: mode === "light" ? "primary.main" : "text.secondary",
+                                        '&:hover': {
+                                            backgroundColor: 'action.hover',
+                                            color: 'text.primary',
+                                        }
+                                    }}
                                     className="header-buttonAnim"
                                 >
                                     <SunnyIcon sx={{ fontSize: 16 }} />
@@ -110,18 +116,30 @@ const Header = (props) => {
 
                                 <IconButton
                                     onClick={() => mode !== "dark" && toggleTheme()}
-                                    sx={{ color: mode === "dark" ? "primary.main" : "text.secondary", }}
+                                    sx={{
+                                        color: mode === "dark" ? "primary.main" : "text.secondary",
+                                        '&:hover': {
+                                            backgroundColor: 'action.hover',
+                                            color: 'text.primary',
+                                        }
+                                    }}
                                     className="header-buttonAnim"
                                 >
                                     <DarkModeIcon sx={{ fontSize: 16 }} />
                                 </IconButton>
                             </Box>
 
-                            <Box className="header-profileIcon">
-                                <IconButton onClick={() => alert("Feature for Notification Modal")}>
-                                    <NotificationsIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
-                                </IconButton>
-                            </Box>
+                            <IconButton
+                                onClick={() => alert("Feature for Notification Modal")}
+                                className="header-icon"
+                            >
+                                <NotificationsIcon
+                                    sx={{
+                                        fontSize: 20,
+                                        color: 'inherit'
+                                    }}
+                                />
+                            </IconButton>
                         </Box>
 
                         <Divider orientation="vertical" sx={{ height: 24, alignSelf: "center", borderWidth: '1.5px' }} />
@@ -133,14 +151,21 @@ const Header = (props) => {
                                 </Typography>
                             </Box>
 
-                            <Box className="header-profileIcon">
-                                <IconButton
-                                    onClick={handleProfileMenuOpen}
-                                    aria-describedby={id}
-                                >
-                                    <PersonIcon sx={{ fontSize: '20px', color: "text.secondary" }} />
-                                </IconButton>
-                            </Box>
+                            <IconButton
+                                onClick={handleProfileMenuOpen}
+                                aria-describedby={id}
+                                className="header-icon"
+                                sx={{
+                                    bgcolor: 'background.default'
+                                }}
+                            >
+                                <PersonIcon
+                                    sx={{
+                                        fontSize: 20,
+                                        color: 'inherit'
+                                    }}
+                                />
+                            </IconButton>
                         </Box>
                     </Box>
                 </Toolbar>

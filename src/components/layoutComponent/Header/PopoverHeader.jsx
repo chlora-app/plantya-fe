@@ -49,14 +49,20 @@ const PopoverHeader = (props) => {
             </Box>
 
             <Box display={"flex"} flexDirection={"column"}>
-                <Button sx={{ justifyContent: 'start', px: 2, py: 1, gap: 2, alignItems: 'center', color: 'text.secondary' }}
+                <Button
+                    color="inherit"
+                    sx={{
+                        justifyContent: 'start', px: 2, py: 1, gap: 2, alignItems: 'center', color: 'text.primary',
+
+                    }}
                     onClick={props.handleAccountInfo}>
                     <ManageAccountsIcon
                         sx={{ fontSize: '20px' }}
                     />
                     Account Setting
                 </Button>
-                <Button sx={{ justifyContent: 'start', px: 2, py: 1, gap: 2, alignItems: 'center' }} color="error"
+                <Button sx={{ justifyContent: 'start', px: 2, py: 1, gap: 2, alignItems: 'center' }}
+                    color="error"
                     onClick={props.handleLogout}
                 >
                     <LogoutIcon sx={{ fontSize: '20px' }} />
