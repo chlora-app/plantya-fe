@@ -104,10 +104,12 @@ const Header = (props) => {
                                     onClick={() => mode !== "light" && toggleTheme()}
                                     sx={{
                                         color: mode === "light" ? "primary.main" : "text.secondary",
-                                        '&:hover': {
-                                            backgroundColor: 'action.hover',
-                                            color: 'text.primary',
-                                        }
+                                        "&:hover": {
+                                            backgroundColor: "action.hover",
+                                            color: mode === "light"
+                                                ? "primary.main"   // 🔥 tetap primary kalau active
+                                                : "text.primary",
+                                        },
                                     }}
                                     className="header-buttonAnim"
                                 >
@@ -118,10 +120,12 @@ const Header = (props) => {
                                     onClick={() => mode !== "dark" && toggleTheme()}
                                     sx={{
                                         color: mode === "dark" ? "primary.main" : "text.secondary",
-                                        '&:hover': {
-                                            backgroundColor: 'action.hover',
-                                            color: 'text.primary',
-                                        }
+                                        "&:hover": {
+                                            backgroundColor: "action.hover",
+                                            color: mode === "dark"
+                                                ? "primary.main"
+                                                : "text.primary",
+                                        },
                                     }}
                                     className="header-buttonAnim"
                                 >

@@ -27,6 +27,7 @@ import {
     mdiMagnify,
     mdiRestore
 } from '@mdi/js';
+import BreadCrumb from "../../components/common/BreadCrumb";
 
 const MasterUser = () => {
     // State First Page, Message, and Loading Effect
@@ -473,22 +474,17 @@ const MasterUser = () => {
                     }}
 
                 >
+                    <BreadCrumb
+                        items={[
+                            { label: "Home", path: "/" },
+                            { label: "Master" },
+                            { label: "Master User" },
+                        ]}
+                    />
                     <Stack
                         // spacing={2}
                         sx={{ overflowX: 'hidden' }}
                     >
-                        <Grid
-                            container
-                            size={12}
-                        >
-                             <Typography variant="h6" fontWeight="bold">
-                                Breadcrumb ""
-                            </Typography>
-                            <Typography variant="h6" fontWeight="bold">
-                                Master User
-                            </Typography>
-                        </Grid>
-
                         <Grid
                             container
                             size={12}

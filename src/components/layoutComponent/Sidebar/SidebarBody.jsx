@@ -37,9 +37,13 @@ const parentButtonSx = (isCollapsed) => ({
         color: "primary.main",
     },
 
-    "&:hover": {
+    "&.Mui-selected:hover": {
         backgroundColor: "layout.sidebarActive",
         color: "primary.main",
+    },
+
+    "&:hover": {
+        color: "text.primary",
     },
 });
 
@@ -49,16 +53,25 @@ const childButtonSx = {
     pr: 1,
     pl: 2,
     transition: "all 0.3s ease",
+    borderTopLeftRadius: "10px",
+    borderBottomLeftRadius: "10px",
 
-    "&.Mui-selected, &:hover": {
+    // "&.Mui-selected, &:hover": { (Use this for hover effect)
+    "&.Mui-selected": {
         bgcolor: "transparent",
         color: "primary.main",
         borderRight: "3px solid",
         borderColor: "primary.main",
     },
 
+    "&:hover": {
+        backgroundColor: "transparent",
+        color: "text.primary",
+    },
+
     "&.Mui-selected:hover": {
         bgcolor: "transparent",
+        color: "primary.main",
     },
 };
 

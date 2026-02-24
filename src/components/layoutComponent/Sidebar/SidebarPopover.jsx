@@ -11,16 +11,24 @@ const childButtonPopoverSx = {
     py: 0.5,
     px: 1,
     transition: "all 0.3s ease",
+    borderTopLeftRadius: "10px",
+    borderBottomLeftRadius: "10px",
 
-    "&.Mui-selected, &:hover": {
+    "&.Mui-selected": {
         bgcolor: "transparent",
         color: "primary.main",
         borderRight: "3px solid",
         borderColor: "primary.main",
     },
 
+    "&:hover": {
+        backgroundColor: "transparent",
+        color: "text.primary",
+    },
+
     "&.Mui-selected:hover": {
         bgcolor: "transparent",
+        color: "primary.main",
     },
 };
 
