@@ -1,15 +1,14 @@
 import React from "react";
 import { Breadcrumbs, Typography, Link, Stack, Box } from "@mui/material";
-import { NavigateNextIcon, DashboardIcon } from "../../assets/Icon/muiIcon";
+import { NavigateNextIcon, DashboardIcon, HomeIcon } from "../../assets/Icon/muiIcon";
 
 const BreadCrumb = (props) => {
     return (
-        <Stack mb={2}>
+        <Stack mb={1}>
             <Breadcrumbs
                 separator={
                     <NavigateNextIcon
-                        fontSize="small"
-                        sx={{ color: "text.secondary" }}
+                        sx={{ color: "text.secondary", fontSize: '13px' }}
                     />
                 }
                 aria-label="breadcrumb"
@@ -25,13 +24,13 @@ const BreadCrumb = (props) => {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: 'center',
-                                gap: 1,
+                                gap: 0.5,
                             }}
                         >
                             {isFirst && (
-                                <DashboardIcon
+                                <HomeIcon
                                     sx={{
-                                        fontSize: 16,
+                                        fontSize: "13px",
                                         color: color,
                                     }}
                                 />
@@ -39,7 +38,7 @@ const BreadCrumb = (props) => {
                             <Typography
                                 color={color}
                                 fontWeight="medium"
-                                variant="body1"
+                                variant="body2"
                             >
                                 {item.label}
                             </Typography>

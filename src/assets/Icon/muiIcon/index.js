@@ -19,3 +19,5 @@ export { default as PersonIcon } from '@mui/icons-material/Person';
 export { default as LogoutIcon } from '@mui/icons-material/Logout';
 export { default as ManageAccountsIcon } from '@mui/icons-material/ManageAccounts';
 export { default as NavigateNextIcon } from '@mui/icons-material/NavigateNext';
+export { default as HomeIcon } from '@mui/icons-material/Home';
+export { default as AddIcon } from '@mui/icons-material/Add';

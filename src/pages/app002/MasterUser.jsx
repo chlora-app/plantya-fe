@@ -18,7 +18,8 @@ import {
     Button,
     Tab,
     Tabs,
-    Box
+    Box,
+    Paper
 } from "@mui/material";
 import {
     mdiTrashCanOutline,
@@ -28,7 +29,7 @@ import {
     mdiRestore
 } from '@mdi/js';
 import BreadCrumb from "../../components/common/BreadCrumb";
-import { PersonIcon } from "../../assets/Icon/muiIcon";
+import { AddIcon, PersonIcon } from "../../assets/Icon/muiIcon";
 
 // ================= DUMMY DATA =================
 const generateDummyUsers = (total = 57) => {
@@ -556,145 +557,111 @@ const MasterUser = () => {
                 msgStateGetStatus={app002MsgStatus}
                 setFirstRender={setFirstRender}
             >
+
+                <BreadCrumb items={[{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]} />
                 <Container
-                    disableGutters
+                    component={Paper}
                     maxWidth={false}
-                    sx={{
-                        display: app002p01Page ? "block" : "none",
-                        py: 1,
-                        px: 2,
-                    }}
-
+                    hidden={!app002p01Page}
+                    disableGutters
+                    sx={{ overflow: 'hidden' }}
                 >
-                    <BreadCrumb
-                        items={[
-                            { label: "Home", path: "/" },
-                            { label: "Master" },
-                            { label: "Master User" },
-                        ]}
-                    />
 
-                    <Stack mb={2} direction={"row"} spacing={1} justifyContent={"flex-start"} alignItems={"center"}>
-                        <PersonIcon fontSize="small" />
-                        <Typography variant="h5" fontWeight={"medium"}>
-                            Master User
+                    <Stack mb={2} direction={"row"} spacing={1} alignItems={"center"} bgcolor={"primary.main"} color={"text.light"} px={2} py={1}>
+                        <PersonIcon sx={{ fontSize: '14px' }} />
+                        <Typography variant="h6" fontWeight={"medium"}
+                            letterSpacing={0.4}
+                        >
+                            User Management
                         </Typography>
                     </Stack>
 
-                    <Stack
-                        // spacing={2}
-                        sx={{ overflowX: 'hidden' }}
-                    >
+                    <Stack mb={2} direction={"column"} px={2} >
+
                         <Grid
                             container
-                            size={12}
-                            sx={{
-                                mb: 2,
-                                borderBottom: "1px solid",
-                                borderColor: 'divider'
-                            }}
+                            justifyContent={"end"}
+                            flex={1}
+                            spacing={2}
+                            mb={{ xs: 2, md: -4 }}
                         >
 
-                            <Tabs
-                                value={active}
-                                onChange={handleTabChange}
-                                sx={{
-                                    borderTopRightRadius: '10px',
-                                    borderTopLeftRadius: '10px',
-                                    borderColor: 'divider',
-                                    minHeight: 36,
-                                    // "& .MuiTabs-indicator": {
-                                    //     display: "none",   // ⬅️ remove garis bawah
-                                    // },
-                                }}
+                            <Grid
+                                size={{ xs: 4, sm: 4, md: 3 }}
                             >
-                                <Tab label="Active User"
-                                    value="activeUser"
-
+                                <TextField
+                                    fullWidth
+                                    placeholder="Search"
+                                    value={search}
+                                    onChange={(e) => {
+                                        setSearch(e.target.value)
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            handleSearchState()
+                                        }
+                                    }}
+                                    size="small"
                                     sx={{
-                                        minHeight: 36,   // ⬅️ penting
+                                        '& .MuiOutlinedInput-root': {
+                                            borderRadius: 2,
+                                            '& fieldset': {
+                                                borderColor: 'custom.line',
+                                                borderWidth: 1.5,
+                                            },
 
-                                        textTransform: 'none',
-                                        borderTopLeftRadius: "10px",
-                                        borderTopRightRadius: "10px",
-                                        "&:hover": {
-                                            bgcolor: "action.hover", // warna hover
-                                            color: "text.primary"
-                                        },
+                                            '&:hover fieldset': {
+                                                borderColor: 'custom.line',
+                                                borderWidth: 2.5
+                                            },
 
-                                        "&.Mui-selected": {
-                                            border: "1px solid",
-                                            borderColor: "divider",
-                                            borderBottom: "none",
-                                            borderTopLeftRadius: "10px",
-                                            borderTopRightRadius: "10px",
-                                            bgcolor: "background.paper",
-                                            marginBottom: "-1px", // 🔥 ini kuncinya
-                                        },
-
-                                        "&.Mui-selected:hover": {
-                                            bgcolor: "layout.sidebarActive",
-                                            color: "primary.main"
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: 'custom.line',
+                                                borderWidth: 2.5
+                                            },
                                         },
                                     }}
-                                />
-                                <Tab label="Deleted User"
-                                    value="deletedUser"
-                                    sx={{
-                                        minHeight: 36,   // ⬅️ penting
-                                        textTransform: 'none',
-                                        borderTopLeftRadius: "10px",
-                                        borderTopRightRadius: "10px",
-                                        "&:hover": {
-                                            bgcolor: "action.hover", // warna hover
-                                            color: "text.primary"
-                                        },
-
-                                        "&.Mui-selected": {
-                                            border: "1px solid",
-                                            borderColor: "divider",
-                                            borderBottom: "none",
-                                            borderTopLeftRadius: "10px",
-                                            borderTopRightRadius: "10px",
-                                            bgcolor: "background.paper",
-                                            marginBottom: "-1px", // 🔥 ini kuncinya
-                                        },
-
-                                        "&.Mui-selected:hover": {
-                                            bgcolor: "layout.sidebarActive",
-                                            color: "primary.main"
-                                        },
-
+                                    slotProps={{
+                                        input: {
+                                            endAdornment: (
+                                                <IconButton
+                                                    aria-label="search button"
+                                                    onClick={handleSearchState}
+                                                    edge="end"
+                                                    size="small"
+                                                    sx={{
+                                                        color: 'text.secondary'
+                                                    }}
+                                                >
+                                                    <Icon path={mdiMagnify} size={"28px"} />
+                                                </IconButton>
+                                            ),
+                                        }
                                     }}
                                 />
-                            </Tabs>
+                            </Grid>
 
 
-                        </Grid>
-
-                        {/* Tab Active User */}
-                        {active === "activeUser" && (
-                            <Box>
-                                <Grid container alignItems="center" size={12} sx={{ mb: 2 }}>
-                                    <Grid
-                                        size={{ xs: 4, sm: 3 }}
-                                        sx={{
-                                            pr: 2
-                                        }}
-                                    >
+                            <Grid
+                                size={{ xs: 4, sm: 4, md: 2 }}
+                            >
+                                <Autocomplete
+                                    fullWidth
+                                    options={roleOptions}
+                                    getOptionLabel={(option) => option.label}
+                                    value={roleOptions.find((opt) => opt.value === role) || null}
+                                    onChange={(event, newValue) => { handleRoleChange(newValue ? newValue.value : ""); }}
+                                    sx={{
+                                        '& .MuiAutocomplete-popupIndicator': {
+                                            color: 'text.secondary',
+                                        },
+                                    }}
+                                    renderInput={(params) => (
                                         <TextField
-                                            fullWidth
-                                            placeholder="Search"
-                                            value={search}
-                                            onChange={(e) => {
-                                                setSearch(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    handleSearchState()
-                                                }
-                                            }}
+                                            {...params}
+                                            placeholder="Role"
                                             size="small"
+                                            fullWidth={true}
                                             sx={{
                                                 '& .MuiOutlinedInput-root': {
                                                     borderRadius: 2,
@@ -714,103 +681,129 @@ const MasterUser = () => {
                                                     },
                                                 },
                                             }}
-                                            slotProps={{
-                                                input: {
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            aria-label="search button"
-                                                            onClick={handleSearchState}
-                                                            edge="end"
-                                                            size="small"
-                                                            sx={{
-                                                                color: 'text.secondary'
-                                                            }}
-                                                        >
-                                                            <Icon path={mdiMagnify} size={"28px"} />
-                                                        </IconButton>
-                                                    ),
-                                                }
-                                            }}
                                         />
-                                    </Grid>
+                                    )}
+                                    isOptionEqualToValue={(opt, val) => opt.value === val.value}
+                                    clearOnEscape
+                                />
+                            </Grid>
 
 
-                                    <Grid container size={{ xs: 4, sm: 2 }}>
-                                        <Autocomplete
-                                            fullWidth
-                                            options={roleOptions}
-                                            getOptionLabel={(option) => option.label}
-                                            value={roleOptions.find((opt) => opt.value === role) || null}
-                                            onChange={(event, newValue) => { handleRoleChange(newValue ? newValue.value : ""); }}
-                                            sx={{
-                                                '& .MuiAutocomplete-popupIndicator': {
-                                                    color: 'text.secondary',
-                                                },
-                                            }}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    placeholder="Role"
-                                                    size="small"
-                                                    fullWidth={true}
-                                                    sx={{
-                                                        '& .MuiOutlinedInput-root': {
-                                                            borderRadius: 2,
-                                                            '& fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 1.5,
-                                                            },
+                            <Grid
+                                size={{ xs: 4, sm: 4, md: 1.5 }}
+                            >
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    startIcon={<AddIcon sx={{ fontSize: '13px' }} />}
+                                    sx={{
+                                        textTransform: 'none',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        flexShrink:0,
+                                        '&:hover': {
+                                            bgcolor: '#61A05A'
+                                        },
+                                    }}
+                                    onClick={handleModalAddOpen}
+                                >
+                                    Add User
+                                </Button>
+                            </Grid>
 
-                                                            '&:hover fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 2.5
-                                                            },
+                        </Grid>
 
-                                                            '&.Mui-focused fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 2.5
-                                                            },
-                                                        },
-                                                    }}
-                                                />
-                                            )}
-                                            isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                                            clearOnEscape
-                                        />
-                                    </Grid>
+                        <Stack>
+                            <Tabs
+                                value={active}
+                                onChange={handleTabChange}
+                                sx={{
 
-                                    <Grid
-                                        container
-                                        size={{ xs: 4, sm: 7 }}
-                                        justifyContent="flex-end"
-                                        alignItems="center"
-                                        sx={{
-                                            pl: 2
-                                        }}
-                                    >
-                                        <Button
-                                            variant="contained"
-                                            color="success"
-                                            endIcon={<Icon path={mdiPlus} size={"20px"} />}
-                                            sx={{
-                                                textTransform: 'none',
-                                                '&:hover': {
-                                                    bgcolor: '#61A05A'
-                                                },
-                                            }}
-                                            onClick={handleModalAddOpen}
-                                        >
-                                            Add User
-                                        </Button>
-                                    </Grid>
+                                    borderColor: 'divider',
+                                    minHeight: 36,
+                                    "& .MuiTabs-indicator": {
+                                        display: "none",   // ⬅️ remove garis bawah
+                                    },
+                                }}
+                            >
+                                <Tab label="Active User"
+                                    component={Paper}
+                                    value="activeUser"
+                                    sx={{
+                                        minHeight: 36,   // ⬅️ penting
+
+                                        border: '1px solid',
+                                        textTransform: 'none',
+                                        borderTopLeftRadius: "10px",
+                                        borderRight: 'none',
+                                        borderBottom: 'none',
+                                        borderColor: "divider",
+                                        // borderTopRightRadius: "10px",
+                                        "&:hover": {
+                                            bgcolor: "action.hover", // warna hover
+                                            color: "text.primary"
+                                        },
+
+                                        "&.Mui-selected": {
+                                            border: "1px solid",
+                                            borderColor: "divider",
+                                            borderBottom: "none",
+                                            borderRight: "none",
+                                            borderTopLeftRadius: "10px",
+                                            // borderTopRightRadius: "10px",
+                                            bgcolor: "layout.sidebarActive",
+                                            // marginBottom: "-1px", // 🔥 ini kuncinya
+                                        },
+
+                                        "&.Mui-selected:hover": {
+                                            bgcolor: "layout.sidebarActive",
+                                            color: "primary.main"
+                                        },
+                                    }}
+                                />
+                                <Tab label="Deleted User"
+                                    value="deletedUser"
+                                    component={Paper}
+                                    sx={{
+                                        minHeight: 36,   // ⬅️ penting
+                                        textTransform: 'none',
+                                        border: '1px solid',
+                                        borderTopRightRadius: "10px",
+                                        borderLeft: 'none',
+                                        borderBottom: 'none',
+                                        borderColor: 'divider',
+                                        "&:hover": {
+                                            bgcolor: "action.hover", // warna hover
+                                            color: "text.primary"
+                                        },
+
+                                        "&.Mui-selected": {
+                                            border: "1px solid",
+                                            borderColor: "divider",
+                                            borderBottom: "none",
+                                            borderLeft: "none",
+                                            borderTopLeftRadius: '0px',
+                                            bgcolor: "layout.sidebarActive",
+                                            // marginBottom: "-1px", // 🔥 ini kuncinya
+                                        },
+
+                                        "&.Mui-selected:hover": {
+                                            bgcolor: "layout.sidebarActive",
+                                            color: "primary.main"
+                                        },
+
+                                    }}
+                                />
+                            </Tabs>
+                        </Stack>
 
 
-
-                                </Grid>
-
-
-
+                        {/* Tab Active User */}
+                        {active === "activeUser" && (
+                            <Stack mb={2} direction={"column"} alignItems={"center"} >
                                 <TableCustom
+                                    hasTab={true}
                                     keyField="user_id"
                                     loadingData={loadingData}
                                     columns={app002UserColumns}
@@ -829,134 +822,14 @@ const MasterUser = () => {
                                     onRowsPerPageChange={handleChangeRowsPerPage}
                                     onRequestSort={handleRequestSort}
                                 />
-                            </Box>
+                            </Stack>
                         )}
 
                         {/* Tab Deleted User */}
                         {active === "deletedUser" && (
-                            <Box>
-                                <Grid container alignItems="center" size={12} sx={{ mb: 2 }}>
-                                    <Grid
-                                        size={{ xs: 4, sm: 3 }}
-                                        sx={{
-                                            pr: 2
-                                        }}
-                                    >
-                                        <TextField
-                                            fullWidth
-                                            placeholder="Search"
-                                            value={search}
-                                            onChange={(e) => {
-                                                setSearch(e.target.value)
-                                            }}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    handleSearchState()
-                                                }
-                                            }}
-                                            size="small"
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
-
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                            slotProps={{
-                                                input: {
-                                                    endAdornment: (
-                                                        <IconButton
-                                                            aria-label="search button"
-                                                            onClick={handleSearchState}
-                                                            edge="end"
-                                                            size="small"
-                                                            sx={{
-                                                                color: 'text.secondary'
-                                                            }}
-                                                        >
-                                                            <Icon path={mdiMagnify} size={"28px"} />
-                                                        </IconButton>
-                                                    ),
-                                                }
-                                            }}
-                                        />
-                                    </Grid>
-
-
-                                    <Grid container size={{ xs: 4, sm: 2 }}>
-                                        <Autocomplete
-                                            fullWidth
-                                            options={roleOptions}
-                                            getOptionLabel={(option) => option.label}
-                                            value={roleOptions.find((opt) => opt.value === role) || null}
-                                            onChange={(event, newValue) => { handleRoleChange(newValue ? newValue.value : ""); }}
-                                            sx={{
-                                                '& .MuiAutocomplete-popupIndicator': {
-                                                    color: 'text.secondary',
-                                                },
-                                            }}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    placeholder="Role"
-                                                    size="small"
-                                                    fullWidth={true}
-                                                    sx={{
-                                                        '& .MuiOutlinedInput-root': {
-                                                            borderRadius: 2,
-                                                            '& fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 1.5,
-                                                            },
-
-                                                            '&:hover fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 2.5
-                                                            },
-
-                                                            '&.Mui-focused fieldset': {
-                                                                borderColor: 'custom.line',
-                                                                borderWidth: 2.5
-                                                            },
-                                                        },
-                                                    }}
-                                                />
-                                            )}
-                                            isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                                            clearOnEscape
-                                        />
-                                    </Grid>
-
-                                    <Grid
-                                        container
-                                        size={{ xs: 4, sm: 7 }}
-                                        justifyContent="flex-end"
-                                        alignItems="center"
-                                        sx={{
-                                            pl: 2
-                                        }}
-                                    >
-                                    </Grid>
-
-
-
-                                </Grid>
-
-
-
+                            <Stack mb={2} direction={"column"} alignItems={"center"}>
                                 <TableCustom
+                                    hasTab={true}
                                     keyField="user_id"
                                     loadingData={loadingData}
                                     columns={app002UserDeletedColumns}
@@ -975,9 +848,8 @@ const MasterUser = () => {
                                     onRowsPerPageChange={handleChangeRowsPerPageDeleted}
                                     onRequestSort={handleRequestSortDeleted}
                                 />
-                            </Box>
+                            </Stack>
                         )}
-
                     </Stack>
                 </Container>
 

@@ -21,15 +21,9 @@ const RootPageCustom = (props) => {
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
-                <Paper
-                    elevation={4}
-                    sx={{
-                        borderRadius: 2,
-                        p: 2,
-                    }}
-                >
+                <Box>
                     {props.children}
-                </Paper>
+                </Box>
             </Container>
         </React.Fragment>
     )

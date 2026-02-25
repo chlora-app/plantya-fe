@@ -293,7 +293,10 @@ const TableCustom = (props) => {
                 component={Paper}
                 elevation={1}
                 sx={{
-                    borderRadius: "10px",
+                    borderTopLeftRadius: props.hasTab ? "0px" : "10px",
+                    borderTopRightRadius: '10px',
+                    borderBottomRightRadius: '10px',
+                    borderBottomLeftRadius: '10px',
                     border: '1px solid',
                     borderColor: theme.palette.table.border,
                     position: 'relative',
