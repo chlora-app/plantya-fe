@@ -28,6 +28,22 @@ import {
     mdiRestore
 } from '@mdi/js';
 import BreadCrumb from "../../components/common/BreadCrumb";
+import { PersonIcon } from "../../assets/Icon/muiIcon";
+
+// ================= DUMMY DATA =================
+const generateDummyUsers = (total = 57) => {
+    const roles = ["ADMIN", "USER", "STAFF"];
+
+    return Array.from({ length: total }, (_, i) => ({
+        user_id: `USR${(i + 1).toString().padStart(3, "0")}`,
+        name: `User ${i + 1}`,
+        role: roles[i % roles.length],
+        email: `user${i + 1}@example.com`,
+    }));
+};
+
+const DUMMY_ACTIVE_USERS = generateDummyUsers(57);
+const DUMMY_DELETED_USERS = generateDummyUsers(23);
 
 const MasterUser = () => {
     // State First Page, Message, and Loading Effect
@@ -262,23 +278,62 @@ const MasterUser = () => {
     };
 
     // Data From API Active User
+    // const getAllUser = useCallback(async (param) => {
+    //     setLoadingData(true);
+    //     try {
+    //         const response = await getUser(param);
+    //         console.table(response.data.users)
+    //         setApp002UserData(response?.data?.users ? response.data.users : []);
+    //         setApp002UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
+    //         app002SetTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
+
+
+    //     } catch (error) {
+    //         console.error("Gagal mengambil data:", error);
+
+    //     } finally {
+    //         setLoadingData(false);
+    //     }
+    // });
     const getAllUser = useCallback(async (param) => {
         setLoadingData(true);
-        try {
-            const response = await getUser(param);
-            console.table(response.data.users)
-            setApp002UserData(response?.data?.users ? response.data.users : []);
-            setApp002UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
-            app002SetTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
 
+        setTimeout(() => {
+            let filtered = [...DUMMY_ACTIVE_USERS];
 
-        } catch (error) {
-            console.error("Gagal mengambil data:", error);
+            // filter search
+            if (param.search) {
+                filtered = filtered.filter(user =>
+                    user.name.toLowerCase().includes(param.search.toLowerCase()) ||
+                    user.email.toLowerCase().includes(param.search.toLowerCase())
+                );
+            }
 
-        } finally {
+            // filter role
+            if (param.role) {
+                filtered = filtered.filter(user => user.role === param.role);
+            }
+
+            // sorting
+            if (param.sort) {
+                filtered.sort((a, b) => {
+                    if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
+                    if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
+                    return 0;
+                });
+            }
+
+            const start = (param.page - 1) * param.size;
+            const end = start + param.size;
+            const paginated = filtered.slice(start, end);
+
+            setApp002UserData(paginated);
+            setApp002UserTotalData(filtered.length);
+            app002SetTotalPage(Math.ceil(filtered.length / param.size));
+
             setLoadingData(false);
-        }
-    });
+        }, 500);
+    }, []);
 
     useEffect(() => {
         if (app002p01Page && active == "activeUser") {
@@ -287,20 +342,56 @@ const MasterUser = () => {
     }, [app002UserDataParam, active]);
 
     // Data From API Deleted User
+    // const getAllDeletedUser = useCallback(async (param) => {
+    //     setLoadingData(true);
+    //     try {
+    //         const response = await getUserDeleted(param);
+    //         console.table(response.data.users)
+    //         setApp002UserDeletedData(response?.data?.users ? response.data.users : []);
+    //         setApp002UserDeletedTotalData(response?.data?.count_data ? response.data.count_data : 0);
+    //         app002SetTotalPageDeleted(response?.data?.total_pages ? response.data?.total_pages : 0);
+    //     } catch (error) {
+    //         console.error("Gagal mengambil data:", error);
+    //     } finally {
+    //         setLoadingData(false);
+    //     }
+    // });
+
     const getAllDeletedUser = useCallback(async (param) => {
         setLoadingData(true);
-        try {
-            const response = await getUserDeleted(param);
-            console.table(response.data.users)
-            setApp002UserDeletedData(response?.data?.users ? response.data.users : []);
-            setApp002UserDeletedTotalData(response?.data?.count_data ? response.data.count_data : 0);
-            app002SetTotalPageDeleted(response?.data?.total_pages ? response.data?.total_pages : 0);
-        } catch (error) {
-            console.error("Gagal mengambil data:", error);
-        } finally {
+
+        setTimeout(() => {
+            let filtered = [...DUMMY_DELETED_USERS];
+
+            if (param.search) {
+                filtered = filtered.filter(user =>
+                    user.name.toLowerCase().includes(param.search.toLowerCase())
+                );
+            }
+
+            if (param.role) {
+                filtered = filtered.filter(user => user.role === param.role);
+            }
+
+            if (param.sort) {
+                filtered.sort((a, b) => {
+                    if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
+                    if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
+                    return 0;
+                });
+            }
+
+            const start = (param.page - 1) * param.size;
+            const end = start + param.size;
+            const paginated = filtered.slice(start, end);
+
+            setApp002UserDeletedData(paginated);
+            setApp002UserDeletedTotalData(filtered.length);
+            app002SetTotalPageDeleted(Math.ceil(filtered.length / param.size));
+
             setLoadingData(false);
-        }
-    });
+        }, 500);
+    }, []);
 
     useEffect(() => {
         if (app002p01Page && active == "deletedUser") {
@@ -470,7 +561,8 @@ const MasterUser = () => {
                     maxWidth={false}
                     sx={{
                         display: app002p01Page ? "block" : "none",
-                        px: 1,
+                        py: 1,
+                        px: 2,
                     }}
 
                 >
@@ -481,6 +573,14 @@ const MasterUser = () => {
                             { label: "Master User" },
                         ]}
                     />
+
+                    <Stack mb={2} direction={"row"} spacing={1} justifyContent={"flex-start"} alignItems={"center"}>
+                        <PersonIcon fontSize="small" />
+                        <Typography variant="h5" fontWeight={"medium"}>
+                            Master User
+                        </Typography>
+                    </Stack>
+
                     <Stack
                         // spacing={2}
                         sx={{ overflowX: 'hidden' }}
@@ -489,22 +589,82 @@ const MasterUser = () => {
                             container
                             size={12}
                             sx={{
-                                mb: 2
+                                mb: 2,
+                                borderBottom: "1px solid",
+                                borderColor: 'divider'
                             }}
                         >
 
                             <Tabs
                                 value={active}
                                 onChange={handleTabChange}
+                                sx={{
+                                    borderTopRightRadius: '10px',
+                                    borderTopLeftRadius: '10px',
+                                    borderColor: 'divider',
+                                    minHeight: 36,
+                                    // "& .MuiTabs-indicator": {
+                                    //     display: "none",   // ⬅️ remove garis bawah
+                                    // },
+                                }}
                             >
-                                <Tab label="Active User" value="activeUser"
+                                <Tab label="Active User"
+                                    value="activeUser"
+
                                     sx={{
+                                        minHeight: 36,   // ⬅️ penting
+
                                         textTransform: 'none',
+                                        borderTopLeftRadius: "10px",
+                                        borderTopRightRadius: "10px",
+                                        "&:hover": {
+                                            bgcolor: "action.hover", // warna hover
+                                            color: "text.primary"
+                                        },
+
+                                        "&.Mui-selected": {
+                                            border: "1px solid",
+                                            borderColor: "divider",
+                                            borderBottom: "none",
+                                            borderTopLeftRadius: "10px",
+                                            borderTopRightRadius: "10px",
+                                            bgcolor: "background.paper",
+                                            marginBottom: "-1px", // 🔥 ini kuncinya
+                                        },
+
+                                        "&.Mui-selected:hover": {
+                                            bgcolor: "layout.sidebarActive",
+                                            color: "primary.main"
+                                        },
                                     }}
                                 />
-                                <Tab label="Deleted User" value="deletedUser"
+                                <Tab label="Deleted User"
+                                    value="deletedUser"
                                     sx={{
+                                        minHeight: 36,   // ⬅️ penting
                                         textTransform: 'none',
+                                        borderTopLeftRadius: "10px",
+                                        borderTopRightRadius: "10px",
+                                        "&:hover": {
+                                            bgcolor: "action.hover", // warna hover
+                                            color: "text.primary"
+                                        },
+
+                                        "&.Mui-selected": {
+                                            border: "1px solid",
+                                            borderColor: "divider",
+                                            borderBottom: "none",
+                                            borderTopLeftRadius: "10px",
+                                            borderTopRightRadius: "10px",
+                                            bgcolor: "background.paper",
+                                            marginBottom: "-1px", // 🔥 ini kuncinya
+                                        },
+
+                                        "&.Mui-selected:hover": {
+                                            bgcolor: "layout.sidebarActive",
+                                            color: "primary.main"
+                                        },
+
                                     }}
                                 />
                             </Tabs>

@@ -89,7 +89,7 @@ const Header = (props) => {
                             </IconButton>
                         )}
 
-                        {!props.isMobile && (<RealtimeClock />)}
+                        {/* {!props.isMobile && (<RealtimeClock />)} */}
                     </Box>
 
                     <Box display={"flex"} gap={1.5} >

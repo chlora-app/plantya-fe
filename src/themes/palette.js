@@ -92,6 +92,38 @@ const buildPalette = (mode = "dark") => {
                 ? colors.surface.inputDisabledDark
                 : colors.surface.inputDisabled,
         },
+
+        table: {
+            background: isDark
+                ? colors.background.paper.dark
+                : colors.background.paper.light,
+
+            headerBackground: isDark
+                ? colors.background.elevated.dark
+                : colors.background.elevated.light,
+
+            border: isDark
+                ? colors.border.subtle
+                : colors.border.default,
+
+            hover: isDark
+                ? "rgba(255,255,255,0.06)"           // Lebih subtle dari selected
+                : "rgba(0,0,0,0.04)",                // Konsisten dengan MUI
+
+
+            striped: isDark
+                ? "rgba(255,255,255,0.02)"           // Sangat subtle di dark mode
+                : "rgba(0,0,0,0.02)",                 // Sangat subtle di light mode
+
+            selected: isDark
+                ? "rgba(16,185,129,0.16)"             // #10B981 dengan opacity
+                : "rgba(0,124,79,0.08)",               // #007C4F dengan opacity
+
+            // Footer background (jika ada)
+            footerBackground: isDark
+                ? colors.background.elevated.dark     // Sama dengan header
+                : colors.background.elevated.light,
+        },
     };
 };
 

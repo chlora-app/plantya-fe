@@ -1,36 +1,65 @@
 import React from "react";
-import { Breadcrumbs, Typography, Link, Stack } from "@mui/material";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Breadcrumbs, Typography, Link, Stack, Box } from "@mui/material";
+import { NavigateNextIcon, DashboardIcon } from "../../assets/Icon/muiIcon";
 
-const BreadCrumb = ({ items }) => {
+const BreadCrumb = (props) => {
     return (
         <Stack mb={2}>
             <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small" />}
+                separator={
+                    <NavigateNextIcon
+                        fontSize="small"
+                        sx={{ color: "text.secondary" }}
+                    />
+                }
                 aria-label="breadcrumb"
             >
-                {items.map((item, index) =>
-                    item.path ? (
+                {props.items.map((item, index) => {
+                    const isLast = index === props.items.length - 1;
+                    const isFirst = index === 0;
+                    const color = isLast ? "text.primary" : "text.secondary";
+
+                    const content = (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: 'center',
+                                gap: 1,
+                            }}
+                        >
+                            {isFirst && (
+                                <DashboardIcon
+                                    sx={{
+                                        fontSize: 16,
+                                        color: color,
+                                    }}
+                                />
+                            )}
+                            <Typography
+                                color={color}
+                                fontWeight="medium"
+                                variant="body1"
+                            >
+                                {item.label}
+                            </Typography>
+                        </Box>
+                    );
+
+                    return item.path && !isLast ? (
                         <Link
                             key={index}
                             underline="hover"
-                            color="inherit"
                             href={item.path}
-                            variant="body1"
+                            color="inherit"
+                            sx={{ display: "flex", alignItems: "center" }}
                         >
-                            {item.label}
+                            {content}
                         </Link>
                     ) : (
-                        <Typography
-                            key={index}
-                            color="text.primary"
-                            fontWeight="medium"
-                            variant="body1"
-                        >
-                            {item.label}
-                        </Typography>
-                    )
-                )}
+                        <Box key={index}>{content}</Box>
+                    );
+                })}
             </Breadcrumbs>
         </Stack>
     );

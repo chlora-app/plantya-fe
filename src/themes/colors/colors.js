@@ -71,9 +71,8 @@ const colors = {
 
     /* ================= BORDER / DIVIDER ================= */
     border: {
-        // default: "#D1D5DB",
-        default: "#E5E7EB",
-        subtle: "#262A30",
+        default: "#D1D5DB",
+        subtle: "#2E3338",
     },
 };
 

@@ -18,3 +18,4 @@ export { default as NotificationsIcon } from '@mui/icons-material/Notifications'
 export { default as PersonIcon } from '@mui/icons-material/Person';
 export { default as LogoutIcon } from '@mui/icons-material/Logout';
 export { default as ManageAccountsIcon } from '@mui/icons-material/ManageAccounts';
+export { default as NavigateNextIcon } from '@mui/icons-material/NavigateNext';
