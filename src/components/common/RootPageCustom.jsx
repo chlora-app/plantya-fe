@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Container, Box, Paper } from "@mui/material";
 import AlertMessage from "./AlertMessage";
+import BreadCrumb from "./BreadCrumb";
 
 const RootPageCustom = (props) => {
     useEffect(() => {
@@ -21,6 +22,8 @@ const RootPageCustom = (props) => {
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
+                <BreadCrumb items={props.breadCrumbItems} />
+
                 <Box>
                     {props.children}
                 </Box>

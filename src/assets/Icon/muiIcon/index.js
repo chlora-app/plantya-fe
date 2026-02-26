@@ -21,3 +21,13 @@ export { default as ManageAccountsIcon } from '@mui/icons-material/ManageAccount
 export { default as NavigateNextIcon } from '@mui/icons-material/NavigateNext';
 export { default as HomeIcon } from '@mui/icons-material/Home';
 export { default as AddIcon } from '@mui/icons-material/Add';
+export { default as HowToRegIcon } from '@mui/icons-material/HowToReg';
+export { default as PersonRemoveOutlinedIcon } from '@mui/icons-material/PersonRemoveOutlined';
+export { default as SearchIcon } from '@mui/icons-material/Search';
+export { default as ClearIcon } from '@mui/icons-material/Clear';
+export { default as DeleteOutlinedIcon } from '@mui/icons-material/DeleteOutlined';
+export { default as EditOutlinedIcon } from '@mui/icons-material/EditOutlined';
+export { default as ReplayOutlinedIcon } from '@mui/icons-material/ReplayOutlined';
+export { default as KeyboardDoubleArrowLeftIcon } from '@mui/icons-material/KeyboardDoubleArrowLeft';
+export { default as KeyboardDoubleArrowRightIcon } from '@mui/icons-material/KeyboardDoubleArrowRight';
+

@@ -99,8 +99,8 @@ const buildPalette = (mode = "dark") => {
                 : colors.background.paper.light,
 
             headerBackground: isDark
-                ? colors.background.elevated.dark
-                : colors.background.elevated.light,
+                ? colors.background.default.dark
+                : colors.background.default.light,
 
             border: isDark
                 ? colors.border.subtle

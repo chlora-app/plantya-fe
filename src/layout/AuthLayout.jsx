@@ -131,7 +131,7 @@ const AuthLayout = (props) => {
                     isMobile={isMobile}
                 />
 
-                <Box component="main" className="auth-layout-content" px={2} py={1}>
+                <Box component="main" className="auth-layout-content" p={2}>
                     {props.children}
                 </Box>
 

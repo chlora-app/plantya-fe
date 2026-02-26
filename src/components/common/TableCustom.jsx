@@ -13,7 +13,7 @@ import {
     Typography,
     Select,
     MenuItem,
-    Paper
+    Paper, Stack
 } from "@mui/material";
 import Icon from '@mdi/react';
 import {
@@ -290,13 +290,9 @@ const TableCustom = (props) => {
 
         <>
             <TableContainer
-                component={Paper}
-                elevation={1}
+
                 sx={{
-                    borderTopLeftRadius: props.hasTab ? "0px" : "10px",
-                    borderTopRightRadius: '10px',
-                    borderBottomRightRadius: '10px',
-                    borderBottomLeftRadius: '10px',
+                    borderRadius: '10px',
                     border: '1px solid',
                     borderColor: theme.palette.table.border,
                     position: 'relative',
@@ -335,46 +331,23 @@ const TableCustom = (props) => {
             </TableContainer>
 
             {/* FOOTER SECTION */}
-            <Box sx={{
-                display: "flex",
-                flexDirection: { xs: 'column', sm: 'column', md: 'row' },
-                alignItems: "center",
-                justifyContent: { xs: 'center', sm: 'space-between', md: 'space-between' },
-                mt: 2,
-                px: 1,
-                gap: { xs: 2, sm: 2, md: 1 },
-            }}>
-                {/* Showing entries info */}
-                <Typography
-                    variant="body2"
-                    sx={{
-                        order: { xs: 1, sm: 1, md: 1 },
-                        fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' },
-                        textAlign: { xs: 'center', sm: 'left', md: 'left' },
-                        mb: { xs: 1, sm: 1, md: 0 },
-                    }}
-                >
+            <Stack
+                direction={{ sm: 'column', md: 'row' }}
+                justifyContent={{ sm: 'center', md: 'space-between' }}
+                mt={2}
+            >
+                <Typography variant="body2" textAlign={{ sm: 'center', md: 'left' }}>
                     Showing {from} to {to} of {props.appdataTotal} entries
                 </Typography>
 
-                {/* PAGINATION SECTION */}
-                <Box sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.5,
-                    order: { xs: 2, sm: 2, md: 2 },
-                    flexWrap: { xs: 'wrap', sm: 'wrap', md: 'nowrap' },
-                    justifyContent: { xs: 'center', sm: 'center', md: 'center' },
-                    mb: { xs: 1, sm: 1, md: 0 },
-                }}>
-                    {/* First Page Button (<<) */}
+                <Box display={"flex"} gap={1} justifyContent={"center"}>
                     <Box
                         component="button"
                         onClick={() => !isFirstPage && handleChangePage(null, 0)}
                         sx={{
                             border: "1px solid",
                             borderColor: theme.palette.primary.main,
-                            bgcolor: 'background.paper', // or theme.palette.table.background
+                            bgcolor: 'background.paper',
                             color: 'text.primary',
                             borderRadius: 2,
                             minWidth: { xs: 28, sm: 28, md: 36 },
@@ -489,12 +462,12 @@ const TableCustom = (props) => {
                 <Box sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 0.5,
-                    order: { xs: 3, sm: 3, md: 3 },
+                    gap: 1,
+                    order: 3,
+                    justifyContent: 'center'
+
                 }}>
-                    <Typography variant="body2" sx={{
-                        fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' }
-                    }}>
+                    <Typography variant="body2">
                         Show
                     </Typography>
                     <Select
@@ -504,7 +477,6 @@ const TableCustom = (props) => {
                         sx={{
                             height: { xs: 28, sm: 28, md: 32 },
                             minWidth: { xs: 50, sm: 50, md: 60 },
-                            fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' },
                             '& .MuiSelect-select': {
                                 padding: { xs: '2px 8px', sm: '2px 8px', md: '4px 10px' },
                                 minHeight: 'auto',
@@ -512,22 +484,16 @@ const TableCustom = (props) => {
                         }}
                     >
                         {props.rowsPerPageOption.map((opt) => (
-                            <MenuItem
-                                key={opt}
-                                value={opt}
-                                sx={{ fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' } }}
-                            >
+                            <MenuItem key={opt} value={opt} >
                                 {opt}
                             </MenuItem>
                         ))}
                     </Select>
-                    <Typography variant="body2" sx={{
-                        fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' }
-                    }}>
+                    <Typography variant="body2">
                         entries
                     </Typography>
                 </Box>
-            </Box>
+            </Stack >
         </>
     );
 };

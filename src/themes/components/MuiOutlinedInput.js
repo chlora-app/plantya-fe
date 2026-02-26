@@ -2,6 +2,7 @@ const MuiOutlinedInput = {
     MuiOutlinedInput: {
         styleOverrides: {
             root: ({ theme }) => ({
+                borderRadius: '10px',
                 ".MuiInputLabel-root:hover + & .MuiOutlinedInput-notchedOutline": {
                     borderColor: theme.palette.primary.light,
                 },

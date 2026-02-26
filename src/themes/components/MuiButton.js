@@ -2,6 +2,7 @@ const MuiButton = {
     MuiButton: {
         styleOverrides: {
             root: ({ theme }) => ({
+                borderRadius: '10px',
                 "&.auth-button": {
                     backgroundColor: theme.palette.primary.main,
                     color: theme.palette.text.light,

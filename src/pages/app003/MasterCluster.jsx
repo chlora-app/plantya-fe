@@ -21,6 +21,7 @@ import { Trash2, SquarePen, Plus, Search, RotateCcw } from "lucide-react";
 
 const MasterCluster = () => {
     // State First Page, Message, and Loading Effect
+    const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master Cluster" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app003p01Page, setApp003p01Page] = useState(true);
 
@@ -242,6 +243,7 @@ const MasterCluster = () => {
                 msgStateSet={setApp003setMsg}
                 msgStateGetStatus={app003MsgStatus}
                 setFirstRender={setFirstRender}
+                breadCrumbItems={breadCrumbItems}
             >
                 <Container
                     disableGutters

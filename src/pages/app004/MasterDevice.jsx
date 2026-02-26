@@ -21,6 +21,7 @@ import MasterDeviceEdit from "./MasterDeviceEdit";
 
 const MasterDevice = () => {
     // State First Page, Message, and Loading Effect
+    const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master Device" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app004p01Page, setApp004p01Page] = useState(true);
 
@@ -335,6 +336,7 @@ const MasterDevice = () => {
                 msgStateSet={setApp004setMsg}
                 msgStateGetStatus={app004MsgStatus}
                 setFirstRender={setFirstRender}
+                breadCrumbItems={breadCrumbItems}
             >
                 <Container
                     disableGutters
@@ -471,8 +473,8 @@ const MasterDevice = () => {
                             </Grid>
 
                             <Grid container size={{ xs: 3, sm: 2 }} sx={{
-                                    pr: 2
-                                }}>
+                                pr: 2
+                            }}>
                                 <Autocomplete
                                     fullWidth
                                     options={clusterOption}

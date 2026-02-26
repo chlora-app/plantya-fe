@@ -5,7 +5,6 @@ import { getUser, deleteUser, getUserDeleted, restoreUser } from "../../utils/Li
 import MasterUserAdd from "./MasterUserAdd";
 import MasterUserEdit from "./MasterUserEdit";
 import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
-import Icon from '@mdi/react';
 import {
     Container,
     Typography,
@@ -13,23 +12,26 @@ import {
     TextField,
     IconButton,
     Stack,
-    Autocomplete,
     Tooltip,
     Button,
     Tab,
     Tabs,
-    Box,
-    Paper
+    Paper,
+    MenuItem,
+    Select,
+    useTheme,
+    useMediaQuery
 } from "@mui/material";
 import {
-    mdiTrashCanOutline,
-    mdiSquareEditOutline,
-    mdiPlus,
-    mdiMagnify,
-    mdiRestore
-} from '@mdi/js';
-import BreadCrumb from "../../components/common/BreadCrumb";
-import { AddIcon, PersonIcon } from "../../assets/Icon/muiIcon";
+    AddIcon,
+    DeleteOutlinedIcon,
+    EditOutlinedIcon,
+    HowToRegIcon,
+    PersonIcon,
+    PersonRemoveOutlinedIcon,
+    ReplayOutlinedIcon,
+    SearchIcon
+} from "../../assets/Icon/muiIcon";
 
 // ================= DUMMY DATA =================
 const generateDummyUsers = (total = 57) => {
@@ -47,6 +49,9 @@ const DUMMY_ACTIVE_USERS = generateDummyUsers(57);
 const DUMMY_DELETED_USERS = generateDummyUsers(23);
 
 const MasterUser = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // xs & sm
+    const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]
     // State First Page, Message, and Loading Effect
     const [firstRender, setFirstRender] = useState(false)
     const [app002p01Page, setApp002p01Page] = useState(true);
@@ -152,7 +157,7 @@ const MasterUser = () => {
                                 onClick={() => handleModalEditOpen(app002UserData)}
                                 color="info"
                             >
-                                <Icon path={mdiSquareEditOutline} size={"20px"} />
+                                <EditOutlinedIcon fontSize="small" />
                             </IconButton>
                         </Tooltip>
 
@@ -163,7 +168,8 @@ const MasterUser = () => {
                                 onClick={() => handleModalDeleteOpen(app002UserData)}
                                 color="error"
                             >
-                                <Icon path={mdiTrashCanOutline} size={"20px"} />
+                                <DeleteOutlinedIcon fontSize="small" />
+
                             </IconButton>
                         </Tooltip>
                     </Stack>
@@ -245,7 +251,7 @@ const MasterUser = () => {
                                 onClick={() => handleModalRestoreOpen(app002UserDeletedData)}
                                 color="info"
                             >
-                                <Icon path={mdiRestore} size={"20px"} />
+                                <ReplayOutlinedIcon fontSize="small" />
                             </IconButton>
                         </Tooltip>
                     </Stack>
@@ -551,209 +557,57 @@ const MasterUser = () => {
 
     return (
         <React.Fragment>
-            <RootPageCustom
-                msgStateGet={app002Msg}
-                msgStateSet={setApp002setMsg}
-                msgStateGetStatus={app002MsgStatus}
-                setFirstRender={setFirstRender}
-            >
-
-                <BreadCrumb items={[{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]} />
+            <RootPageCustom msgStateGet={app002Msg} msgStateSet={setApp002setMsg} msgStateGetStatus={app002MsgStatus} setFirstRender={setFirstRender} breadCrumbItems={breadCrumbItems}>
                 <Container
-                    component={Paper}
                     maxWidth={false}
                     hidden={!app002p01Page}
                     disableGutters
-                    sx={{ overflow: 'hidden' }}
                 >
 
-                    <Stack mb={2} direction={"row"} spacing={1} alignItems={"center"} bgcolor={"primary.main"} color={"text.light"} px={2} py={1}>
-                        <PersonIcon sx={{ fontSize: '14px' }} />
-                        <Typography variant="h6" fontWeight={"medium"}
-                            letterSpacing={0.4}
-                        >
+                    <Stack
+                        direction={"row"}
+                        width={"fit-content"}
+                        spacing={1}
+                        alignItems={"center"}
+                        bgcolor={"primary.main"}
+                        px={2}
+                        py={1}
+                        color={"text.light"}
+                        component={Paper}
+                        elevation={4}
+                        sx={{
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                        }}>
+                        <PersonIcon fontSize="small" />
+                        <Typography variant="h6" fontWeight={"normal"}>
                             User Management
                         </Typography>
                     </Stack>
 
-                    <Stack mb={2} direction={"column"} px={2} >
-
-                        <Grid
-                            container
-                            justifyContent={"end"}
-                            flex={1}
-                            spacing={2}
-                            mb={{ xs: 2, md: -4 }}
-                        >
-
-                            <Grid
-                                size={{ xs: 4, sm: 4, md: 3 }}
-                            >
-                                <TextField
-                                    fullWidth
-                                    placeholder="Search"
-                                    value={search}
-                                    onChange={(e) => {
-                                        setSearch(e.target.value)
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            handleSearchState()
-                                        }
-                                    }}
-                                    size="small"
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            borderRadius: 2,
-                                            '& fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 1.5,
-                                            },
-
-                                            '&:hover fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 2.5
-                                            },
-
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 2.5
-                                            },
-                                        },
-                                    }}
-                                    slotProps={{
-                                        input: {
-                                            endAdornment: (
-                                                <IconButton
-                                                    aria-label="search button"
-                                                    onClick={handleSearchState}
-                                                    edge="end"
-                                                    size="small"
-                                                    sx={{
-                                                        color: 'text.secondary'
-                                                    }}
-                                                >
-                                                    <Icon path={mdiMagnify} size={"28px"} />
-                                                </IconButton>
-                                            ),
-                                        }
-                                    }}
-                                />
-                            </Grid>
-
-
-                            <Grid
-                                size={{ xs: 4, sm: 4, md: 2 }}
-                            >
-                                <Autocomplete
-                                    fullWidth
-                                    options={roleOptions}
-                                    getOptionLabel={(option) => option.label}
-                                    value={roleOptions.find((opt) => opt.value === role) || null}
-                                    onChange={(event, newValue) => { handleRoleChange(newValue ? newValue.value : ""); }}
-                                    sx={{
-                                        '& .MuiAutocomplete-popupIndicator': {
-                                            color: 'text.secondary',
-                                        },
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            placeholder="Role"
-                                            size="small"
-                                            fullWidth={true}
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
-
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                        />
-                                    )}
-                                    isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                                    clearOnEscape
-                                />
-                            </Grid>
-
-
-                            <Grid
-                                size={{ xs: 4, sm: 4, md: 1.5 }}
-                            >
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    startIcon={<AddIcon sx={{ fontSize: '13px' }} />}
-                                    sx={{
-                                        textTransform: 'none',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        flexShrink:0,
-                                        '&:hover': {
-                                            bgcolor: '#61A05A'
-                                        },
-                                    }}
-                                    onClick={handleModalAddOpen}
-                                >
-                                    Add User
-                                </Button>
-                            </Grid>
-
-                        </Grid>
-
-                        <Stack>
+                    <Stack direction={"column"} spacing={2} p={2} component={Paper} elevation={4} sx={{ borderTopLeftRadius: '0px' }}>
+                        <Stack width={"fit-content"} >
                             <Tabs
                                 value={active}
+                                component={Paper}
+                                elevation={0}
                                 onChange={handleTabChange}
                                 sx={{
-
-                                    borderColor: 'divider',
                                     minHeight: 36,
-                                    "& .MuiTabs-indicator": {
-                                        display: "none",   // ⬅️ remove garis bawah
-                                    },
+                                    borderBottomLeftRadius: "0px",
+                                    borderBottomRightRadius: "0px"
                                 }}
                             >
                                 <Tab label="Active User"
-                                    component={Paper}
+                                    icon={<HowToRegIcon fontSize="small" />}
+                                    iconPosition="start"
                                     value="activeUser"
                                     sx={{
-                                        minHeight: 36,   // ⬅️ penting
+                                        minHeight: 36,
 
-                                        border: '1px solid',
-                                        textTransform: 'none',
-                                        borderTopLeftRadius: "10px",
-                                        borderRight: 'none',
-                                        borderBottom: 'none',
-                                        borderColor: "divider",
-                                        // borderTopRightRadius: "10px",
                                         "&:hover": {
-                                            bgcolor: "action.hover", // warna hover
-                                            color: "text.primary"
-                                        },
-
-                                        "&.Mui-selected": {
-                                            border: "1px solid",
-                                            borderColor: "divider",
-                                            borderBottom: "none",
-                                            borderRight: "none",
-                                            borderTopLeftRadius: "10px",
-                                            // borderTopRightRadius: "10px",
-                                            bgcolor: "layout.sidebarActive",
-                                            // marginBottom: "-1px", // 🔥 ini kuncinya
+                                            bgcolor: "action.hover",
+                                            color: "primary.main"
                                         },
 
                                         "&.Mui-selected:hover": {
@@ -764,92 +618,137 @@ const MasterUser = () => {
                                 />
                                 <Tab label="Deleted User"
                                     value="deletedUser"
-                                    component={Paper}
+                                    icon={<PersonRemoveOutlinedIcon fontSize="small" />}
+                                    iconPosition="start"
                                     sx={{
-                                        minHeight: 36,   // ⬅️ penting
-                                        textTransform: 'none',
-                                        border: '1px solid',
-                                        borderTopRightRadius: "10px",
-                                        borderLeft: 'none',
-                                        borderBottom: 'none',
-                                        borderColor: 'divider',
+                                        minHeight: 36,
+
                                         "&:hover": {
-                                            bgcolor: "action.hover", // warna hover
-                                            color: "text.primary"
-                                        },
-
-                                        "&.Mui-selected": {
-                                            border: "1px solid",
-                                            borderColor: "divider",
-                                            borderBottom: "none",
-                                            borderLeft: "none",
-                                            borderTopLeftRadius: '0px',
-                                            bgcolor: "layout.sidebarActive",
-                                            // marginBottom: "-1px", // 🔥 ini kuncinya
-                                        },
-
-                                        "&.Mui-selected:hover": {
-                                            bgcolor: "layout.sidebarActive",
+                                            bgcolor: "action.hover",
                                             color: "primary.main"
                                         },
 
+                                        "&.Mui-selected:hover": {
+                                            color: "primary.main",
+                                        },
                                     }}
                                 />
                             </Tabs>
                         </Stack>
 
+                        <Stack >
+                            <Grid container alignItems="center" spacing={2}>
+                                <Grid size={{ xs: 10, md: 10 }}>
+                                    <Grid container spacing={2}>
+                                        <Grid size={{ xs: 6, md: 3 }}>
+                                            <TextField
+                                                fullWidth
+                                                placeholder="Search"
+                                                value={search}
+                                                onChange={(e) => { setSearch(e.target.value) }}
+                                                onKeyDown={(e) => { if (e.key === 'Enter') { handleSearchState() } }}
+                                                size="small"
+                                                slotProps={{
+                                                    input: {
+                                                        endAdornment: (
+                                                            <IconButton
+                                                                onClick={handleSearchState}
+                                                                edge="end"
+                                                                size="small"
+                                                            >
+                                                                <SearchIcon fontSize="small" />
+                                                            </IconButton>
+                                                        ),
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
 
-                        {/* Tab Active User */}
-                        {active === "activeUser" && (
-                            <Stack mb={2} direction={"column"} alignItems={"center"} >
-                                <TableCustom
-                                    hasTab={true}
-                                    keyField="user_id"
-                                    loadingData={loadingData}
-                                    columns={app002UserColumns}
-                                    appdata={app002UserData}
-                                    appdataTotal={app002UserTotalData}
-                                    totalPage={app002TotalPage}
-                                    rowsPerPageOption={[2, 10, 20, 25]}
+                                        <Grid size={{ xs: 5, md: 2 }}>
+                                            <Select
+                                                fullWidth
+                                                size="small"
+                                                value={role}
+                                                displayEmpty
+                                                onChange={(e) => handleRoleChange(e.target.value)}
+                                                renderValue={(selected) =>
+                                                    selected
+                                                        ? roleOptions.find((opt) => opt.value === selected)?.label
+                                                        : <Typography>All Roles</Typography>
+                                                }
+                                            >
+                                                <MenuItem value="">
+                                                    <Typography>All Roles</Typography>
+                                                </MenuItem>
 
-                                    page={app002UserDataParam.page - 1}
-                                    rowsPerPage={app002UserDataParam.size}
-                                    sortField={app002UserDataParam.sort}
-                                    sortOrder={app002UserDataParam.order}
+                                                {roleOptions.map(({ value, label }) => (
+                                                    <MenuItem key={value} value={value}>
+                                                        {label}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid size={{ xs: 2, md: 2 }} display="flex" justifyContent="flex-end" alignItems={"center"}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleModalAddOpen}
+                                        sx={{ gap: 1 }}
+                                    >
+                                        <AddIcon fontSize="small" />
+                                        {!isMobile && "Add User"}
+                                    </Button>
+                                </Grid>
+
+                                <Grid size={12}>
+                                    {active === "activeUser" && (
+                                        <TableCustom
+                                            keyField="user_id"
+                                            loadingData={loadingData}
+                                            columns={app002UserColumns}
+                                            appdata={app002UserData}
+                                            appdataTotal={app002UserTotalData}
+                                            totalPage={app002TotalPage}
+                                            rowsPerPageOption={[2, 10, 20, 25]}
+
+                                            page={app002UserDataParam.page - 1}
+                                            rowsPerPage={app002UserDataParam.size}
+                                            sortField={app002UserDataParam.sort}
+                                            sortOrder={app002UserDataParam.order}
 
 
-                                    onPageChange={handleChangePage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                    onRequestSort={handleRequestSort}
-                                />
-                            </Stack>
-                        )}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            onRequestSort={handleRequestSort}
+                                        />
+                                    )}
 
-                        {/* Tab Deleted User */}
-                        {active === "deletedUser" && (
-                            <Stack mb={2} direction={"column"} alignItems={"center"}>
-                                <TableCustom
-                                    hasTab={true}
-                                    keyField="user_id"
-                                    loadingData={loadingData}
-                                    columns={app002UserDeletedColumns}
-                                    appdata={app002UserDeletedData}
-                                    appdataTotal={app002UserDeletedTotalData}
-                                    totalPage={app002TotalPageDeleted}
-                                    rowsPerPageOption={[5, 10, 20, 25]}
+                                    {active === "deletedUser" && (
+                                        <TableCustom
+                                            keyField="user_id"
+                                            loadingData={loadingData}
+                                            columns={app002UserDeletedColumns}
+                                            appdata={app002UserDeletedData}
+                                            appdataTotal={app002UserDeletedTotalData}
+                                            totalPage={app002TotalPageDeleted}
+                                            rowsPerPageOption={[5, 10, 20, 25]}
 
-                                    page={app002UserDeletedDataParam.page - 1}
-                                    rowsPerPage={app002UserDeletedDataParam.size}
-                                    sortField={app002UserDeletedDataParam.sort}
-                                    sortOrder={app002UserDeletedDataParam.order}
+                                            page={app002UserDeletedDataParam.page - 1}
+                                            rowsPerPage={app002UserDeletedDataParam.size}
+                                            sortField={app002UserDeletedDataParam.sort}
+                                            sortOrder={app002UserDeletedDataParam.order}
 
 
-                                    onPageChange={handleChangePageDeleted}
-                                    onRowsPerPageChange={handleChangeRowsPerPageDeleted}
-                                    onRequestSort={handleRequestSortDeleted}
-                                />
-                            </Stack>
-                        )}
+                                            onPageChange={handleChangePageDeleted}
+                                            onRowsPerPageChange={handleChangeRowsPerPageDeleted}
+                                            onRequestSort={handleRequestSortDeleted}
+                                        />
+                                    )}
+                                </Grid>
+                            </Grid>
+                        </Stack>
                     </Stack>
                 </Container>
 

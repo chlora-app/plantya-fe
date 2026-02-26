@@ -4,11 +4,11 @@ import { NavigateNextIcon, DashboardIcon, HomeIcon } from "../../assets/Icon/mui
 
 const BreadCrumb = (props) => {
     return (
-        <Stack mb={1}>
+        <Stack mb={2}>
             <Breadcrumbs
                 separator={
                     <NavigateNextIcon
-                        sx={{ color: "text.secondary", fontSize: '13px' }}
+                        sx={{ color: "text.secondary", fontSize: '14px' }}
                     />
                 }
                 aria-label="breadcrumb"
@@ -16,7 +16,7 @@ const BreadCrumb = (props) => {
                 {props.items.map((item, index) => {
                     const isLast = index === props.items.length - 1;
                     const isFirst = index === 0;
-                    const color = isLast ? "text.primary" : "text.secondary";
+                    const color = isLast ? "primary.main" : "text.secondary";
 
                     const content = (
                         <Box
@@ -30,7 +30,7 @@ const BreadCrumb = (props) => {
                             {isFirst && (
                                 <HomeIcon
                                     sx={{
-                                        fontSize: "13px",
+                                        fontSize: "14px",
                                         color: color,
                                     }}
                                 />
@@ -38,7 +38,7 @@ const BreadCrumb = (props) => {
                             <Typography
                                 color={color}
                                 fontWeight="medium"
-                                variant="body2"
+                                variant="body1"
                             >
                                 {item.label}
                             </Typography>

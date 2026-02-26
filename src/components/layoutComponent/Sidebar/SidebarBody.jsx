@@ -42,9 +42,6 @@ const parentButtonSx = (isCollapsed) => ({
         color: "primary.main",
     },
 
-    "&:hover": {
-        color: "text.primary",
-    },
 });
 
 
