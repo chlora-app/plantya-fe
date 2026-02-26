@@ -565,7 +565,8 @@ const MasterUser = () => {
                 >
 
                     <Stack
-                        direction={"row"}
+// mt={-5} HEre for Breadcrumb and title row
+                        direction={"row-reverse"}
                         width={"fit-content"}
                         spacing={1}
                         alignItems={"center"}
@@ -576,6 +577,7 @@ const MasterUser = () => {
                         component={Paper}
                         elevation={4}
                         sx={{
+                            ml: "auto", // 👈 ini bikin ke kanan
                             borderBottomLeftRadius: 0,
                             borderBottomRightRadius: 0,
                         }}>
@@ -585,7 +587,7 @@ const MasterUser = () => {
                         </Typography>
                     </Stack>
 
-                    <Stack direction={"column"} spacing={2} p={2} component={Paper} elevation={4} sx={{ borderTopLeftRadius: '0px' }}>
+                    <Stack direction={"column"} spacing={2} p={2} component={Paper} elevation={4} sx={{ borderTopRightRadius: '0px' }}>
                         <Stack width={"fit-content"} >
                             <Tabs
                                 value={active}
