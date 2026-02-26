@@ -4,7 +4,7 @@ import { Typography, Button, Grid } from '@mui/material';
 import RootPageCustom from "../../components/common/RootPageCustom";
 
 const Dashboard = () => {
-
+    const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app001p01Page, setApp001p01Page] = useState(true);
 
@@ -19,6 +19,7 @@ const Dashboard = () => {
                 msgStateSet={setApp001setMsg}
                 msgStateGetStatus={app001MsgStatus}
                 setFirstRender={setFirstRender}
+                breadCrumbItems={breadCrumbItems}
             >
                 <Container
                     // maxWidth="xl"

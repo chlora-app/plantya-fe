@@ -22,9 +22,9 @@ const RootPageCustom = (props) => {
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
-                <BreadCrumb items={props.breadCrumbItems} />
 
                 <Box>
+                    <BreadCrumb items={props.breadCrumbItems} />
                     {props.children}
                 </Box>
             </Container>

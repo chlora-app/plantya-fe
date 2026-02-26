@@ -655,6 +655,8 @@ const MasterUser = () => {
                                                                 onClick={handleSearchState}
                                                                 edge="end"
                                                                 size="small"
+                                                                disableRipple
+
                                                             >
                                                                 <SearchIcon fontSize="small" />
                                                             </IconButton>
@@ -694,11 +696,12 @@ const MasterUser = () => {
                                 <Grid size={{ xs: 2, md: 2 }} display="flex" justifyContent="flex-end" alignItems={"center"}>
                                     <Button
                                         variant="contained"
+                                        color="primary"
                                         onClick={handleModalAddOpen}
-                                        sx={{ gap: 1 }}
+                                        sx={{ gap: 0.5, px: isMobile ? 1 : 2 }}
                                     >
                                         <AddIcon fontSize="small" />
-                                        {!isMobile && "Add User"}
+                                        {!isMobile && "Create"}
                                     </Button>
                                 </Grid>
 
@@ -711,7 +714,7 @@ const MasterUser = () => {
                                             appdata={app002UserData}
                                             appdataTotal={app002UserTotalData}
                                             totalPage={app002TotalPage}
-                                            rowsPerPageOption={[2, 10, 20, 25]}
+                                            rowsPerPageOption={[5, 10, 20, 25]}
 
                                             page={app002UserDataParam.page - 1}
                                             rowsPerPage={app002UserDataParam.size}

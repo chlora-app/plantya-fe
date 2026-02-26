@@ -143,12 +143,8 @@ const TableCustom = (props) => {
                 onClick={() => handleChangePage(null, pageNum - 1)}
                 sx={{
                     border: "1px solid",
-                    borderColor: theme.palette.primary.main,
-                    bgcolor: 'background.paper', // or theme.palette.table.background
-                    // borderColor: pageNum === page + 1 ? 'primary.main' : 'primary.main',
-                    color: 'text.primary',
-
-                    // borderRadius: 2,
+                    borderColor: pageNum === page + 1 ? 'primary.main' : 'theme.palette.table.border',
+                    borderRadius: "10px",
                     minWidth: { xs: 32, sm: 32, md: 36 },
                     height: { xs: 32, sm: 32, md: 36 },
                     display: 'flex',
@@ -243,9 +239,7 @@ const TableCustom = (props) => {
             return (
                 <TableRow>
                     <StyledTableCell colSpan={props.columns.length} align="center">
-                        <Typography variant="body2" sx={{ fontSize: { xs: '0.75rem', sm: '0.75rem', md: '0.875rem' } }}>
-                            No records to display
-                        </Typography>
+                        <Typography variant="body2"> No records to display</Typography>
                     </StyledTableCell>
                 </TableRow>
             );
@@ -376,14 +370,12 @@ const TableCustom = (props) => {
                             border: "1px solid",
                             borderColor: theme.palette.primary.main,
                             bgcolor: 'background.paper', // or theme.palette.table.background
-                            color: 'text.primary',
                             minWidth: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: isFirstPage ? 'default' : 'pointer',
-                            bgcolor: 'background.paper',
                             color: 'text.primary',
                             transition: 'all 0.2s ease',
                             '&:hover': !isFirstPage && {
