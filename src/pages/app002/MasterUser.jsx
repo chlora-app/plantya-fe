@@ -565,7 +565,7 @@ const MasterUser = () => {
                 >
 
                     <Stack
-// mt={-5} HEre for Breadcrumb and title row
+                        // mt={-5} HEre for Breadcrumb and title row
                         direction={"row-reverse"}
                         width={"fit-content"}
                         spacing={1}
@@ -581,10 +581,10 @@ const MasterUser = () => {
                             borderBottomLeftRadius: 0,
                             borderBottomRightRadius: 0,
                         }}>
-                        <PersonIcon fontSize="small" />
                         <Typography variant="h6" fontWeight={"normal"}>
                             User Management
                         </Typography>
+                        <PersonIcon fontSize="small" />
                     </Stack>
 
                     <Stack direction={"column"} spacing={2} p={2} component={Paper} elevation={4} sx={{ borderTopRightRadius: '0px' }}>
