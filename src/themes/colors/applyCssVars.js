@@ -23,6 +23,7 @@ export const applyCssVars = (mode = "dark") => {
 
     /* ================= TEXT ================= */
     root.style.setProperty("--color-text-primary", palette.text.primary);
+    root.style.setProperty("--color-text-light", palette.text.light);
     root.style.setProperty("--color-text-secondary", palette.text.secondary);
     root.style.setProperty("--color-text-secondaryLighter", palette.text.secondaryLighter);
 

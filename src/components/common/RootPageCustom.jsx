@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Container, Box, Paper } from "@mui/material";
+import { Container, Box, Paper, Stack, Typography } from "@mui/material";
 import AlertMessage from "./AlertMessage";
 import BreadCrumb from "./BreadCrumb";
 
@@ -13,20 +13,20 @@ const RootPageCustom = (props) => {
 
     return (
         <React.Fragment>
-            <Container
-                disableGutters
-                maxWidth={false}
-            >
+            <Container disableGutters maxWidth={false}>
                 <AlertMessage
                     msg={props.msgStateGet}
                     stateData={props.msgStateSet}
                     msgStatus={props.msgStateGetStatus}
                 />
-
-                <Box>
+                <Stack direction={props.isMobile ? "column" : "row"} spacing={props.isMobile ? 1 : 0} className="rootpagecustom-head-wrapper" >
                     <BreadCrumb items={props.breadCrumbItems} />
-                    {props.children}
-                </Box>
+                    <Stack direction={"row"} gap={1} px={2 } py={1} className="rootpagecustom-title-wrapper" >
+                        {props.icon}
+                        <Typography variant="h6" fontWeight="medium" noWrap> {props.title}</Typography>
+                    </Stack>
+                </Stack>
+                <Box>{props.children}</Box>
             </Container>
         </React.Fragment>
     )
@@ -38,6 +38,9 @@ RootPageCustom.propTypes = {
     msgStateGetStatus: PropTypes.any,
     msgStateSet: PropTypes.any,
     setFirstRender: PropTypes.any,
+    icon: PropTypes.node,
+    breadCrumbItems: PropTypes.array,
+    isMobile: PropTypes.bool,
 };
 
 export default RootPageCustom;

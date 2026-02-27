@@ -13,7 +13,8 @@ import {
     Typography,
     Select,
     MenuItem,
-    Paper, Stack
+    Stack,
+    IconButton
 } from "@mui/material";
 import Icon from '@mdi/react';
 import {
@@ -21,13 +22,9 @@ import {
     mdiMenuUp,
     mdiMenuDown,
     mdiChevronRight,
-    mdiChevronLeft,
-    mdiChevronDoubleLeft,
-    mdiChevronDoubleRight
+    mdiChevronLeft
 } from '@mdi/js';
 import { useTheme } from "@mui/material/styles";
-
-
 
 // Pindahkan StyledTableCell ke luar komponen agar tidak dibuat ulang setiap render
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -52,7 +49,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const TableCustom = (props) => {
     const theme = useTheme();
 
-    const [page, setPage] = useState(props.page || 0)
+    const [page, setPage] = useState(props.page || 0) // state ini 0-based
     const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage || 10)
     const [sortField, setSortField] = useState(props.sortField || '');
     const [sortOrder, setSortOrder] = useState(props.sortOrder || 'asc');
@@ -104,92 +101,42 @@ const TableCustom = (props) => {
     const { from, to } = calculateRange();
 
     const totalPages = props.totalPage || 1;
-    const isFirstPage = page === 0;
-    const isLastPage = page + 1 >= totalPages;
 
-    // Gunakan useMemo untuk komponen yang sering berubah
-    const renderPageNumbers = useMemo(() => {
+    // --- LOGIKA PAGINATION KUSTOM UNTUK MENAMPILKAN 3 HALAMAN ---
+    // Konversi ke 1-based untuk perhitungan yang lebih mudah
+    const currentPage = page + 1; 
+    const pageNumbers = useMemo(() => {
         const maxVisiblePages = 3;
-        let startPage, endPage;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = startPage + maxVisiblePages - 1;
 
-        if (totalPages <= maxVisiblePages) {
-            startPage = 1;
+        if (endPage > totalPages) {
             endPage = totalPages;
-        } else {
-            const maxPagesBeforeCurrent = Math.floor(maxVisiblePages / 2);
-            const maxPagesAfterCurrent = Math.ceil(maxVisiblePages / 2) - 1;
-
-            if (page + 1 <= maxPagesBeforeCurrent) {
-                startPage = 1;
-                endPage = maxVisiblePages;
-            } else if (page + 1 + maxPagesAfterCurrent >= totalPages) {
-                startPage = totalPages - maxVisiblePages + 1;
-                endPage = totalPages;
-            } else {
-                startPage = page + 1 - maxPagesBeforeCurrent;
-                endPage = page + 1 + maxPagesAfterCurrent;
-            }
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
         }
 
-        const pages = Array.from(
-            { length: endPage - startPage + 1 },
-            (_, i) => startPage + i
-        );
-
-        return pages.map((pageNum) => (
-            <Box
-                key={pageNum}
-                component="button"
-                onClick={() => handleChangePage(null, pageNum - 1)}
-                sx={{
-                    border: "1px solid",
-                    borderColor: pageNum === page + 1 ? 'primary.main' : 'theme.palette.table.border',
-                    borderRadius: "10px",
-                    minWidth: { xs: 32, sm: 32, md: 36 },
-                    height: { xs: 32, sm: 32, md: 36 },
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    bgcolor: pageNum === page + 1 ? 'primary.main' : 'background.paper',
-                    color: pageNum === page + 1 ? 'primary.contrastText' : 'text.primary',
-                    fontWeight: "medium",
-                    transition: 'all 0.2s ease',
-                    '&:hover': {
-                        bgcolor: pageNum === page + 1 ? 'primary.dark' : 'action.hover',
-                        borderColor: pageNum === page + 1 ? 'primary.dark' : 'text.secondary',
-                    }
-                }}
-            >
-                {pageNum}
-            </Box>
-        ));
-    }, [page, totalPages]);
+        const numbers = [];
+        for (let i = startPage; i <= endPage; i++) {
+            numbers.push(i);
+        }
+        return numbers;
+    }, [currentPage, totalPages]);
+    // --- AKHIR LOGIKA PAGINATION KUSTOM ---
 
     // Optimasi render header columns dengan useMemo
     const headerColumns = useMemo(() => {
         return props.columns.map((column) => (
             <StyledTableCell
                 key={column.dataField}
-                align={column.headerAlign || 'left'}
-                sx={{
-                    minWidth: column.minWidth || 'auto',
-                }}
+                align={"center"}
+                sx={{ minWidth: column.minWidth || 'auto' }}
             >
                 {column.sort ? (
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: column.headerAlign === 'center' ? 'center' :
-                                column.headerAlign === 'right' ? 'flex-end' : 'flex-start',
-                        }}
+                    <Box display={"flex"} alignItems={"center"} justifyContent={column.headerAlign ? column.headerAlign : "center"}
                         onClick={() => handleRequestSort(null, column.dataField)}
+                        sx={{ cursor: 'pointer' }}
                     >
-                        <Typography
-                            variant="body1"
-                            fontWeight="medium"
-                        >
+                        <Typography variant="body1" fontWeight="medium">
                             {column.text}
                         </Typography>
 
@@ -199,6 +146,7 @@ const TableCustom = (props) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             flexShrink: 0,
+                            ml: 0.5
                         }}>
                             {sortField === column.dataField ? (
                                 sortOrder === 'asc' ? (
@@ -213,18 +161,9 @@ const TableCustom = (props) => {
                     </Box>
                 ) : (
                     <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: column.headerAlign === 'center' ? 'center' :
-                                column.headerAlign === 'right' ? 'flex-end' : 'flex-start',
-                        }}
+                        sx={{ display: 'flex', alignItems: 'center', justifyContent: "center" }}
                     >
-                        <Typography
-                            variant="body2"
-                            component="span"
-                            fontWeight="medium"
-                        >
+                        <Typography variant="body1" fontWeight="medium" >
                             {column.text}
                         </Typography>
                     </Box>
@@ -239,7 +178,7 @@ const TableCustom = (props) => {
             return (
                 <TableRow>
                     <StyledTableCell colSpan={props.columns.length} align="center">
-                        <Typography variant="body2"> No records to display</Typography>
+                        <Typography variant="body1"> No records to display</Typography>
                     </StyledTableCell>
                 </TableRow>
             );
@@ -281,10 +220,8 @@ const TableCustom = (props) => {
     }, [props.appdata, props.columns, props.keyField, props.loadingData, theme]);
 
     return (
-
         <>
             <TableContainer
-
                 sx={{
                     borderRadius: '10px',
                     border: '1px solid',
@@ -306,11 +243,10 @@ const TableCustom = (props) => {
                 >
                     <TableHead
                         sx={{
-                            bgcolor: theme.palette.table.headerBackground, // <- header bg
+                            bgcolor: theme.palette.table.headerBackground,
                             position: 'sticky',
                             top: 0,
                             zIndex: 1,
-                            borderBottom: 'none',
                         }}
                     >
                         <TableRow>
@@ -325,130 +261,94 @@ const TableCustom = (props) => {
             </TableContainer>
 
             {/* FOOTER SECTION */}
-            <Stack
-                direction={{ sm: 'column', md: 'row' }}
-                justifyContent={{ sm: 'center', md: 'space-between' }}
-                mt={2}
-            >
-                <Typography variant="body2" textAlign={{ sm: 'center', md: 'left' }}>
-                    Showing {from} to {to} of {props.appdataTotal} entries
-                </Typography>
+            <Stack direction={{ sm: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'space-between' }} mt={2} spacing={1} alignItems={"center"}>
+                <Typography variant="body1">Showing {from} to {to} of {props.appdataTotal} entries</Typography>
 
-                <Box display={"flex"} gap={1} justifyContent={"center"}>
-                    <Box
-                        component="button"
-                        onClick={() => !isFirstPage && handleChangePage(null, 0)}
+                {/* PAGINATION KUSTOM YANG HANYA MENAMPILKAN 3 HALAMAN */}
+                <Stack direction="row" spacing={1} alignItems="center">
+                    {/* Tombol Sebelumnya */}
+                    <IconButton
+                        onClick={(e) => handleChangePage(e, page - 1)}
+                        disabled={page === 0}
                         sx={{
-                            border: "1px solid",
-                            borderColor: theme.palette.primary.main,
-                            bgcolor: 'background.paper',
-                            color: 'text.primary',
-                            borderRadius: 2,
-                            minWidth: { xs: 28, sm: 28, md: 36 },
-                            height: { xs: 28, sm: 28, md: 36 },
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: isFirstPage ? 'default' : 'pointer',
-
+                            borderRadius: '8px',
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            color: 'text.secondary',
+                            backgroundColor: 'background.paper',
                             transition: 'all 0.2s ease',
-                            '&:hover': !isFirstPage && {
-                                bgcolor: theme.palette.action.hover,
-                                borderColor: theme.palette.primary.main,
-                                color: theme.palette.primary.main,
-                            },
-                        }}
-                    >
-                        <Icon path={mdiChevronDoubleLeft} size={0.9} />
-                    </Box>
-
-                    {/* Previous Page Button (<) */}
-                    <Box
-                        component="button"
-                        onClick={() => !isFirstPage && handleChangePage(null, page - 1)}
-                        sx={{
-                            border: "1px solid",
-                            borderColor: theme.palette.primary.main,
-                            bgcolor: 'background.paper', // or theme.palette.table.background
-                            minWidth: { xs: 28, sm: 28, md: 36 },
+                            width: { xs: 28, sm: 28, md: 36 },
                             height: { xs: 28, sm: 28, md: 36 },
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: isFirstPage ? 'default' : 'pointer',
-                            color: 'text.primary',
-                            transition: 'all 0.2s ease',
-                            '&:hover': !isFirstPage && {
-                                bgcolor: theme.palette.action.hover,
-                                borderColor: theme.palette.primary.main,
-                                color: theme.palette.primary.main,
+                            '&:hover:not(.Mui-disabled)': {
+                                backgroundColor: 'action.hover',
+                                borderColor: 'primary.main',
+                                color: 'primary.main',
                             },
+                            '&.Mui-disabled': {
+                                borderColor: 'action.disabledBackground',
+                                color: 'action.disabled',
+                                backgroundColor: 'action.disabledBackground',
+                            }
                         }}
                     >
                         <Icon path={mdiChevronLeft} size={0.9} />
-                    </Box>
+                    </IconButton>
 
-                    {/* Page Numbers */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
-                        {renderPageNumbers}
-                    </Box>
+                    {/* Tombol Nomor Halaman (hasil dari logika kustom) */}
+                    {pageNumbers.map((p) => (
+                        <IconButton
+                            key={p}
+                            onClick={(e) => handleChangePage(e, p - 1)} // Konversi kembali ke 0-based
+                            sx={{
+                                borderRadius: '8px',
+                                border: '1px solid',
+                                borderColor: p === currentPage ? 'primary.main' : 'divider',
+                                color: p === currentPage ? 'primary.contrastText' : 'text.secondary',
+                                backgroundColor: p === currentPage ? 'primary.main' : 'background.paper',
+                                fontWeight: p === currentPage ? 'bold' : 500,
+                                transition: 'all 0.2s ease',
+                                width: { xs: 28, sm: 28, md: 36 },
+                                height: { xs: 28, sm: 28, md: 36 },
+                                fontSize: '0.875rem',
+                                '&:hover': {
+                                    backgroundColor: p === currentPage ? 'primary.dark' : 'action.hover',
+                                    borderColor: 'primary.main',
+                                    color: p === currentPage ? 'primary.contrastText' : 'primary.main',
+                                },
+                            }}
+                        >
+                            {p}
+                        </IconButton>
+                    ))}
 
-                    {/* Next Page Button (>) */}
-                    <Box
-                        component="button"
-                        onClick={() => !isLastPage && handleChangePage(null, page + 1)}
+                    {/* Tombol Selanjutnya */}
+                    <IconButton
+                        onClick={(e) => handleChangePage(e, page + 1)}
+                        disabled={page === totalPages - 1}
                         sx={{
-                            border: "1px solid",
-                            borderColor: theme.palette.primary.main,
-                            bgcolor: 'background.paper', // or theme.palette.table.background
-                            color: 'text.primary',
-                            borderRadius: 2,
-                            minWidth: { xs: 28, sm: 28, md: 36 },
-                            height: { xs: 28, sm: 28, md: 36 },
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: isLastPage ? 'default' : 'pointer',
+                            borderRadius: '8px',
+                            border: '1px solid',
+                            borderColor: 'divider',
+                            color: 'text.secondary',
+                            backgroundColor: 'background.paper',
                             transition: 'all 0.2s ease',
-                            '&:hover': !isLastPage && {
-                                bgcolor: theme.palette.action.hover,
-                                borderColor: theme.palette.primary.main,
-                                color: theme.palette.primary.main,
+                            width: { xs: 28, sm: 28, md: 36 },
+                            height: { xs: 28, sm: 28, md: 36 },
+                            '&:hover:not(.Mui-disabled)': {
+                                backgroundColor: 'action.hover',
+                                borderColor: 'primary.main',
+                                color: 'primary.main',
                             },
+                            '&.Mui-disabled': {
+                                borderColor: 'action.disabledBackground',
+                                color: 'action.disabled',
+                                backgroundColor: 'action.disabledBackground',
+                            }
                         }}
                     >
                         <Icon path={mdiChevronRight} size={0.9} />
-                    </Box>
-
-                    {/* Last Page Button (>>) */}
-                    <Box
-                        component="button"
-                        onClick={() => !isLastPage && handleChangePage(null, totalPages - 1)}
-                        sx={{
-                            border: "1px solid",
-                            borderColor: theme.palette.primary.main,
-                            bgcolor: 'background.paper', // or theme.palette.table.background
-                            color: 'text.primary',
-
-                            borderRadius: 2,
-                            minWidth: { xs: 28, sm: 28, md: 36 },
-                            height: { xs: 28, sm: 28, md: 36 },
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: isLastPage ? 'default' : 'pointer',
-
-                            transition: 'all 0.2s ease',
-                            '&:hover': !isLastPage && {
-                                bgcolor: theme.palette.action.hover,
-                                borderColor: theme.palette.primary.main,
-                                color: theme.palette.primary.main,
-                            },
-                        }}
-                    >
-                        <Icon path={mdiChevronDoubleRight} size={0.9} />
-                    </Box>
-                </Box>
+                    </IconButton>
+                </Stack>
 
                 {/* Show entries selector */}
                 <Box sx={{
@@ -457,11 +357,8 @@ const TableCustom = (props) => {
                     gap: 1,
                     order: 3,
                     justifyContent: 'center'
-
                 }}>
-                    <Typography variant="body2">
-                        Show
-                    </Typography>
+                    <Typography variant="body2">Show</Typography>
                     <Select
                         size="small"
                         value={rowsPerPage}
@@ -481,11 +378,9 @@ const TableCustom = (props) => {
                             </MenuItem>
                         ))}
                     </Select>
-                    <Typography variant="body2">
-                        entries
-                    </Typography>
+                    <Typography variant="body2">entries</Typography>
                 </Box>
-            </Stack >
+            </Stack>
         </>
     );
 };
@@ -506,6 +401,5 @@ TableCustom.propTypes = {
     sortOrder: PropTypes.string,
     onRequestSort: PropTypes.func,
 };
-
 
 export default TableCustom;

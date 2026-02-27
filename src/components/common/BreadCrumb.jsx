@@ -4,7 +4,7 @@ import { NavigateNextIcon, DashboardIcon, HomeIcon } from "../../assets/Icon/mui
 
 const BreadCrumb = (props) => {
     return (
-        <Stack mb={2}>
+        <Stack direction={"row"} alignItems={"center"}>
             <Breadcrumbs
                 separator={
                     <NavigateNextIcon

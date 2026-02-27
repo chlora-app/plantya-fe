@@ -336,7 +336,6 @@ const MasterDevice = () => {
                 msgStateSet={setApp004setMsg}
                 msgStateGetStatus={app004MsgStatus}
                 setFirstRender={setFirstRender}
-                breadCrumbItems={breadCrumbItems}
             >
                 <Container
                     disableGutters

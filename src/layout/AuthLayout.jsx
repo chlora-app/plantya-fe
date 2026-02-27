@@ -50,6 +50,12 @@ const AuthLayout = (props) => {
                 variant={isMobile ? "temporary" : "permanent"}
                 open={isMobile ? isMobileOpen : true}
                 onClose={handleMobileClose}
+                elevation={4}
+                slotProps={{
+                    paper: {
+                        elevation: 8, // shadow
+                    },
+                }}
                 sx={{
                     zIndex: theme.zIndex.drawer + 1,
 

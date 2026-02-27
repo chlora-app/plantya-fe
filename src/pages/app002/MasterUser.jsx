@@ -20,7 +20,8 @@ import {
     MenuItem,
     Select,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    Box
 } from "@mui/material";
 import {
     AddIcon,
@@ -32,6 +33,7 @@ import {
     ReplayOutlinedIcon,
     SearchIcon
 } from "../../assets/Icon/muiIcon";
+import BreadCrumb from "../../components/common/BreadCrumb";
 
 // ================= DUMMY DATA =================
 const generateDummyUsers = (total = 57) => {
@@ -115,7 +117,6 @@ const MasterUser = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: "center",
-            minWidth: '100px',
         },
         {
             dataField: "name",
@@ -123,7 +124,6 @@ const MasterUser = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: "center",
-            minWidth: '100px',
         },
         {
             dataField: "role",
@@ -131,7 +131,6 @@ const MasterUser = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: "center",
-            minWidth: '100px',
         },
         {
             dataField: "email",
@@ -139,14 +138,12 @@ const MasterUser = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: "center",
-            minWidth: '100px',
         },
         {
             dataField: "action",
             text: "Action",
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
             formatter: (cellContent, app002UserData) => (
                 <>
                     <Stack direction="row" spacing={1} justifyContent="center">
@@ -557,92 +554,53 @@ const MasterUser = () => {
 
     return (
         <React.Fragment>
-            <RootPageCustom msgStateGet={app002Msg} msgStateSet={setApp002setMsg} msgStateGetStatus={app002MsgStatus} setFirstRender={setFirstRender} breadCrumbItems={breadCrumbItems}>
+            <RootPageCustom
+                msgStateGet={app002Msg}
+                msgStateSet={setApp002setMsg}
+                msgStateGetStatus={app002MsgStatus}
+                setFirstRender={setFirstRender}
+                title="User Management"
+                icon={<PersonIcon fontSize="small" />}
+                breadCrumbItems={breadCrumbItems}
+                isMobile={isMobile}>
+
+
                 <Container
                     maxWidth={false}
                     hidden={!app002p01Page}
                     disableGutters
+                    component={Paper}
+                    sx={{ overflow: "hidden", borderTopRightRadius: '0px', borderTopLeftRadius: isMobile ? "0px" : "10px" }}
                 >
 
-                    <Stack
-                        // mt={-5} HEre for Breadcrumb and title row
-                        direction={"row-reverse"}
-                        width={"fit-content"}
-                        spacing={1}
-                        alignItems={"center"}
-                        bgcolor={"primary.main"}
-                        px={2}
-                        py={1}
-                        color={"text.light"}
-                        component={Paper}
-                        elevation={4}
-                        sx={{
-                            ml: "auto", // 👈 ini bikin ke kanan
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                        }}>
-                        <Typography variant="h6" fontWeight={"normal"}>
-                            User Management
-                        </Typography>
-                        <PersonIcon fontSize="small" />
-                    </Stack>
 
-                    <Stack direction={"column"} spacing={2} p={2} component={Paper} elevation={4} sx={{ borderTopRightRadius: '0px' }}>
-                        <Stack width={"fit-content"} >
+                    <Box display={"flex"} flexDirection={"column"} gap={2} py={1} px={2}>
+                        <Stack>
                             <Tabs
                                 value={active}
-                                component={Paper}
-                                elevation={0}
                                 onChange={handleTabChange}
-                                sx={{
-                                    minHeight: 36,
-                                    borderBottomLeftRadius: "0px",
-                                    borderBottomRightRadius: "0px"
-                                }}
+                                variant="scrollable"
+                                scrollButtons={false}
+                                allowScrollButtonsMobile
                             >
                                 <Tab label="Active User"
                                     icon={<HowToRegIcon fontSize="small" />}
                                     iconPosition="start"
                                     value="activeUser"
-                                    sx={{
-                                        minHeight: 36,
-
-                                        "&:hover": {
-                                            bgcolor: "action.hover",
-                                            color: "primary.main"
-                                        },
-
-                                        "&.Mui-selected:hover": {
-                                            bgcolor: "layout.sidebarActive",
-                                            color: "primary.main"
-                                        },
-                                    }}
                                 />
                                 <Tab label="Deleted User"
                                     value="deletedUser"
                                     icon={<PersonRemoveOutlinedIcon fontSize="small" />}
                                     iconPosition="start"
-                                    sx={{
-                                        minHeight: 36,
-
-                                        "&:hover": {
-                                            bgcolor: "action.hover",
-                                            color: "primary.main"
-                                        },
-
-                                        "&.Mui-selected:hover": {
-                                            color: "primary.main",
-                                        },
-                                    }}
                                 />
                             </Tabs>
                         </Stack>
 
-                        <Stack >
-                            <Grid container alignItems="center" spacing={2}>
-                                <Grid size={{ xs: 10, md: 10 }}>
-                                    <Grid container spacing={2}>
-                                        <Grid size={{ xs: 6, md: 3 }}>
+                        <Stack>
+                            <Grid container alignItems="center" spacing={4}>
+                                <Grid size={9}>
+                                    <Grid container spacing={1}>
+                                        <Grid size={{ xs: 6, sm: 5, md: 3 }}>
                                             <TextField
                                                 fullWidth
                                                 placeholder="Search"
@@ -668,23 +626,19 @@ const MasterUser = () => {
                                             />
                                         </Grid>
 
-                                        <Grid size={{ xs: 5, md: 2 }}>
+                                        <Grid size={{ xs: 6, sm: 5, md: 3 }}>
                                             <Select
                                                 fullWidth
                                                 size="small"
                                                 value={role}
                                                 displayEmpty
                                                 onChange={(e) => handleRoleChange(e.target.value)}
-                                                renderValue={(selected) =>
-                                                    selected
-                                                        ? roleOptions.find((opt) => opt.value === selected)?.label
-                                                        : <Typography>All Roles</Typography>
-                                                }
+                                                renderValue={(selected) => {
+                                                    if (!selected) return "All Roles";
+                                                    return roleOptions.find((opt) => opt.value === selected)?.label;
+                                                }}
                                             >
-                                                <MenuItem value="">
-                                                    <Typography>All Roles</Typography>
-                                                </MenuItem>
-
+                                                <MenuItem value="">All Roles</MenuItem>
                                                 {roleOptions.map(({ value, label }) => (
                                                     <MenuItem key={value} value={value}>
                                                         {label}
@@ -695,66 +649,66 @@ const MasterUser = () => {
                                     </Grid>
                                 </Grid>
 
-                                <Grid size={{ xs: 2, md: 2 }} display="flex" justifyContent="flex-end" alignItems={"center"}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={handleModalAddOpen}
-                                        sx={{ gap: 0.5, px: isMobile ? 1 : 2 }}
-                                    >
-                                        <AddIcon fontSize="small" />
-                                        {!isMobile && "Create"}
-                                    </Button>
-                                </Grid>
+                                <Grid size={3} sx={{ display: 'flex', justifyContent: "flex-end" }}>
+                                    {active !== "deletedUser" && (
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={handleModalAddOpen}
+                                            sx={{
+                                                gap: 0.5, px: isMobile ? 1 : 2, minWidth: "auto"
+                                            }}
 
-                                <Grid size={12}>
-                                    {active === "activeUser" && (
-                                        <TableCustom
-                                            keyField="user_id"
-                                            loadingData={loadingData}
-                                            columns={app002UserColumns}
-                                            appdata={app002UserData}
-                                            appdataTotal={app002UserTotalData}
-                                            totalPage={app002TotalPage}
-                                            rowsPerPageOption={[5, 10, 20, 25]}
-
-                                            page={app002UserDataParam.page - 1}
-                                            rowsPerPage={app002UserDataParam.size}
-                                            sortField={app002UserDataParam.sort}
-                                            sortOrder={app002UserDataParam.order}
-
-
-                                            onPageChange={handleChangePage}
-                                            onRowsPerPageChange={handleChangeRowsPerPage}
-                                            onRequestSort={handleRequestSort}
-                                        />
-                                    )}
-
-                                    {active === "deletedUser" && (
-                                        <TableCustom
-                                            keyField="user_id"
-                                            loadingData={loadingData}
-                                            columns={app002UserDeletedColumns}
-                                            appdata={app002UserDeletedData}
-                                            appdataTotal={app002UserDeletedTotalData}
-                                            totalPage={app002TotalPageDeleted}
-                                            rowsPerPageOption={[5, 10, 20, 25]}
-
-                                            page={app002UserDeletedDataParam.page - 1}
-                                            rowsPerPage={app002UserDeletedDataParam.size}
-                                            sortField={app002UserDeletedDataParam.sort}
-                                            sortOrder={app002UserDeletedDataParam.order}
-
-
-                                            onPageChange={handleChangePageDeleted}
-                                            onRowsPerPageChange={handleChangeRowsPerPageDeleted}
-                                            onRequestSort={handleRequestSortDeleted}
-                                        />
+                                        >
+                                            <AddIcon fontSize="small" />
+                                            {!isMobile && "Create"}
+                                        </Button>
                                     )}
                                 </Grid>
                             </Grid>
                         </Stack>
-                    </Stack>
+
+                        <Stack>
+                            {active === "activeUser" && (
+                                <TableCustom
+                                    keyField="user_id"
+                                    loadingData={loadingData}
+                                    columns={app002UserColumns}
+                                    appdata={app002UserData}
+                                    appdataTotal={app002UserTotalData}
+                                    totalPage={app002TotalPage}
+                                    rowsPerPageOption={[5, 10, 20, 25]}
+                                    page={app002UserDataParam.page - 1}
+                                    rowsPerPage={app002UserDataParam.size}
+                                    sortField={app002UserDataParam.sort}
+                                    sortOrder={app002UserDataParam.order}
+                                    onPageChange={handleChangePage}
+                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    onRequestSort={handleRequestSort}
+                                />
+                            )}
+
+                            {active === "deletedUser" && (
+                                <TableCustom
+                                    keyField="user_id"
+                                    loadingData={loadingData}
+                                    columns={app002UserDeletedColumns}
+                                    appdata={app002UserDeletedData}
+                                    appdataTotal={app002UserDeletedTotalData}
+                                    totalPage={app002TotalPageDeleted}
+                                    rowsPerPageOption={[5, 10, 20, 25]}
+                                    page={app002UserDeletedDataParam.page - 1}
+                                    rowsPerPage={app002UserDeletedDataParam.size}
+                                    sortField={app002UserDeletedDataParam.sort}
+                                    sortOrder={app002UserDeletedDataParam.order}
+                                    onPageChange={handleChangePageDeleted}
+                                    onRowsPerPageChange={handleChangeRowsPerPageDeleted}
+                                    onRequestSort={handleRequestSortDeleted}
+                                />
+                            )}
+
+                        </Stack>
+                    </Box>
                 </Container>
 
                 {modalAddOpen && (

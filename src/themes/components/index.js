@@ -5,6 +5,8 @@ import MuiButton from "./MuiButton";
 import MuiInputLabel from "./MuiInputLabel";
 import MuiOutlinedInput from "./MuiOutlinedInput";
 import MuiDrawer from "./MuiDrawer";
+import MuiSelect from "./MuiSelect";
+import TabOverrides from "./MuiTabOverrides";
 
 const buildComponents = () => ({
     ...MuiPaper,
@@ -14,6 +16,8 @@ const buildComponents = () => ({
     ...MuiInputLabel,
     ...MuiOutlinedInput,
     ...MuiDrawer,
+    ...MuiSelect,
+    ...TabOverrides,
 });
 
 export default buildComponents;
