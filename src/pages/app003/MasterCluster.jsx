@@ -9,7 +9,10 @@ import {
     Autocomplete,
     Tooltip,
     Button,
-    Box
+    Box,
+    useTheme,
+    useMediaQuery,
+    Paper
 } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
@@ -18,9 +21,12 @@ import MasterClusterAdd from "./MasterClusterAdd";
 import MasterClusterEdit from "./MasterClusterEdit";
 import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore";
 import { Trash2, SquarePen, Plus, Search, RotateCcw } from "lucide-react";
+import { AddIcon, PersonIcon, SearchIcon } from "../../assets/Icon/muiIcon";
 
 const MasterCluster = () => {
     // State First Page, Message, and Loading Effect
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master Cluster" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app003p01Page, setApp003p01Page] = useState(true);
@@ -61,7 +67,6 @@ const MasterCluster = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "cluster_name",
@@ -69,7 +74,6 @@ const MasterCluster = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "total_devices",
@@ -77,14 +81,12 @@ const MasterCluster = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "action",
             text: "Action",
             headerAlign: "center",
             bodyAlign: 'left',
-            minWidth: '100px',
             formatter: (cellContent, app003ClusterData) => (
                 <>
                     <Stack direction="row" spacing={1} justifyContent="center">
@@ -243,94 +245,41 @@ const MasterCluster = () => {
                 msgStateSet={setApp003setMsg}
                 msgStateGetStatus={app003MsgStatus}
                 setFirstRender={setFirstRender}
+                title="Clusters Management"
+                icon={<PersonIcon fontSize="small" />}
                 breadCrumbItems={breadCrumbItems}
+                isMobile={isMobile}
             >
                 <Container
-                    disableGutters
                     maxWidth={false}
-                    sx={{
-                        display: app003p01Page ? "block" : "none",
-                        // py: 1,
-                        px: 1,
-                    }}
-
+                    hidden={!app003p01Page}
+                    disableGutters
+                    component={Paper}
+                    sx={{ overflow: "hidden", borderTopRightRadius: '0px', borderTopLeftRadius: isMobile ? "0px" : "10px" }}
                 >
-                    <Stack
-                        // spacing={2}
-                        sx={{ overflowX: 'hidden' }}
-                    >
-                        <Grid
-                            container
-                            size={12}
-                        >
-                            <Typography variant="h6" fontWeight="bold">
-                                Master Cluster
-                            </Typography>
-                        </Grid>
 
-                        <Grid
-                            container
-                            size={12}
-                            sx={{
-                                mb: 2
-                            }}
-                        >
-
-                        </Grid>
-
-                        <Box >
-                            <Grid container alignItems="center" size={12} sx={{ mb: 2, justifyContent: 'space-between' }}>
-                                <Grid
-                                    size={{ xs: 4, sm: 3 }}
-                                    sx={{
-                                        pr: 2
-                                    }}
-                                >
+                    <Box display={"flex"} flexDirection={"column"} gap={2} px={2} py={3}>
+                        <Stack>
+                            <Grid container spacing={2} alignItems={"center"}>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
                                     <TextField
                                         fullWidth
                                         placeholder="Search"
                                         value={search}
-                                        onChange={(e) => {
-                                            setSearch(e.target.value)
-                                        }}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter') {
-                                                handleSearchState()
-                                            }
-                                        }}
+                                        onChange={(e) => { setSearch(e.target.value) }}
+                                        onKeyDown={(e) => { if (e.key === 'Enter') { handleSearchState() } }}
                                         size="small"
-                                        sx={{
-                                            '& .MuiOutlinedInput-root': {
-                                                borderRadius: 2,
-                                                '& fieldset': {
-                                                    borderColor: 'custom.line',
-                                                    borderWidth: 1.5,
-                                                },
-
-                                                '&:hover fieldset': {
-                                                    borderColor: 'custom.line',
-                                                    borderWidth: 2.5
-                                                },
-
-                                                '&.Mui-focused fieldset': {
-                                                    borderColor: 'custom.line',
-                                                    borderWidth: 2.5
-                                                },
-                                            },
-                                        }}
                                         slotProps={{
                                             input: {
                                                 endAdornment: (
                                                     <IconButton
-                                                        aria-label="search button"
                                                         onClick={handleSearchState}
                                                         edge="end"
                                                         size="small"
-                                                        sx={{
-                                                            color: 'text.secondary'
-                                                        }}
+                                                        disableRipple
+
                                                     >
-                                                        <Search size={18} />
+                                                        <SearchIcon fontSize="small" />
                                                     </IconButton>
                                                 ),
                                             }
@@ -338,39 +287,21 @@ const MasterCluster = () => {
                                     />
                                 </Grid>
 
-
-
-                                <Grid
-                                    container
-                                    size={{ xs: 4, sm: 7 }}
-                                    justifyContent="flex-end"
-                                    alignItems="center"
-                                    sx={{
-                                        pl: 2
-                                    }}
-                                >
+                                <Grid size={{ xs: 12, md: 9 }} sx={{ display: 'flex', justifyContent: "flex-end" }}>
                                     <Button
                                         variant="contained"
-                                        color="success"
-                                        endIcon={<Plus size={18} />}
-                                        sx={{
-                                            textTransform: 'none',
-                                            '&:hover': {
-                                                bgcolor: '#61A05A'
-                                            },
-                                        }}
+                                        color="primary"
                                         onClick={handleModalAddOpen}
+                                        fullWidth={isMobile ? true : false}
+                                        startIcon={<AddIcon fontSize="small" />}
                                     >
-                                        Add Cluster
+                                        Add
                                     </Button>
                                 </Grid>
-
-
-
                             </Grid>
+                        </Stack>
 
-
-
+                        <Stack >
                             <TableCustom
                                 keyField="cluster_id"
                                 loadingData={loadingData}
@@ -390,9 +321,11 @@ const MasterCluster = () => {
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 onRequestSort={handleRequestSort}
                             />
-                        </Box>
+                        </Stack>
 
-                    </Stack>
+                    </Box>
+
+
                 </Container>
 
                 {modalAddOpen && (

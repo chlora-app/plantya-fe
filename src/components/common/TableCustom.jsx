@@ -21,9 +21,14 @@ import {
     mdiMenuSwap,
     mdiMenuUp,
     mdiMenuDown,
-    mdiChevronRight,
-    mdiChevronLeft
 } from '@mdi/js';
+import {
+    FirstPageOutlinedIcon,
+    LastPageOutlinedIcon,
+    NavigateBeforeOutlinedIcon,
+    NavigateNextOutlinedIcon,
+
+} from "../../assets/Icon/muiIcon";
 import { useTheme } from "@mui/material/styles";
 
 // Pindahkan StyledTableCell ke luar komponen agar tidak dibuat ulang setiap render
@@ -104,7 +109,7 @@ const TableCustom = (props) => {
 
     // --- LOGIKA PAGINATION KUSTOM UNTUK MENAMPILKAN 3 HALAMAN ---
     // Konversi ke 1-based untuk perhitungan yang lebih mudah
-    const currentPage = page + 1; 
+    const currentPage = page + 1;
     const pageNumbers = useMemo(() => {
         const maxVisiblePages = 3;
         let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
@@ -219,6 +224,27 @@ const TableCustom = (props) => {
         ));
     }, [props.appdata, props.columns, props.keyField, props.loadingData, theme]);
 
+    const paginationButtonSx = {
+        borderRadius: '8px',
+        border: '1px solid',
+        borderColor: 'divider',
+        color: 'text.secondary',
+        backgroundColor: 'background.paper',
+        transition: 'all 0.2s ease',
+        width: { xs: 28, sm: 28, md: 36 },
+        height: { xs: 28, sm: 28, md: 36 },
+        '&:hover:not(.Mui-disabled)': {
+            backgroundColor: 'action.hover',
+            borderColor: 'primary.main',
+            color: 'primary.main',
+        },
+        '&.Mui-disabled': {
+            borderColor: 'action.disabledBackground',
+            color: 'action.disabled',
+            backgroundColor: 'action.disabledBackground',
+        }
+    };
+
     return (
         <>
             <TableContainer
@@ -264,56 +290,46 @@ const TableCustom = (props) => {
             <Stack direction={{ sm: 'column', md: 'row' }} justifyContent={{ xs: 'center', md: 'space-between' }} mt={2} spacing={1} alignItems={"center"}>
                 <Typography variant="body1">Showing {from} to {to} of {props.appdataTotal} entries</Typography>
 
-                {/* PAGINATION KUSTOM YANG HANYA MENAMPILKAN 3 HALAMAN */}
+                {/* PAGINATION KUSTOM DENGAN ELLIPSIS */}
                 <Stack direction="row" spacing={1} alignItems="center">
+                    {/* Tombol First Page */}
+                    <IconButton
+                        onClick={(e) => handleChangePage(e, 0)}
+                        disabled={page === 0}
+                        sx={paginationButtonSx}
+                    >
+                        <FirstPageOutlinedIcon fontSize="small" />
+                    </IconButton>
+
                     {/* Tombol Sebelumnya */}
                     <IconButton
                         onClick={(e) => handleChangePage(e, page - 1)}
                         disabled={page === 0}
-                        sx={{
-                            borderRadius: '8px',
-                            border: '1px solid',
-                            borderColor: 'divider',
-                            color: 'text.secondary',
-                            backgroundColor: 'background.paper',
-                            transition: 'all 0.2s ease',
-                            width: { xs: 28, sm: 28, md: 36 },
-                            height: { xs: 28, sm: 28, md: 36 },
-                            '&:hover:not(.Mui-disabled)': {
-                                backgroundColor: 'action.hover',
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                            },
-                            '&.Mui-disabled': {
-                                borderColor: 'action.disabledBackground',
-                                color: 'action.disabled',
-                                backgroundColor: 'action.disabledBackground',
-                            }
-                        }}
+                        sx={paginationButtonSx}
                     >
-                        <Icon path={mdiChevronLeft} size={0.9} />
+                        <NavigateBeforeOutlinedIcon fontSize="small" />
                     </IconButton>
 
-                    {/* Tombol Nomor Halaman (hasil dari logika kustom) */}
+                    {/* Tombol Nomor Halaman */}
                     {pageNumbers.map((p) => (
                         <IconButton
                             key={p}
-                            onClick={(e) => handleChangePage(e, p - 1)} // Konversi kembali ke 0-based
+                            onClick={(e) => handleChangePage(e, p - 1)}
                             sx={{
-                                borderRadius: '8px',
+                                borderRadius: '10px',
                                 border: '1px solid',
                                 borderColor: p === currentPage ? 'primary.main' : 'divider',
-                                color: p === currentPage ? 'primary.contrastText' : 'text.secondary',
+                                color: p === currentPage ? 'text.light' : 'text.secondary',
                                 backgroundColor: p === currentPage ? 'primary.main' : 'background.paper',
-                                fontWeight: p === currentPage ? 'bold' : 500,
+                                fontWeight: p === currentPage ? "medium" : "normal",
                                 transition: 'all 0.2s ease',
                                 width: { xs: 28, sm: 28, md: 36 },
                                 height: { xs: 28, sm: 28, md: 36 },
-                                fontSize: '0.875rem',
+                                typography: 'body1',
                                 '&:hover': {
                                     backgroundColor: p === currentPage ? 'primary.dark' : 'action.hover',
                                     borderColor: 'primary.main',
-                                    color: p === currentPage ? 'primary.contrastText' : 'primary.main',
+                                    color: p === currentPage ? 'text.light' : 'primary.main',
                                 },
                             }}
                         >
@@ -321,32 +337,34 @@ const TableCustom = (props) => {
                         </IconButton>
                     ))}
 
+                    {/* --- PERUBAHAN: TAMBAHKAN ELLIPSIS SECARA KONDISIONAL --- */}
+                    {/* Tampilkan elipsis jika halaman terakhir yang terlihat bukanlah halaman terakhir total */}
+                    {pageNumbers.length > 0 && pageNumbers[pageNumbers.length - 1] < totalPages && (
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                px: 1, // Beri sedikit padding horizontal
+                                color: 'text.secondary',
+                                userSelect: 'none', // Cegah teks dipilih
+                                alignSelf: 'center' // Ratakan tengah secara vertikal dengan tombol
+                            }}
+                        >
+                            ...
+                        </Typography>
+                    )}
+
                     {/* Tombol Selanjutnya */}
                     <IconButton
                         onClick={(e) => handleChangePage(e, page + 1)}
                         disabled={page === totalPages - 1}
-                        sx={{
-                            borderRadius: '8px',
-                            border: '1px solid',
-                            borderColor: 'divider',
-                            color: 'text.secondary',
-                            backgroundColor: 'background.paper',
-                            transition: 'all 0.2s ease',
-                            width: { xs: 28, sm: 28, md: 36 },
-                            height: { xs: 28, sm: 28, md: 36 },
-                            '&:hover:not(.Mui-disabled)': {
-                                backgroundColor: 'action.hover',
-                                borderColor: 'primary.main',
-                                color: 'primary.main',
-                            },
-                            '&.Mui-disabled': {
-                                borderColor: 'action.disabledBackground',
-                                color: 'action.disabled',
-                                backgroundColor: 'action.disabledBackground',
-                            }
-                        }}
+                        sx={paginationButtonSx}
                     >
-                        <Icon path={mdiChevronRight} size={0.9} />
+                        <NavigateNextOutlinedIcon fontSize="small" />
+                    </IconButton>
+
+                    {/* Tombol Last Page */}
+                    <IconButton onClick={(e) => handleChangePage(e, totalPages - 1)} disabled={page === totalPages - 1} sx={paginationButtonSx} >
+                        <LastPageOutlinedIcon fontSize="small" />
                     </IconButton>
                 </Stack>
 
@@ -358,7 +376,7 @@ const TableCustom = (props) => {
                     order: 3,
                     justifyContent: 'center'
                 }}>
-                    <Typography variant="body2">Show</Typography>
+                    <Typography variant="body1">Show</Typography>
                     <Select
                         size="small"
                         value={rowsPerPage}
@@ -378,7 +396,7 @@ const TableCustom = (props) => {
                             </MenuItem>
                         ))}
                     </Select>
-                    <Typography variant="body2">entries</Typography>
+                    <Typography variant="bodd1">entries</Typography>
                 </Box>
             </Stack>
         </>

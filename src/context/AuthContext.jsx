@@ -1,5 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+
 import { logoutApi } from "../utils/ListApi";
+import { setLogoutHandler } from "../utils/AxiosInstance";
 
 export const AuthContext = createContext(null);
 
@@ -35,8 +37,20 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const clearAuthState = () => {
+        debugger
+        setUser(null);
+        setLoginStatus(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("loginStatus");
+    }
+
+    useEffect(() => {
+        setLogoutHandler(clearAuthState);
+    }, []);
+
     return (
-        <AuthContext.Provider value={{ user, loginStatus, login, logout }}>
+        <AuthContext.Provider value={{ user, loginStatus, login, logout, clearAuthState }}>
             {children}
         </AuthContext.Provider>
     );

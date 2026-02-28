@@ -28,6 +28,9 @@ export { default as ClearIcon } from '@mui/icons-material/Clear';
 export { default as DeleteOutlinedIcon } from '@mui/icons-material/DeleteOutlined';
 export { default as EditOutlinedIcon } from '@mui/icons-material/EditOutlined';
 export { default as ReplayOutlinedIcon } from '@mui/icons-material/ReplayOutlined';
-export { default as KeyboardDoubleArrowLeftIcon } from '@mui/icons-material/KeyboardDoubleArrowLeft';
+export { default as FirstPageOutlinedIcon } from '@mui/icons-material/FirstPageOutlined';
 export { default as KeyboardDoubleArrowRightIcon } from '@mui/icons-material/KeyboardDoubleArrowRight';
+export { default as LastPageOutlinedIcon } from '@mui/icons-material/LastPageOutlined';
+export { default as NavigateNextOutlinedIcon } from '@mui/icons-material/NavigateNextOutlined';
+export { default as NavigateBeforeOutlinedIcon } from '@mui/icons-material/NavigateBeforeOutlined';
 

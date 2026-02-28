@@ -33,26 +33,10 @@ import {
     ReplayOutlinedIcon,
     SearchIcon
 } from "../../assets/Icon/muiIcon";
-import BreadCrumb from "../../components/common/BreadCrumb";
-
-// ================= DUMMY DATA =================
-const generateDummyUsers = (total = 57) => {
-    const roles = ["ADMIN", "USER", "STAFF"];
-
-    return Array.from({ length: total }, (_, i) => ({
-        user_id: `USR${(i + 1).toString().padStart(3, "0")}`,
-        name: `User ${i + 1}`,
-        role: roles[i % roles.length],
-        email: `user${i + 1}@example.com`,
-    }));
-};
-
-const DUMMY_ACTIVE_USERS = generateDummyUsers(57);
-const DUMMY_DELETED_USERS = generateDummyUsers(23);
 
 const MasterUser = () => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // xs & sm
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]
     // State First Page, Message, and Loading Effect
     const [firstRender, setFirstRender] = useState(false)
@@ -282,62 +266,60 @@ const MasterUser = () => {
     };
 
     // Data From API Active User
-    // const getAllUser = useCallback(async (param) => {
-    //     setLoadingData(true);
-    //     try {
-    //         const response = await getUser(param);
-    //         console.table(response.data.users)
-    //         setApp002UserData(response?.data?.users ? response.data.users : []);
-    //         setApp002UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
-    //         app002SetTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
-
-
-    //     } catch (error) {
-    //         console.error("Gagal mengambil data:", error);
-
-    //     } finally {
-    //         setLoadingData(false);
-    //     }
-    // });
     const getAllUser = useCallback(async (param) => {
         setLoadingData(true);
+        try {
+            const response = await getUser(param);
+            console.table(response.data.users)
+            setApp002UserData(response?.data?.users ? response.data.users : []);
+            setApp002UserTotalData(response?.data?.count_data ? response.data.count_data : 0);
+            app002SetTotalPage(response?.data?.total_pages ? response.data?.total_pages : 0);
 
-        setTimeout(() => {
-            let filtered = [...DUMMY_ACTIVE_USERS];
 
-            // filter search
-            if (param.search) {
-                filtered = filtered.filter(user =>
-                    user.name.toLowerCase().includes(param.search.toLowerCase()) ||
-                    user.email.toLowerCase().includes(param.search.toLowerCase())
-                );
-            }
+        } catch (error) {
+            console.error("Gagal mengambil data:", error);
 
-            // filter role
-            if (param.role) {
-                filtered = filtered.filter(user => user.role === param.role);
-            }
-
-            // sorting
-            if (param.sort) {
-                filtered.sort((a, b) => {
-                    if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
-                    if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
-                    return 0;
-                });
-            }
-
-            const start = (param.page - 1) * param.size;
-            const end = start + param.size;
-            const paginated = filtered.slice(start, end);
-
-            setApp002UserData(paginated);
-            setApp002UserTotalData(filtered.length);
-            app002SetTotalPage(Math.ceil(filtered.length / param.size));
-
+        } finally {
             setLoadingData(false);
-        }, 500);
-    }, []);
+        }
+    });
+
+    // const getAllUser = useCallback(async (param) => {
+    //     setLoadingData(true);
+
+    //     setTimeout(() => {
+    //         let filtered = [...DUMMY_ACTIVE_USERS];
+
+    //         if (param.search) {
+    //             filtered = filtered.filter(user =>
+    //                 user.name.toLowerCase().includes(param.search.toLowerCase()) ||
+    //                 user.email.toLowerCase().includes(param.search.toLowerCase())
+    //             );
+    //         }
+
+    //         if (param.role) {
+    //             filtered = filtered.filter(user => user.role === param.role);
+    //         }
+
+    //         if (param.sort) {
+    //             filtered.sort((a, b) => {
+    //                 if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
+    //                 if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
+    //                 return 0;
+    //             });
+    //         }
+
+    //         const start = (param.page - 1) * param.size;
+    //         const end = start + param.size;
+    //         const paginated = filtered.slice(start, end);
+
+    //         setApp002UserData(paginated);
+    //         setApp002UserTotalData(filtered.length);
+    //         app002SetTotalPage(Math.ceil(filtered.length / param.size));
+
+    //         setLoadingData(false);
+    //     }, 500);
+    // }, []);
 
     useEffect(() => {
         if (app002p01Page && active == "activeUser") {
@@ -346,56 +328,56 @@ const MasterUser = () => {
     }, [app002UserDataParam, active]);
 
     // Data From API Deleted User
-    // const getAllDeletedUser = useCallback(async (param) => {
-    //     setLoadingData(true);
-    //     try {
-    //         const response = await getUserDeleted(param);
-    //         console.table(response.data.users)
-    //         setApp002UserDeletedData(response?.data?.users ? response.data.users : []);
-    //         setApp002UserDeletedTotalData(response?.data?.count_data ? response.data.count_data : 0);
-    //         app002SetTotalPageDeleted(response?.data?.total_pages ? response.data?.total_pages : 0);
-    //     } catch (error) {
-    //         console.error("Gagal mengambil data:", error);
-    //     } finally {
-    //         setLoadingData(false);
-    //     }
-    // });
-
     const getAllDeletedUser = useCallback(async (param) => {
         setLoadingData(true);
-
-        setTimeout(() => {
-            let filtered = [...DUMMY_DELETED_USERS];
-
-            if (param.search) {
-                filtered = filtered.filter(user =>
-                    user.name.toLowerCase().includes(param.search.toLowerCase())
-                );
-            }
-
-            if (param.role) {
-                filtered = filtered.filter(user => user.role === param.role);
-            }
-
-            if (param.sort) {
-                filtered.sort((a, b) => {
-                    if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
-                    if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
-                    return 0;
-                });
-            }
-
-            const start = (param.page - 1) * param.size;
-            const end = start + param.size;
-            const paginated = filtered.slice(start, end);
-
-            setApp002UserDeletedData(paginated);
-            setApp002UserDeletedTotalData(filtered.length);
-            app002SetTotalPageDeleted(Math.ceil(filtered.length / param.size));
-
+        try {
+            const response = await getUserDeleted(param);
+            console.table(response.data.users)
+            setApp002UserDeletedData(response?.data?.users ? response.data.users : []);
+            setApp002UserDeletedTotalData(response?.data?.count_data ? response.data.count_data : 0);
+            app002SetTotalPageDeleted(response?.data?.total_pages ? response.data?.total_pages : 0);
+        } catch (error) {
+            console.error("Gagal mengambil data:", error);
+        } finally {
             setLoadingData(false);
-        }, 500);
-    }, []);
+        }
+    });
+
+    // const getAllDeletedUser = useCallback(async (param) => {
+    //     setLoadingData(true);
+
+    //     setTimeout(() => {
+    //         let filtered = [...DUMMY_DELETED_USERS];
+
+    //         if (param.search) {
+    //             filtered = filtered.filter(user =>
+    //                 user.name.toLowerCase().includes(param.search.toLowerCase())
+    //             );
+    //         }
+
+    //         if (param.role) {
+    //             filtered = filtered.filter(user => user.role === param.role);
+    //         }
+
+    //         if (param.sort) {
+    //             filtered.sort((a, b) => {
+    //                 if (a[param.sort] < b[param.sort]) return param.order === "asc" ? -1 : 1;
+    //                 if (a[param.sort] > b[param.sort]) return param.order === "asc" ? 1 : -1;
+    //                 return 0;
+    //             });
+    //         }
+
+    //         const start = (param.page - 1) * param.size;
+    //         const end = start + param.size;
+    //         const paginated = filtered.slice(start, end);
+
+    //         setApp002UserDeletedData(paginated);
+    //         setApp002UserDeletedTotalData(filtered.length);
+    //         app002SetTotalPageDeleted(Math.ceil(filtered.length / param.size));
+
+    //         setLoadingData(false);
+    //     }, 500);
+    // }, []);
 
     useEffect(() => {
         if (app002p01Page && active == "deletedUser") {
@@ -559,10 +541,11 @@ const MasterUser = () => {
                 msgStateSet={setApp002setMsg}
                 msgStateGetStatus={app002MsgStatus}
                 setFirstRender={setFirstRender}
-                title="User Management"
+                title="Users Management"
                 icon={<PersonIcon fontSize="small" />}
                 breadCrumbItems={breadCrumbItems}
-                isMobile={isMobile}>
+                isMobile={isMobile}
+            >
 
 
                 <Container
@@ -597,71 +580,68 @@ const MasterUser = () => {
                         </Stack>
 
                         <Stack>
-                            <Grid container alignItems="center" spacing={4}>
-                                <Grid size={9}>
-                                    <Grid container spacing={1}>
-                                        <Grid size={{ xs: 6, sm: 5, md: 3 }}>
-                                            <TextField
-                                                fullWidth
-                                                placeholder="Search"
-                                                value={search}
-                                                onChange={(e) => { setSearch(e.target.value) }}
-                                                onKeyDown={(e) => { if (e.key === 'Enter') { handleSearchState() } }}
-                                                size="small"
-                                                slotProps={{
-                                                    input: {
-                                                        endAdornment: (
-                                                            <IconButton
-                                                                onClick={handleSearchState}
-                                                                edge="end"
-                                                                size="small"
-                                                                disableRipple
+                            <Grid container spacing={2} alignItems="center">
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <TextField
+                                        fullWidth
+                                        placeholder="Search"
+                                        value={search}
+                                        onChange={(e) => { setSearch(e.target.value) }}
+                                        onKeyDown={(e) => { if (e.key === 'Enter') { handleSearchState() } }}
+                                        size="small"
+                                        slotProps={{
+                                            input: {
+                                                endAdornment: (
+                                                    <IconButton
+                                                        onClick={handleSearchState}
+                                                        edge="end"
+                                                        size="small"
+                                                        disableRipple
 
-                                                            >
-                                                                <SearchIcon fontSize="small" />
-                                                            </IconButton>
-                                                        ),
-                                                    }
-                                                }}
-                                            />
-                                        </Grid>
-
-                                        <Grid size={{ xs: 6, sm: 5, md: 3 }}>
-                                            <Select
-                                                fullWidth
-                                                size="small"
-                                                value={role}
-                                                displayEmpty
-                                                onChange={(e) => handleRoleChange(e.target.value)}
-                                                renderValue={(selected) => {
-                                                    if (!selected) return "All Roles";
-                                                    return roleOptions.find((opt) => opt.value === selected)?.label;
-                                                }}
-                                            >
-                                                <MenuItem value="">All Roles</MenuItem>
-                                                {roleOptions.map(({ value, label }) => (
-                                                    <MenuItem key={value} value={value}>
-                                                        {label}
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </Grid>
-                                    </Grid>
+                                                    >
+                                                        <SearchIcon fontSize="small" />
+                                                    </IconButton>
+                                                ),
+                                            }
+                                        }}
+                                    />
                                 </Grid>
 
-                                <Grid size={3} sx={{ display: 'flex', justifyContent: "flex-end" }}>
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <Select
+                                        fullWidth
+                                        size="small"
+                                        value={role}
+                                        displayEmpty
+                                        onChange={(e) => handleRoleChange(e.target.value)}
+                                        renderValue={(selected) => {
+                                            if (!selected) return "All Roles";
+                                            return roleOptions.find((opt) => opt.value === selected)?.label;
+                                        }}
+                                    >
+                                        <MenuItem value="">All Roles</MenuItem>
+                                        {roleOptions.map((opt) => (
+                                            <MenuItem key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </Grid>
+
+                                <Grid
+                                    size={{ xs: 12, md: 6 }}
+                                    display={"flex"}
+                                    sx={{ justifyContent: "flex-end" }}
+                                >
                                     {active !== "deletedUser" && (
                                         <Button
                                             variant="contained"
                                             color="primary"
                                             onClick={handleModalAddOpen}
-                                            sx={{
-                                                gap: 0.5, px: isMobile ? 1 : 2, minWidth: "auto"
-                                            }}
-
+                                            fullWidth={isMobile ? true : false}
+                                            startIcon={<AddIcon fontSize="small" />}
                                         >
-                                            <AddIcon fontSize="small" />
-                                            {!isMobile && "Create"}
+                                            Add
                                         </Button>
                                     )}
                                 </Grid>

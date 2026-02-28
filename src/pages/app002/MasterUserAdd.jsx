@@ -102,12 +102,6 @@ const MasterUserAdd = (props) => {
         fullWidth={true}
         maxWidth={"xs"}
         scroll={"paper"}
-        sx={{
-          '& .MuiDialog-paper': {
-            bgcolor: 'background.default',
-            borderRadius: 2
-          }
-        }}
       >
         <DialogTitle
           sx={{

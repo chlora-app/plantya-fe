@@ -9,7 +9,12 @@ import {
     Autocomplete,
     Tooltip,
     Button,
-    Box
+    Box,
+    useTheme,
+    useMediaQuery,
+    Paper,
+    Select,
+    MenuItem,
 } from "@mui/material";
 import RootPageCustom from "../../components/common/RootPageCustom";
 import TableCustom from "../../components/common/TableCustom";
@@ -18,9 +23,12 @@ import PopupDeleteAndRestore from "../../components/common/PopupDeleteAndRestore
 import { Trash2, SquarePen, Plus, Search, RotateCcw } from "lucide-react";
 import MasterDeviceAdd from "./MasterDeviceAdd";
 import MasterDeviceEdit from "./MasterDeviceEdit";
+import { AddIcon, PersonIcon, SearchIcon } from "../../assets/Icon/muiIcon";
 
 const MasterDevice = () => {
     // State First Page, Message, and Loading Effect
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master Device" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app004p01Page, setApp004p01Page] = useState(true);
@@ -73,7 +81,6 @@ const MasterDevice = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "device_name",
@@ -81,7 +88,6 @@ const MasterDevice = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "device_type",
@@ -89,7 +95,6 @@ const MasterDevice = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "cluster_name",
@@ -97,7 +102,6 @@ const MasterDevice = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "status",
@@ -105,14 +109,12 @@ const MasterDevice = () => {
             sort: true,
             headerAlign: "center",
             bodyAlign: 'center',
-            minWidth: '100px',
         },
         {
             dataField: "action",
             text: "Action",
             headerAlign: "center",
             bodyAlign: 'left',
-            minWidth: '100px',
             formatter: (cellContent, app004DeviceData) => (
                 <>
                     <Stack direction="row" spacing={1} justifyContent="center">
@@ -198,7 +200,7 @@ const MasterDevice = () => {
         { value: "ACTUATOR", label: "Actuator" },
         { value: "Sensor", label: "Sensor" },
     ])
-    const [statusOption, setStatusOption] = useState([
+    const [statusOptions, setStatusOptions] = useState([
         { value: "ONLINE", label: "Online" },
         { value: "OFFLINE", label: "Offline" },
     ])
@@ -336,236 +338,127 @@ const MasterDevice = () => {
                 msgStateSet={setApp004setMsg}
                 msgStateGetStatus={app004MsgStatus}
                 setFirstRender={setFirstRender}
+                title="Devices Management"
+                icon={<PersonIcon fontSize="small" />}
+                breadCrumbItems={breadCrumbItems}
+                isMobile={isMobile}
             >
                 <Container
-                    disableGutters
                     maxWidth={false}
-                    sx={{
-                        display: app004p01Page ? "block" : "none",
-                        // py: 1,
-                        px: 1,
-                    }}
-
+                    hidden={!app004p01Page}
+                    disableGutters
+                    component={Paper}
+                    sx={{ overflow: "hidden", borderTopRightRadius: '0px', borderTopLeftRadius: isMobile ? "0px" : "10px" }}
                 >
-                    <Stack
-                        spacing={2}
-                        sx={{ overflowX: 'hidden' }}
-                    >
-                        <Grid
-                            container
-                            size={12}
-                        >
-                            <Typography variant="h6" fontWeight="bold">
-                                Master Device
-                            </Typography>
-                        </Grid>
+                    <Box display={"flex"} flexDirection={"column"} gap={2} px={2} py={3}>
+                        <Stack>
+                            <Grid container spacing={2} alignItems={"center"}>
+                                <Grid size={{ xs: 12, sm: 12, md: 3 }}>
+                                    <TextField
+                                        fullWidth
+                                        placeholder="Search"
+                                        value={search}
+                                        onChange={(e) => { setSearch(e.target.value) }}
+                                        onKeyDown={(e) => { if (e.key === 'Enter') { handleSearchState() } }}
+                                        size="small"
+                                        slotProps={{
+                                            input: {
+                                                endAdornment: (
+                                                    <IconButton
+                                                        onClick={handleSearchState}
+                                                        edge="end"
+                                                        size="small"
+                                                        disableRipple
 
-                        <Grid
-                            container
-                            size={12}
-                            sx={{
-                                mb: 2
-                            }}
-                        >
-                            <Grid
-                                size={{ xs: 3, sm: 2 }}
-                                sx={{
-                                    pr: 2
-                                }}
-                            >
-                                <TextField
-                                    fullWidth
-                                    placeholder="Search"
-                                    value={search}
-                                    onChange={(e) => {
-                                        setSearch(e.target.value)
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            handleSearchState()
-                                        }
-                                    }}
-                                    size="small"
-                                    sx={{
-                                        '& .MuiOutlinedInput-root': {
-                                            borderRadius: 2,
-                                            '& fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 1.5,
-                                            },
+                                                    >
+                                                        <SearchIcon fontSize="small" />
+                                                    </IconButton>
+                                                ),
+                                            }
+                                        }}
+                                    />
+                                </Grid>
 
-                                            '&:hover fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 2.5
-                                            },
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <Select
+                                        fullWidth
+                                        size="small"
+                                        value={status}
+                                        displayEmpty
+                                        onChange={(e) => { handleStatusChange(e.target.value) }}
+                                        renderValue={(selected) => {
+                                            if (!selected) return "All Status";
+                                            return statusOptions.find((opt) => opt.value === selected)?.label;
+                                        }}
+                                    >
+                                        <MenuItem value="">All Status</MenuItem>
+                                        {statusOptions.map((opt) => (
+                                            <MenuItem key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </MenuItem>
+                                        ))}
 
-                                            '&.Mui-focused fieldset': {
-                                                borderColor: 'custom.line',
-                                                borderWidth: 2.5
-                                            },
-                                        },
-                                    }}
-                                    slotProps={{
-                                        input: {
-                                            endAdornment: (
-                                                <IconButton
-                                                    aria-label="search button"
-                                                    onClick={handleSearchState}
-                                                    edge="end"
-                                                    size="small"
-                                                    sx={{
-                                                        color: 'text.secondary'
-                                                    }}
-                                                >
-                                                    <Search size={18} />
-                                                </IconButton>
-                                            ),
-                                        }
-                                    }}
-                                />
+                                    </Select>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                                    <Select
+                                        fullWidth
+                                        size="small"
+                                        value={cluster}
+                                        displayEmpty
+                                        onChange={(e) => { handleClusterChange(e.target.value) }}
+                                        renderValue={(selected) => {
+                                            if (!selected) return "All Clusters";
+                                            return clusterOption.find((opt) => opt.value === selected)?.label;
+                                        }}
+                                    >
+                                        <MenuItem value="">All Clusters</MenuItem>
+                                        {statusOptions.map((opt) => (
+                                            <MenuItem key={opt.value} value={opt.value}>
+                                                {opt.label}
+                                            </MenuItem>
+                                        ))}
+
+                                    </Select>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, sm: 12, md: 3 }} sx={{ display: 'flex', justifyContent: "flex-end" }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={handleModalAddOpen}
+                                        fullWidth={isMobile ? true : false}
+                                        startIcon={<AddIcon fontSize="small" />}
+                                    >
+                                        Add
+                                    </Button>
+                                </Grid>
                             </Grid>
+                        </Stack>
 
-                            <Grid container size={{ xs: 3, sm: 2 }} sx={{
-                                pr: 2
-                            }}>
-                                <Autocomplete
-                                    fullWidth
-                                    options={statusOption}
-                                    getOptionLabel={(option) => option.label}
-                                    value={statusOption.find((opt) => opt.value === status) || null}
-                                    onChange={(event, newValue) => { handleStatusChange(newValue ? newValue.value : ""); }}
-                                    sx={{
-                                        '& .MuiAutocomplete-popupIndicator': {
-                                            color: 'text.secondary',
-                                        },
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            placeholder="Status"
-                                            size="small"
-                                            fullWidth={true}
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
+                        <Stack>
+                            <TableCustom
+                                keyField="device_id"
+                                loadingData={loadingData}
+                                columns={app004DeviceColumns}
+                                appdata={app004DeviceData}
+                                appdataTotal={app004DeviceTotalData}
+                                totalPage={app004TotalPage}
+                                rowsPerPageOption={[5, 10, 20, 25]}
 
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                        />
-                                    )}
-                                    isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                                    clearOnEscape
-                                />
-                            </Grid>
-
-                            <Grid container size={{ xs: 3, sm: 2 }} sx={{
-                                pr: 2
-                            }}>
-                                <Autocomplete
-                                    fullWidth
-                                    options={clusterOption}
-                                    getOptionLabel={(option) => option.label}
-                                    value={clusterOption.find((opt) => opt.value === cluster) || null}
-                                    onChange={(event, newValue) => { handleClusterChange(newValue ? newValue.value : ""); }}
-                                    sx={{
-                                        '& .MuiAutocomplete-popupIndicator': {
-                                            color: 'text.secondary',
-                                        },
-                                    }}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            placeholder="Cluster Name"
-                                            size="small"
-                                            fullWidth={true}
-                                            sx={{
-                                                '& .MuiOutlinedInput-root': {
-                                                    borderRadius: 2,
-                                                    '& fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 1.5,
-                                                    },
-
-                                                    '&:hover fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: 'custom.line',
-                                                        borderWidth: 2.5
-                                                    },
-                                                },
-                                            }}
-                                        />
-                                    )}
-                                    isOptionEqualToValue={(opt, val) => opt.value === val.value}
-                                    clearOnEscape
-                                />
-                            </Grid>
-
-                            <Grid
-                                container
-                                size={{ xs: 3, sm: 6 }}
-                                justifyContent="flex-end"
-                                alignItems="center"
-                                sx={{
-                                    pl: 2
-                                }}
-                            >
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                    endIcon={<Plus size={18} />}
-                                    sx={{
-                                        textTransform: 'none',
-                                        '&:hover': {
-                                            bgcolor: '#61A05A'
-                                        },
-                                    }}
-                                    onClick={handleModalAddOpen}
-                                >
-                                    Add Device
-                                </Button>
-                            </Grid>
-                        </Grid>
+                                page={app004DeviceDataParam.page - 1}
+                                rowsPerPage={app004DeviceDataParam.size}
+                                sortField={app004DeviceDataParam.sort}
+                                sortOrder={app004DeviceDataParam.order}
 
 
-
-                        <TableCustom
-                            keyField="device_id"
-                            loadingData={loadingData}
-                            columns={app004DeviceColumns}
-                            appdata={app004DeviceData}
-                            appdataTotal={app004DeviceTotalData}
-                            totalPage={app004TotalPage}
-                            rowsPerPageOption={[5, 10, 20, 25]}
-
-                            page={app004DeviceDataParam.page - 1}
-                            rowsPerPage={app004DeviceDataParam.size}
-                            sortField={app004DeviceDataParam.sort}
-                            sortOrder={app004DeviceDataParam.order}
-
-
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            onRequestSort={handleRequestSort}
-                        />
-
-                    </Stack>
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                onRequestSort={handleRequestSort}
+                            />
+                        </Stack>
+                    </Box>
                 </Container>
 
                 {modalAddOpen && (
@@ -600,7 +493,7 @@ const MasterDevice = () => {
                         setApp004setMsgStatus={setApp004setMsgStatus}
                         clusterOption={clusterOption}
                         deviceTypeOption={deviceTypeOption}
-                        statusOption={statusOption}
+                        statusOption={statusOptions}
                     />
                 )}
 

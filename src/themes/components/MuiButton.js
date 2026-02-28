@@ -1,5 +1,5 @@
-const MuiTab = {
-    MuiTab: {
+const MuiButton = {
+    MuiButton: {
         styleOverrides: {
             root: ({ theme }) => ({
                 borderRadius: '10px',
@@ -27,4 +27,4 @@ const MuiTab = {
     },
 };
 
-export default MuiTab;
+export default MuiButton;

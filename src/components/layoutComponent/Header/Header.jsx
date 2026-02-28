@@ -73,7 +73,7 @@ const Header = (props) => {
         <>
             <AppBar
                 position="static"
-                elevation={4}
+                elevation={0}
                 sx={{ height: props.headerHeight }}
                 className="header-container"
 

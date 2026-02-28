@@ -21,12 +21,12 @@ const RootPageCustom = (props) => {
                 />
                 <Stack direction={props.isMobile ? "column" : "row"} spacing={props.isMobile ? 1 : 0} className="rootpagecustom-head-wrapper" >
                     <BreadCrumb items={props.breadCrumbItems} />
-                    <Stack direction={"row"} gap={1} px={2 } py={1} className="rootpagecustom-title-wrapper" >
+                    <Stack direction={"row"} gap={1} px={2} py={1} className="rootpagecustom-title-wrapper" >
                         {props.icon}
                         <Typography variant="h6" fontWeight="medium" noWrap> {props.title}</Typography>
                     </Stack>
                 </Stack>
-                <Box>{props.children}</Box>
+                <Box component={Paper} elevation={4}>{props.children}</Box>
             </Container>
         </React.Fragment>
     )

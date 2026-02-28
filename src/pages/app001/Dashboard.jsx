@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { Paper, Container } from "@mui/material";
-import { Typography, Button, Grid } from '@mui/material';
+import {
+    Typography, Button, Grid, useTheme,
+    useMediaQuery,
+} from '@mui/material';
 import RootPageCustom from "../../components/common/RootPageCustom";
+import { DashboardIcon } from "../../assets/Icon/muiIcon";
+
 
 const Dashboard = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // xs & sm
     const breadCrumbItems = [{ label: "Home", path: "/" }, { label: "Master Data" }, { label: "Master User" }]
     const [firstRender, setFirstRender] = useState(false)
     const [app001p01Page, setApp001p01Page] = useState(true);
@@ -19,7 +26,10 @@ const Dashboard = () => {
                 msgStateSet={setApp001setMsg}
                 msgStateGetStatus={app001MsgStatus}
                 setFirstRender={setFirstRender}
+                title="Dashboard"
+                icon={<DashboardIcon fontSize="small" />}
                 breadCrumbItems={breadCrumbItems}
+                isMobile={isMobile}
             >
                 <Container
                     // maxWidth="xl"
@@ -30,13 +40,13 @@ const Dashboard = () => {
                     }}
                 >
                     <Typography variant="h4" gutterBottom>
-                        Halaman Dashboard
+                        Dashboard
                     </Typography>
                     <Typography>
-                        Ini adalah contoh bagaimana menggunakan komponen AlertMessage yang Anda buat.
+                        On Progress
                     </Typography>
 
-                    <Grid container spacing={2} sx={{ mt: 3 }}>
+                    {/* <Grid container spacing={2} sx={{ mt: 3 }}>
                         <Grid >
                             <Button
                                 variant="contained"
@@ -72,7 +82,7 @@ const Dashboard = () => {
                                 Tampilkan Alert Warning
                             </Button>
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </Container>
 
 
